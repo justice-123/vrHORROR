@@ -98,6 +98,16 @@ game/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Pro
 # Auto-generated scenes by play mode tests
 game/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
+# Ignore all Unity assets
+game/Assets/**
+
+# Re-allow folders
+!game/Assets/**/
+
+# Keep scripts
+!game/Assets/Scripts/**/*.cs
+!game/Assets/Scripts/**/*.cs.meta
+
 
 
 
