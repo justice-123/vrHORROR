@@ -3,5 +3,5 @@
 
 ## Instructions
 
-When you pull the default project it will just be the VR template this is meant to happen. Import the Abandoned Psychiatric Hospital asset by yourself into unity. Then, open up AP demo and go to File -> Save as New Scene. Start from there to create the scene you want to work on.  
+Import the Abandoned Psychiatric Hospital asset by yourself into unity. Then, open up AP demo and go to File -> Save as New Scene. Start from there to create the scene you want to work on.  
 
