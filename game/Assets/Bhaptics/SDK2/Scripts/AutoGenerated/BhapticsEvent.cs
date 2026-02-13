@@ -24,5 +24,7 @@ namespace Bhaptics.SDK2
         public const string HEARTBEAT_AND_JUMPSCARES = "heartbeat_and_jumpscares";
         
         public const string JUMPSCARE_BACK = "jumpscare-back";
+        
+        public const string HEARTHUMP = "hearthump";
     }
 }
