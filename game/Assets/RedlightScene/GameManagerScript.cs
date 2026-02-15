@@ -1,5 +1,6 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using TMPro;
 public class GameManagerScript : MonoBehaviour
 {
 
@@ -11,8 +12,10 @@ public class GameManagerScript : MonoBehaviour
 
     [Header("Detection Settings")]
     public Transform playerTransform;
-    public float moveThreshold = 0.01f; // Tiny movements allowed
-    public float turnThreshold = 0.05f;
+    public float moveThreshold = 1.05f; // Tiny movements allowed
+    public float turnThreshold = 1.1f;
+
+    public Transform spawnPoint;
 
     private Vector3 lastPosition;
     private Quaternion lastRotation;
@@ -20,6 +23,7 @@ public class GameManagerScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        ResetPlayer();
 
         lastPosition = playerTransform.position;
         lastRotation = playerTransform.rotation;
@@ -45,8 +49,15 @@ public class GameManagerScript : MonoBehaviour
                 lastRotation = playerTransform.rotation;
 
             }
-
+            if (!isGreenLight)
+            {
+                lastPosition = playerTransform.position;
+                lastRotation = playerTransform.rotation;
+            }
         }
+           
+
+            
 
         if (!isGreenLight)
         {
@@ -76,14 +87,34 @@ public class GameManagerScript : MonoBehaviour
             float moveDistance = Vector3.Distance(playerTransform.position, lastPosition);
             float turnAngle = Quaternion.Angle(playerTransform.rotation, lastRotation);
 
-            if (moveDistance > moveThreshold || turnAngle > turnThreshold)
-            {
-                Debug.Log("DEAD motion detected.");
-            }
+        if (moveDistance > moveThreshold || turnAngle > turnThreshold)
+        {
+            Debug.Log("DEAD motion detected.");
+            ResetPlayer();
+        }
 
             lastPosition = playerTransform.position;
             lastRotation = playerTransform.rotation;
         }
 
+
+    public void ResetPlayer()
+    {
+        // Moves player to spawn point and resets rotation
+        playerTransform.position = spawnPoint.position;
+        playerTransform.rotation = spawnPoint.rotation;
+
+        lastPosition = spawnPoint.position;
+        lastRotation = spawnPoint.rotation;
+
+        // reset
+        isGreenLight = true;
+        timer = 3f;
+        UpdateCubeColor();
+
+
     }
+}
+
+    
 
