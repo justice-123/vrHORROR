@@ -1,39 +1,57 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+
+using OVR;
+
 public class GameManagerScript : MonoBehaviour
 {
 
+    [Header("Game State")]
     public bool isGreenLight = true;
     public float timer = 0f;
+    public bool isInsideGameBox = false;
 
+
+
+    [Header("Detection Thresholds")]
+    public float velocityThreshold = 0.15f; // head/hands
+    public float angularVelocityThreshold = 1.0f; // head turning
+
+    [Header("References")]
     public Renderer cubeRenderer;
-
-
-    [Header("Detection Settings")]
-    public Transform playerTransform;
-    public float moveThreshold = 1.05f; // Tiny movements allowed
-    public float turnThreshold = 1.1f;
-
+    public Transform playerTransform; // The Capsule
+    public Transform headTransform;   // CenterEyeAnchor
     public Transform spawnPoint;
 
-    private Vector3 lastPosition;
-    private Quaternion lastRotation;
+
+
+
+
+    //private Vector3 lastPosition;
+    //private Quaternion lastRotation;
+
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         ResetPlayer();
 
-        lastPosition = playerTransform.position;
-        lastRotation = playerTransform.rotation;
+        //lastPosition = playerTransform.position;
+        //lastRotation = playerTransform.rotation;
 
-        UpdateCubeColor();
+        //UpdateCubeColor();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (!isInsideGameBox) return;    // only if inside the box, start the game logic
+
+
         timer -= Time.deltaTime;
 
         if (timer <= 0)
@@ -41,24 +59,9 @@ public class GameManagerScript : MonoBehaviour
             isGreenLight = !isGreenLight;
             timer = Random.Range(2f, 5f);
             UpdateCubeColor();
-
-
-            if (isGreenLight)
-            {
-                lastPosition = playerTransform.position;
-                lastRotation = playerTransform.rotation;
-
-            }
-            if (!isGreenLight)
-            {
-                lastPosition = playerTransform.position;
-                lastRotation = playerTransform.rotation;
-            }
         }
+
            
-
-            
-
         if (!isGreenLight)
         {
             DetectMovement();
@@ -67,7 +70,48 @@ public class GameManagerScript : MonoBehaviour
 
     }
 
-        void UpdateCubeColor()
+
+    private Vector3 lastHeadPos;
+    private Quaternion lastHeadRot;
+
+    void DetectMovement()
+    {
+        // Controllers
+        Vector3 leftVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.LTouch);
+        Vector3 rightVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RTouch);
+
+        // Head
+        Vector3 headLinearVel = (headTransform.position - lastHeadPos) / Time.deltaTime;
+        float headAngularVel = Quaternion.Angle(headTransform.rotation, lastHeadRot) / Time.deltaTime;
+
+        // Capsule Velocity (in case of joystick)
+        CharacterController cc = playerTransform.GetComponent<CharacterController>();
+        float bodySpeed = cc.velocity.magnitude;
+
+        // Detection Logic
+        if (leftVel.magnitude > velocityThreshold ||
+            rightVel.magnitude > velocityThreshold ||
+            headLinearVel.magnitude > velocityThreshold ||
+            headAngularVel > angularVelocityThreshold ||
+            bodySpeed > 0.1f)
+        {
+            Debug.Log("ELIMINATED: Motion detected!");
+            ResetPlayer();
+        }
+    }
+
+    public void SetPlayerInZone(bool inside)
+    {
+        isInsideGameBox = inside;
+        if (!inside)
+        {
+            isGreenLight = true; // When player leaves box, rest to green
+            UpdateCubeColor();
+        }
+    }
+
+
+    void UpdateCubeColor()
         {
             if (isGreenLight)
             {
@@ -81,22 +125,6 @@ public class GameManagerScript : MonoBehaviour
 
         }
 
-        void DetectMovement()
-        {
-
-            float moveDistance = Vector3.Distance(playerTransform.position, lastPosition);
-            float turnAngle = Quaternion.Angle(playerTransform.rotation, lastRotation);
-
-        if (moveDistance > moveThreshold || turnAngle > turnThreshold)
-        {
-            Debug.Log("DEAD motion detected.");
-            ResetPlayer();
-        }
-
-            lastPosition = playerTransform.position;
-            lastRotation = playerTransform.rotation;
-        }
-
 
     public void ResetPlayer()
     {
@@ -104,8 +132,8 @@ public class GameManagerScript : MonoBehaviour
         playerTransform.position = spawnPoint.position;
         playerTransform.rotation = spawnPoint.rotation;
 
-        lastPosition = spawnPoint.position;
-        lastRotation = spawnPoint.rotation;
+        //lastPosition = spawnPoint.position;
+        //lastRotation = spawnPoint.rotation;
 
         // reset
         isGreenLight = true;
