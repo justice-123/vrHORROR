@@ -1,8 +1,9 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using TMPro;
-
 using OVR;
+using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -20,9 +21,14 @@ public class GameManagerScript : MonoBehaviour
 
     [Header("References")]
     public Renderer cubeRenderer;
-    public Transform playerTransform; // The Capsule
-    public Transform headTransform;   // CenterEyeAnchor
+    public Transform playerTransform; // XR Origin
+    public Transform headTransform;   // Main camera
     public Transform spawnPoint;
+
+
+    [Header("Controllers")]
+    public InputActionReference leftHandVelocity;  
+    public InputActionReference rightHandVelocity;
 
 
 
@@ -30,6 +36,9 @@ public class GameManagerScript : MonoBehaviour
 
     //private Vector3 lastPosition;
     //private Quaternion lastRotation;
+
+    private Vector3 lastHeadPos;
+    private Quaternion lastHeadRot;
 
 
 
@@ -68,21 +77,23 @@ public class GameManagerScript : MonoBehaviour
         }
 
 
+        lastHeadPos = headTransform.position;
+        lastHeadRot = headTransform.rotation;
+
+
     }
 
-
-    private Vector3 lastHeadPos;
-    private Quaternion lastHeadRot;
 
     void DetectMovement()
     {
         // Controllers
-        Vector3 leftVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.LTouch);
-        Vector3 rightVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RTouch);
+        Vector3 leftVel = leftHandVelocity.action.ReadValue<Vector3>();
+        Vector3 rightVel = rightHandVelocity.action.ReadValue<Vector3>();
 
         // Head
         Vector3 headLinearVel = (headTransform.position - lastHeadPos) / Time.deltaTime;
         float headAngularVel = Quaternion.Angle(headTransform.rotation, lastHeadRot) / Time.deltaTime;
+
 
         // Capsule Velocity (in case of joystick)
         CharacterController cc = playerTransform.GetComponent<CharacterController>();
@@ -128,9 +139,16 @@ public class GameManagerScript : MonoBehaviour
 
     public void ResetPlayer()
     {
-        // Moves player to spawn point and resets rotation
+        // Moves player to spawn point and resets rotation, disables controllers for teleport
+
+        CharacterController cc = playerTransform.GetComponent<CharacterController>();
+
+        if (cc != null) cc.enabled = false;
+
         playerTransform.position = spawnPoint.position;
         playerTransform.rotation = spawnPoint.rotation;
+
+        if (cc != null) cc.enabled = true;
 
         //lastPosition = spawnPoint.position;
         //lastRotation = spawnPoint.rotation;
@@ -139,6 +157,10 @@ public class GameManagerScript : MonoBehaviour
         isGreenLight = true;
         timer = 3f;
         UpdateCubeColor();
+
+
+        lastHeadPos = headTransform.position;
+        lastHeadRot = headTransform.rotation;
 
 
     }
