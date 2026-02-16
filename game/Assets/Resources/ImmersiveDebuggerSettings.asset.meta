@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Resources/ImmersiveDebuggerSettings.asset.meta
 guid: 11625212933232143912a0f606fc55b0
+========
+guid: 8d2efb377c44b51449cea207dbe45cdd
+>>>>>>>> dev:game/Assets/Resources/InputActions.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
