@@ -152,26 +152,35 @@ public class PaperHorrorSequence : MonoBehaviour
     void SpawnMonsterInFrontOfPlayer()
     {
         if (monster == null || playerTransform == null)
-        {
-            Debug.LogError("Cannot spawn monster. Missing references.");
             return;
-        }
 
-        Vector3 spawnPosition = playerTransform.position +
-                                playerTransform.forward * monsterDistanceFromPlayer;
+        // Get player horizontal forward direction only
+        Vector3 forward = playerTransform.forward;
+        forward.y = 0f;
+        forward.Normalize();
 
-        spawnPosition.y = playerTransform.position.y;
+        // Get floor height from monster's current position
+        float groundY = monster.transform.position.y;
+
+        // Calculate spawn position
+        Vector3 spawnPosition = playerTransform.position + forward * monsterDistanceFromPlayer;
+
+        // Force monster to stay on floor
+        spawnPosition.y = groundY;
 
         monster.transform.position = spawnPosition;
-        monster.transform.LookAt(playerTransform);
+
+        // Make monster face player horizontally
+        Vector3 lookTarget = playerTransform.position;
+        lookTarget.y = spawnPosition.y;
+
+        monster.transform.LookAt(lookTarget);
 
         monster.SetActive(true);
 
-        Debug.Log("Monster spawned.");
-
-        if (jumpscareSound != null)
-            audioSource.PlayOneShot(jumpscareSound);
+        Debug.Log("Monster spawned correctly on floor.");
     }
+
 
     // Manual test trigger (Press T in Editor)
     void Update()
