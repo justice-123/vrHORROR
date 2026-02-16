@@ -54227,7 +54227,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 11.505983, y: -1.947547, z: -13.915436}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 747075162}
@@ -54246,9 +54246,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43d4d9a4e3569445a42b43eec2362d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  mouseSensitivity: 0.1
-  verticalRotation: 0
 --- !u!143 &737461008
 CharacterController:
   m_ObjectHideFlags: 0
@@ -55228,7 +55225,7 @@ Transform:
   m_GameObject: {fileID: 747075157}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -59211,7 +59208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7310049e62c13ad46a56a4b0d3f0092a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 845525942}
 --- !u!1001 &802615410
 PrefabInstance:
   m_ObjectHideFlags: 0
