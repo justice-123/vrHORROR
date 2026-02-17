@@ -1,65 +1,152 @@
+﻿using System.Collections;
 using UnityEngine;
 using Bhaptics.SDK2;
 
-public class PaperGrabHaptic : MonoBehaviour
+public class PaperTouchHaptic : MonoBehaviour
 {
-    [Header("Haptic Settings")]
-    [SerializeField] private string hapticEventName = "hearthump";
-    [SerializeField] private int intensity = 1;
-    [SerializeField] private int duration = 200;
-    [SerializeField] private bool continuousHeartbeat = false;
-    [SerializeField] private float beatsPerMinute = 100f;
+    [Header("Haptic Events")]
+    [SerializeField] private string heartbeatEvent = "hearthump";
+    [SerializeField] private string jumpscareEvent = "jumpscare-back";
 
-    private OVRGrabbable grabbable;
-    private bool isGrabbed = false;
-    private float beatInterval;
+    [Header("Heartbeat Settings")]
+    [SerializeField] private float heartbeatDuration = 10f;
+    [SerializeField] private float breakBetweenBeats = 1f;
 
-    void Start()
+    [Header("Monster Settings")]
+    [SerializeField] private GameObject monster;
+    [SerializeField] private float spawnDistance = 2f;
+    [SerializeField] private float turnThreshold = 150f;
+    [SerializeField] private float faceDistance = 0.8f;
+    [SerializeField] private float groundRayHeight = 2.5f;
+    [SerializeField] private LayerMask groundMask = ~0; // set to your Ground layer if you have one
+    [SerializeField] private float groundLift = 0.02f;  // tiny lift to avoid z-fighting
+
+
+
+    [Header("Player Head (recommended)")]
+    [Tooltip("If left empty, uses Camera.main at runtime.")]
+    [SerializeField] private Transform playerHead;
+
+    private bool triggered = false;
+    private Transform playerRoot;            // whatever entered trigger (optional)
+    private Vector3 initialForwardFlat;      // forward on the ground plane
+
+    void OnTriggerEnter(Collider other)
     {
-        grabbable = GetComponent<OVRGrabbable>();
-        beatInterval = 60f / beatsPerMinute;
+        if (triggered) return;
+        triggered = true;
+
+        playerRoot = other.transform;
+
+        // Use headset/camera for turning
+        if (!playerHead)
+        {
+            if (Camera.main) playerHead = Camera.main.transform;
+        }
+
+        if (!playerHead)
+        {
+            Debug.LogError("[PaperTouchHaptic] No playerHead assigned and Camera.main not found.");
+            return;
+        }
+
+        StartCoroutine(HorrorSequence());
     }
 
-    void Update()
+    IEnumerator HorrorSequence()
     {
-        // Check if paper is currently grabbed
-        if (grabbable.isGrabbed && !isGrabbed)
+        // HEARTBEAT LOOP
+        float timer = 0f;
+        while (timer < heartbeatDuration)
         {
-            // Just grabbed
-            OnPaperGrabbed();
-            isGrabbed = true;
+            BhapticsLibrary.Play(heartbeatEvent);
+            yield return new WaitForSeconds(breakBetweenBeats);
+            timer += breakBetweenBeats;
         }
-        else if (!grabbable.isGrabbed && isGrabbed)
+
+        // Pause
+        yield return new WaitForSeconds(6f);
+
+        // Jumpscare haptic
+        BhapticsLibrary.Play(jumpscareEvent);
+
+        // Store head forward AFTER jumpscare (flattened)
+        initialForwardFlat = Flatten(playerHead.forward);
+
+
+        // Wait until player turns around
+        yield return StartCoroutine(WaitForTurn());
+
+        SpawnMonster();
+    }
+
+    IEnumerator WaitForTurn()
+    {
+        while (true)
         {
-            // Just released
-            OnPaperReleased();
-            isGrabbed = false;
+            Vector3 currentForwardFlat = Flatten(playerHead.forward);
+            float angle = Vector3.Angle(initialForwardFlat, currentForwardFlat);
+
+            // Debug (optional)
+            // Debug.Log($"Turn angle: {angle}");
+
+            if (angle >= turnThreshold)
+                yield break;
+
+            yield return null;
         }
     }
 
-    void OnPaperGrabbed()
+    void SpawnMonster()
     {
-        // Play haptic when grabbed
-        BhapticsLibrary.Play(hapticEventName, intensity, duration);
+        if (!monster || !playerHead) return;
 
-        // Optional: Start continuous heartbeat while holding
-        if (continuousHeartbeat)
+        // Spawn behind the direction you were facing at jumpscare time
+        Vector3 spawnDir = -initialForwardFlat; // already flat + normalized
+        if (spawnDir.sqrMagnitude < 0.0001f) spawnDir = -Flatten(playerHead.forward);
+        spawnDir.Normalize();
+
+        // Horizontal spawn position (ignore Y for now)
+        Vector3 spawnPos = playerHead.position + spawnDir * faceDistance;
+
+        // Raycast down to find ground height at spawn spot
+        float groundY = spawnPos.y; // fallback
+        Ray ray = new Ray(new Vector3(spawnPos.x, playerHead.position.y + groundRayHeight, spawnPos.z), Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, groundRayHeight + 5f, groundMask, QueryTriggerInteraction.Ignore))
         {
-            InvokeRepeating("PlayHeartbeat", beatInterval, beatInterval);
+            groundY = hit.point.y;
         }
+
+        // Place monster roughly at ground first (we'll correct using bounds)
+        monster.transform.position = new Vector3(spawnPos.x, groundY, spawnPos.z);
+        monster.SetActive(true);
+
+        // Snap so the *bottom of the rendered model* sits on the ground
+        Renderer rend = monster.GetComponentInChildren<Renderer>();
+        if (rend != null)
+        {
+            float bottomY = rend.bounds.min.y;
+            float offsetY = (groundY - bottomY) + groundLift;
+            monster.transform.position += new Vector3(0f, offsetY, 0f);
+        }
+
+        // Rotate to stare at player (face-to-face)
+        Vector3 lookDir = playerHead.position - monster.transform.position;
+        lookDir.y = 0f;
+        if (lookDir.sqrMagnitude > 0.0001f)
+            monster.transform.rotation = Quaternion.LookRotation(lookDir);
     }
 
-    void OnPaperReleased()
-    {
-        // Stop continuous heartbeat when released
-        if (continuousHeartbeat)
-        {
-            CancelInvoke("PlayHeartbeat");
-        }
-    }
 
-    void PlayHeartbeat()
+
+
+
+
+    Vector3 Flatten(Vector3 v)
     {
-        BhapticsLibrary.Play(hapticEventName, intensity, duration);
+        v.y = 0f;
+        float mag = v.magnitude;
+        return mag > 0.0001f ? (v / mag) : Vector3.forward;
     }
 }

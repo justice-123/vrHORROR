@@ -64677,6 +64677,7 @@ GameObject:
   - component: {fileID: 453681705}
   - component: {fileID: 453681704}
   - component: {fileID: 453681708}
+  - component: {fileID: 453681709}
   m_Layer: 0
   m_Name: DoorShutTrigger
   m_TagString: Untagged
@@ -64786,6 +64787,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: haptic_vest
+--- !u!54 &453681709
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453681703}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &454063719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -105786,7 +105814,7 @@ GameObject:
   - component: {fileID: 738062911}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105800,7 +105828,7 @@ Transform:
   m_GameObject: {fileID: 738062910}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.523, y: 1.252, z: 0}
+  m_LocalPosition: {x: -1.523, y: 0.888, z: -2.609}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -127369,7 +127397,7 @@ Transform:
   m_GameObject: {fileID: 904318937}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.324, y: 1.652, z: -14.619}
+  m_LocalPosition: {x: 2.324, y: 1.599, z: -14.621}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -127388,7 +127416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breath: {fileID: 2016603180}
-  player: {fileID: 0}
+  player: {fileID: 1741185769}
   hearingRadius: 100
   suspicion: 0
   hearThreshold: 0.25
@@ -224913,6 +224941,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: VR Rig
       objectReference: {fileID: 0}
+    - target: {fileID: 5587223999325945607, guid: b4fb5e62e5ea40d4e9a84c6ce29279b0, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489262391363484155, guid: b4fb5e62e5ea40d4e9a84c6ce29279b0, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8605247096591435335, guid: b4fb5e62e5ea40d4e9a84c6ce29279b0, type: 3}
       propertyPath: m_DirtyAABB
       value: 0
@@ -224937,6 +224973,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5587223999325945607, guid: b4fb5e62e5ea40d4e9a84c6ce29279b0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1741185762}
+    - targetCorrespondingSourceObject: {fileID: 5587223999325945607, guid: b4fb5e62e5ea40d4e9a84c6ce29279b0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1741185775}
+    - targetCorrespondingSourceObject: {fileID: 5587223999325945607, guid: b4fb5e62e5ea40d4e9a84c6ce29279b0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1741185776}
   m_SourcePrefab: {fileID: 100100000, guid: b4fb5e62e5ea40d4e9a84c6ce29279b0, type: 3}
 --- !u!1001 &1604989665
 PrefabInstance:
@@ -244145,6 +244187,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1703456524548354351, guid: b4fb5e62e5ea40d4e9a84c6ce29279b0, type: 3}
   m_PrefabInstance: {fileID: 1604829167}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1741185775
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741185761}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1741185776
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741185761}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1742331394
 PrefabInstance:
   m_ObjectHideFlags: 0
