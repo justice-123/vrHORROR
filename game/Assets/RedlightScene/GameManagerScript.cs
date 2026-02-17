@@ -8,10 +8,14 @@ using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
 public class GameManagerScript : MonoBehaviour
 {
 
+    public enum GameState { Green, Orange, Red }
+
     [Header("Game State")]
-    public bool isGreenLight = true;
+    //public bool isGreenLight = true;
+    public GameState currentState = GameState.Green;
     public float timer = 0f;
     public bool isInsideGameBox = false;
+    public float orangeDuration = 1.5f;
 
 
 
@@ -72,24 +76,45 @@ public class GameManagerScript : MonoBehaviour
 
             if (timer <= 0)
             {
-                isGreenLight = !isGreenLight;
-                timer = Random.Range(2f, 5f);
-                UpdateCubeColor();
+                //isGreenLight = !isGreenLight;
+                //timer = Random.Range(2f, 5f);
+                //UpdateCubeColor();
+                CycleLight();
             }
 
 
-            if (!isGreenLight)
+            if (currentState == GameState.Red)
             {
                 DetectMovement();
             }
 
         }
-        lastHeadPos = headTransform.position;
-        lastHeadRot = headTransform.rotation;
-        lastLeftHandPos = leftHandTransform.position;
-        lastRightHandPos = rightHandTransform.position;
 
 
+        UpdateTrackingData();
+
+
+
+    }
+
+    void CycleLight()
+    {
+        if (currentState == GameState.Green)
+        {
+            currentState = GameState.Orange;
+            timer = orangeDuration; 
+        }
+        else if (currentState == GameState.Orange)
+        {
+            currentState = GameState.Red;
+            timer = Random.Range(2f, 5f); 
+        }
+        else
+        {
+            currentState = GameState.Green;
+            timer = Random.Range(2f, 5f); 
+        }
+        UpdateCubeColor();
     }
 
 
@@ -130,70 +155,57 @@ public class GameManagerScript : MonoBehaviour
         isInsideGameBox = inside;
         if (!inside)
         {
-            isGreenLight = true; // When player leaves box, rest to green
+            //isGreenLight = true; // When player leaves box, rest to green
+            currentState = GameState.Green;
             UpdateCubeColor();
         }
     }
 
 
     void UpdateCubeColor()
+    {
+        switch (currentState)
         {
-            if (isGreenLight)
-            {
+            case GameState.Green:
                 cubeRenderer.material.color = Color.green;
-            }
-            else
-            {
+                break;
+            case GameState.Orange:
+                cubeRenderer.material.color = new Color(1f, 0.5f, 0f);
+                break;
+            case GameState.Red:
                 cubeRenderer.material.color = Color.red;
-            }
-
-
+                break;
         }
+    }
+
+
+    void UpdateTrackingData()
+    {
+        lastHeadPos = headTransform.position;
+        lastHeadRot = headTransform.rotation;
+        lastLeftHandPos = leftHandTransform.position;
+        lastRightHandPos = rightHandTransform.position;
+    }
 
 
     public void ResetPlayer()
     {
-        // Moves player to spawn point and resets rotation, disables controllers for teleport
-
-        //CharacterController cc = playerTransform.GetComponent<CharacterController>();
-        //Rigidbody rb = playerTransform.GetComponentInChildren<Rigidbody>();
-
-        //if (cc != null) cc.enabled = false;
-        //if (rb != null) rb.isKinematic = true;
-
-
-
-
-        //TeleportRequest request = new TeleportRequest
-        //{
-        //    destinationPosition = spawnPoint.position,
-        //    destinationRotation = spawnPoint.rotation,
-        //    matchOrientation = MatchOrientation.WorldSpaceUp
-        //};
-
-        //// Execute the teleport
-        //teleportationProvider.QueueTeleportRequest(request);
-
-
+        
 
         playerTransform.position = spawnPoint.position;
         playerTransform.rotation = spawnPoint.rotation;
         Physics.SyncTransforms();
 
-        //if (cc != null) cc.enabled = true;
-        //if (rb != null) rb.isKinematic = false;
-
-        //lastPosition = spawnPoint.position;
-        //lastRotation = spawnPoint.rotation;
 
         // reset
-        isGreenLight = true;
+
+        //isGreenLight = true;
+        currentState = GameState.Green;
         timer = 3f;
         UpdateCubeColor();
 
 
-        lastHeadPos = headTransform.position;
-        lastHeadRot = headTransform.rotation;
+        UpdateTrackingData();
 
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
