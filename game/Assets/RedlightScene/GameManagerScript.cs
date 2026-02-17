@@ -2,8 +2,8 @@ using TMPro;
 using UnityEngine;
 //using UnityEngine.InputSystem;
 //using UnityEngine.SceneManagement;
-//using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
+using UnityEngine.XR.Interaction.Toolkit;
+using System.Collections;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -20,9 +20,9 @@ public class GameManagerScript : MonoBehaviour
 
 
     [Header("Detection Thresholds")]
-    public float velocityThreshold = 1f; // head/hands
+    private float velocityThreshold = 1.0f; // head/hands
     //public float velocityThreshold = 0.15f; // head/hands
-    public float angularVelocityThreshold = 2.0f; // head turning
+    private float angularVelocityThreshold = 1.0f; // head turning
 
     [Header("References")]
     public Renderer cubeRenderer;
@@ -33,12 +33,10 @@ public class GameManagerScript : MonoBehaviour
     public Transform spawnPoint;
 
 
-    //[Header("Controllers")]
-    //public InputActionReference leftHandVelocity;  
-    //public InputActionReference rightHandVelocity;
-
-
-    //public TeleportationProvider teleportationProvider;
+    [Header("Jumpscare References")]
+    public GameObject jumpscareUI;    // Canvas/Image here
+    public AudioSource scareAudio;    // AudioSource here
+    public float scareDuration = 1.0f;
 
 
 
@@ -50,12 +48,15 @@ public class GameManagerScript : MonoBehaviour
     private Vector3 lastRightHandPos;
 
 
+    private bool Jumpscaring = false;
+
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        ResetPlayer();
+        //ResetPlayer();
 
         //lastPosition = playerTransform.position;
         //lastRotation = playerTransform.rotation;
@@ -146,8 +147,30 @@ public class GameManagerScript : MonoBehaviour
             bodySpeed > 0.1f)
         {
             Debug.Log("ELIMINATED: Motion detected!");
-            ResetPlayer();
+            if (Jumpscaring == false) StartCoroutine(JumpscareThenReset());
         }
+    }
+
+    IEnumerator JumpscareThenReset()
+    {
+
+        Jumpscaring = true;
+
+        jumpscareUI.SetActive(true);
+        scareAudio.Play();
+
+        
+        yield return new WaitForSeconds(scareDuration);
+
+        
+        jumpscareUI.SetActive(false);
+
+
+
+
+        ResetPlayer();
+        Jumpscaring = false;
+
     }
 
     public void SetPlayerInZone(bool inside)
