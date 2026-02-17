@@ -1,9 +1,9 @@
-using OVR;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.XR.Interaction.Toolkit;
+//using UnityEngine.InputSystem;
+//using UnityEngine.SceneManagement;
+//using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -16,29 +16,34 @@ public class GameManagerScript : MonoBehaviour
 
 
     [Header("Detection Thresholds")]
-    public float velocityThreshold = 0.15f; // head/hands
-    public float angularVelocityThreshold = 1.0f; // head turning
+    public float velocityThreshold = 1f; // head/hands
+    //public float velocityThreshold = 0.15f; // head/hands
+    public float angularVelocityThreshold = 2.0f; // head turning
 
     [Header("References")]
     public Renderer cubeRenderer;
     public Transform playerTransform; // XR Origin
     public Transform headTransform;   // Main camera
+    public Transform leftHandTransform;  // Left Controller 
+    public Transform rightHandTransform; // Right Controller
     public Transform spawnPoint;
 
 
-    [Header("Controllers")]
-    public InputActionReference leftHandVelocity;  
-    public InputActionReference rightHandVelocity;
+    //[Header("Controllers")]
+    //public InputActionReference leftHandVelocity;  
+    //public InputActionReference rightHandVelocity;
+
+
+    //public TeleportationProvider teleportationProvider;
 
 
 
 
-
-    //private Vector3 lastPosition;
-    //private Quaternion lastRotation;
 
     private Vector3 lastHeadPos;
     private Quaternion lastHeadRot;
+    private Vector3 lastLeftHandPos;
+    private Vector3 lastRightHandPos;
 
 
 
@@ -52,33 +57,37 @@ public class GameManagerScript : MonoBehaviour
         //lastRotation = playerTransform.rotation;
 
         //UpdateCubeColor();
+
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (!isInsideGameBox) return;    // only if inside the box, start the game logic
+        if (isInsideGameBox)
+        {    // only if inside the box, start the game logic
 
 
-        timer -= Time.deltaTime;
+            timer -= Time.deltaTime;
 
-        if (timer <= 0)
-        {
-            isGreenLight = !isGreenLight;
-            timer = Random.Range(2f, 5f);
-            UpdateCubeColor();
+            if (timer <= 0)
+            {
+                isGreenLight = !isGreenLight;
+                timer = Random.Range(2f, 5f);
+                UpdateCubeColor();
+            }
+
+
+            if (!isGreenLight)
+            {
+                DetectMovement();
+            }
+
         }
-
-           
-        if (!isGreenLight)
-        {
-            DetectMovement();
-        }
-
-
         lastHeadPos = headTransform.position;
         lastHeadRot = headTransform.rotation;
+        lastLeftHandPos = leftHandTransform.position;
+        lastRightHandPos = rightHandTransform.position;
 
 
     }
@@ -87,8 +96,13 @@ public class GameManagerScript : MonoBehaviour
     void DetectMovement()
     {
         // Controllers
-        Vector3 leftVel = leftHandVelocity.action.ReadValue<Vector3>();
-        Vector3 rightVel = rightHandVelocity.action.ReadValue<Vector3>();
+        // 1. Hand Velocities (Calculated by position differences)
+        //float leftHandSpeed = 0f;
+        //float rightHandSpeed = 0f;
+
+        float leftHandSpeed = ((leftHandTransform.position - lastLeftHandPos) / Time.deltaTime).magnitude;
+
+        float rightHandSpeed = ((rightHandTransform.position - lastRightHandPos) / Time.deltaTime).magnitude;
 
         // Head
         Vector3 headLinearVel = (headTransform.position - lastHeadPos) / Time.deltaTime;
@@ -100,8 +114,8 @@ public class GameManagerScript : MonoBehaviour
         float bodySpeed = cc.velocity.magnitude;
 
         // Detection Logic
-        if (leftVel.magnitude > velocityThreshold ||
-            rightVel.magnitude > velocityThreshold ||
+        if (leftHandSpeed > velocityThreshold ||
+            rightHandSpeed > velocityThreshold ||
             headLinearVel.magnitude > velocityThreshold ||
             headAngularVel > angularVelocityThreshold ||
             bodySpeed > 0.1f)
@@ -141,14 +155,33 @@ public class GameManagerScript : MonoBehaviour
     {
         // Moves player to spawn point and resets rotation, disables controllers for teleport
 
-        CharacterController cc = playerTransform.GetComponent<CharacterController>();
+        //CharacterController cc = playerTransform.GetComponent<CharacterController>();
+        //Rigidbody rb = playerTransform.GetComponentInChildren<Rigidbody>();
 
-        if (cc != null) cc.enabled = false;
+        //if (cc != null) cc.enabled = false;
+        //if (rb != null) rb.isKinematic = true;
+
+
+
+
+        //TeleportRequest request = new TeleportRequest
+        //{
+        //    destinationPosition = spawnPoint.position,
+        //    destinationRotation = spawnPoint.rotation,
+        //    matchOrientation = MatchOrientation.WorldSpaceUp
+        //};
+
+        //// Execute the teleport
+        //teleportationProvider.QueueTeleportRequest(request);
+
+
 
         playerTransform.position = spawnPoint.position;
         playerTransform.rotation = spawnPoint.rotation;
+        Physics.SyncTransforms();
 
-        if (cc != null) cc.enabled = true;
+        //if (cc != null) cc.enabled = true;
+        //if (rb != null) rb.isKinematic = false;
 
         //lastPosition = spawnPoint.position;
         //lastRotation = spawnPoint.rotation;
@@ -161,6 +194,8 @@ public class GameManagerScript : MonoBehaviour
 
         lastHeadPos = headTransform.position;
         lastHeadRot = headTransform.rotation;
+
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
 
     }
