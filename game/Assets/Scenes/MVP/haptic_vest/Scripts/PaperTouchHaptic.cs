@@ -5,6 +5,7 @@ using Bhaptics.SDK2;
 public class PaperTouchHaptic : MonoBehaviour
 {
     [Header("Haptic Events")]
+    [SerializeField] AudioSource pianoScare;
     [SerializeField] private string heartbeatEvent = "hearthump";
     [SerializeField] private string jumpscareEvent = "jumpscare-back";
 
@@ -136,6 +137,7 @@ public class PaperTouchHaptic : MonoBehaviour
         lookDir.y = 0f;
         if (lookDir.sqrMagnitude > 0.0001f)
             monster.transform.rotation = Quaternion.LookRotation(lookDir);
+        pianoScare.Play();
     }
 
 

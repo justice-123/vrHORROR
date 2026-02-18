@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:game/Assets/Resources/InputActions.asset.meta
-guid: 8d2efb377c44b51449cea207dbe45cdd
-========
-guid: 5f8d4129f56ed6d419dd8c71c5d37721
->>>>>>>> dev:game/Assets/Resources/MetaXRAcousticMaterialMapping.asset.meta
+guid: 36acb4ca335ab73469283879c202cbe6
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000

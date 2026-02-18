@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:game/Assets/Oculus/OculusProjectConfig.asset.meta
-guid: 8315793e13f2e644b96c5cc92441e538
-========
-guid: 11625212933232143912a0f606fc55b0
->>>>>>>> dev:game/Assets/Resources/ImmersiveDebuggerSettings.asset.meta
+guid: a3251381275f965429a7a4e5c55cec2e
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
