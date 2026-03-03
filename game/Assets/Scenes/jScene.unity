@@ -2276,7 +2276,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1703456524548354351, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.9095209
+      value: -3.701
       objectReference: {fileID: 0}
     - target: {fileID: 1703456524548354351, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2284,7 +2284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1703456524548354351, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.43063
+      value: -11.16
       objectReference: {fileID: 0}
     - target: {fileID: 1703456524548354351, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2321,6 +2321,10 @@ PrefabInstance:
     - target: {fileID: 5587223999325945607, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_Name
       value: VR Rig
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587223999325945607, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6058114943132816637, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_InteractionManager
@@ -2406,7 +2410,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -65173,7 +65177,7 @@ Transform:
   m_GameObject: {fileID: 453681703}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.135, y: 1.143, z: -7.15}
+  m_LocalPosition: {x: -5.135, y: 1.143, z: -17.684}
   m_LocalScale: {x: 5.785959, y: 0.24568057, z: 0.22210401}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -65192,6 +65196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: haptic_vest
+  playerRoot: {fileID: 738062911}
 --- !u!54 &453681709
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -212165,23 +212170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb9b0d187fbc7c4c9a0f771d0edd215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deviceName: 
-  clipLengthSec: 1
-  fftSize: 1024
-  window: 5
-  lowMinHz: 100
-  lowMaxHz: 800
-  midMinHz: 800
-  midMaxHz: 3000
-  baselineBreathiness: 0.8
-  loudBreathiness: 2
-  smoothSpeed: 2
-  eventThreshold01: 0.55
-  minBreathInterval: 0.8
-  maxBreathInterval: 10
-  breathNoise01: 0
-  breathinessRaw: 0
-  breathsPerMinute: 0
 --- !u!4 &1508152870
 Transform:
   m_ObjectHideFlags: 0
@@ -212306,23 +212294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb9b0d187fbc7c4c9a0f771d0edd215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deviceName: 
-  clipLengthSec: 1
-  fftSize: 1024
-  window: 5
-  lowMinHz: 100
-  lowMaxHz: 800
-  midMinHz: 800
-  midMaxHz: 3000
-  baselineBreathiness: 0.8
-  loudBreathiness: 2
-  smoothSpeed: 2
-  eventThreshold01: 0.55
-  minBreathInterval: 0.8
-  maxBreathInterval: 10
-  breathNoise01: 0
-  breathinessRaw: 0
-  breathsPerMinute: 0
 --- !u!82 &1508152873
 AudioSource:
   m_ObjectHideFlags: 0
@@ -278574,36 +278545,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8602827069bbc48892c99bf33ea59e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mover: {fileID: 0}
-  minimumHandSpeed: 0.4
-  maximumHandSpeed: 2.5
-  minimumMoveSpeed: 0.2
-  maximumMoveSpeed: 1.3
-  minimumTurnDegree: 4
-  smoothing: 10
-  turnSmoothing: 10
-  smoothedSpeed: 0
-  smoothedRotR: 0
-  smoothedRotL: 0
-  lastPositionR: {x: 0, y: 0, z: 0}
-  lastPositionL: {x: 0, y: 0, z: 0}
-  previousPlanarVelocityR: {x: 0, y: 0, z: 0}
-  previousPlanarVelocityL: {x: 0, y: 0, z: 0}
-  rightHandTransform: {fileID: 0}
-  leftHandTransform: {fileID: 0}
-  head: {fileID: 0}
-  rightHandNode: 5
-  leftHandNode: 4
-  circleBuildRate: 6
-  circleDecayRate: 3
-  circleThreshold: 0.45
-  circleScoreR: 0
-  circleScoreL: 0
-  directionalConsistencyR: 0
-  directionalConsistencyL: 0
-  directionalConsistencyThreshold: 0.45
-  lockedDirectionR: 0
-  lockedDirectionL: 0
 --- !u!1001 &1979327368
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -283223,21 +283164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4c26d4070cb59498e3725efeb76fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spikeDetector: {fileID: 2016603183}
-  panicVolume: {fileID: 243854021}
-  breathInput: {fileID: 2016603180}
-  panic01: 0
-  spikeAdd: 0.35
-  extraFromDelta: 1200
-  panicWindowSeconds: 1.5
-  windowDecayPerSecond: 0.05
-  baseDecayPerSecond: 0.25
-  calmDecayPerSecond: 0.8
-  calmBreathThreshold01: 0.18
-  calmGraceSeconds: 0.25
-  panicWindowTimer: 0
-  calmTimer: 0
-  isCalming: 0
 --- !u!114 &2016603183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283250,15 +283176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ec63af46abd1a43bf203f0af9edd32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deviceName: 
-  sampleRate: 48000
-  clipLengthSec: 1
-  windowSamples: 1024
-  minRms: 0.00025
-  spikeDeltaThreshold: 0.00035
-  cooldown: 0.6
-  rms: 0
-  delta: 0
 --- !u!1001 &2016923663
 PrefabInstance:
   m_ObjectHideFlags: 0

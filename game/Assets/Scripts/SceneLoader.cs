@@ -4,12 +4,17 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     public string SceneName = "haptic_vest";
+    public Transform playerRoot;  
+    bool loading;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (loading) return;
+
+        if (other.transform.root == playerRoot)
         {
-            SceneManager.LoadScene(SceneName, LoadSceneMode.Additive);
+            loading = true;
+            SceneManager.LoadSceneAsync(SceneName, LoadSceneMode.Additive);
         }
     }
 }

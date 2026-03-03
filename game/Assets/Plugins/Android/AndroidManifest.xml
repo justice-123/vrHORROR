@@ -14,5 +14,11 @@
     <meta-data android:name="com.oculus.telemetry.project_guid" android:value="0b326777-6a31-4beb-8508-555753a7a847" />
     <meta-data android:name="com.oculus.supportedDevices" android:value="quest2|questpro|quest3|quest3s" tools:replace="android:value" />
   </application>
+  <queries>
+    <package android:name="com.bhaptics.player" />
+</queries>
+<uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
   <uses-feature android:name="android.hardware.vr.headtracking" android:version="1" android:required="true" />
 </manifest>
