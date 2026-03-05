@@ -1,0 +1,453 @@
+Using pre-set license
+Built from '6000.0/respin/6000.0.59f1-063c55f2fd0f' branch; Version is '6000.0.59f2 (ef281c76c3c1) revision 15673372'; Using compiler version '193933523'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'zh' Physical Memory: 48232 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+Date: 2026-03-05T16:47:47Z
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.0.59f2\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+D:/TeamProject/Back_to_the_Feature/welcome-tutorial
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+59373
+-job-worker-count
+15
+-background-job-worker-count
+8
+-gc-helper-count
+1
+-name
+AssetImport
+Successfully changed project path to: D:/TeamProject/Back_to_the_Feature/welcome-tutorial
+D:/TeamProject/Back_to_the_Feature/welcome-tutorial
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [26672]  Target information:
+
+Player connection [26672]  * "[IP] 192.168.1.108 [Port] 0 [Flags] 2 [Guid] 2076262231 [EditorId] 2076262231 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-J95Q15J) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [26672] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [26672] Host joined alternative multi-casting on [225.0.0.222:34997]...
+JobSystem: Creating JobQueue using job-worker-count value 15
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Refreshing native plugins compatible for Editor in 11.08 ms, found 13 plugins.
+Unity memory allocator detected: MetaXRAudio native memory allocations will be tracked.
+Preloading 2 native plugins for Editor in 16.97 ms.
+Initialize engine version: 6000.0.59f2 (ef281c76c3c1)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.59f2/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/TeamProject/Back_to_the_Feature/welcome-tutorial/Assets
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 5090 (ID=0x2b85)
+    Vendor:   NVIDIA
+    VRAM:     32100 MB
+    Driver:   32.0.15.7688
+Shader 'Meta/MRUK/Scene/HighlightsAndShadows': fallback shader 'Off' not found
+Shader 'Oculus/OVRMRCameraFrameLit': fallback shader 'Alpha-Diffuse' not found
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.59f2/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.59f2/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.59f2/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56616
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.59f2/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.59f2/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Registered in 0.003891 seconds.
+- Loaded All Assemblies, in  0.366 seconds
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 2263 ms
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  2.559 seconds
+Domain Reload Profiling: 2922ms
+	BeginReloadAssembly (121ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (35ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (47ms)
+	LoadAllAssembliesAndSetupDomain (149ms)
+		LoadAssemblies (119ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (146ms)
+			TypeCache.Refresh (145ms)
+				TypeCache.ScanAssembly (133ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (2559ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2531ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (2359ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (42ms)
+			ProcessInitializeOnLoadAttributes (89ms)
+			ProcessInitializeOnLoadMethodAttributes (38ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Import Worker Mode flag is 0x00
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.497 seconds
+Script 'CharacterController' has the same name as built-in Unity component.
+AddComponent and GetComponent will not work with this script.
+'Packages/com.meta.xr.sdk.core/Editor/BuildingBlocks/BlocksWindow.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Packages/com.meta.xr.sdk.core/Editor/BuildingBlocks/BlocksWindowDetailsExtension.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Packages/com.meta.xr.sdk.core/Editor/BuildingBlocks/BlocksWindowCollectionsPageExtension.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+Refreshing native plugins compatible for Editor in 6.46 ms, found 13 plugins.
+Native extension for Android target not found
+Native extension for WindowsStandalone target not found
+Package Manager log level set to [2]
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Refreshing native plugins compatible for Editor in 6.09 ms, found 13 plugins.
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    29    0    29    0     0    180      0 --:--:-- --:--:-- --:--:--   180
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+- Finished resetting the current domain, in  0.882 seconds
+Domain Reload Profiling: 1376ms
+	BeginReloadAssembly (136ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (30ms)
+	RebuildCommonClasses (29ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (28ms)
+	LoadAllAssembliesAndSetupDomain (292ms)
+		LoadAssemblies (214ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (150ms)
+			TypeCache.Refresh (95ms)
+				TypeCache.ScanAssembly (80ms)
+			BuildScriptInfoCaches (36ms)
+			ResolveRequiredComponents (15ms)
+	FinalizeReload (883ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (776ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (10ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (87ms)
+			ProcessInitializeOnLoadAttributes (584ms)
+			ProcessInitializeOnLoadMethodAttributes (86ms)
+			AfterProcessingInitializeOnLoad (4ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+WARNING: Shader Unsupported: 'EnvironmentDepth/URP/OcclusionUnlit' - All subshaders removed
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+WARNING: Shader Unsupported: 'EnvironmentDepth/URP/OcclusionUnlit' - All subshaders removed
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+WARNING: Shader Unsupported: 'URP/UI/Prerendered Opaque' - All subshaders removed
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+WARNING: Shader Unsupported: 'URP/UI/Prerendered Opaque' - All subshaders removed
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+WARNING: Shader Unsupported: 'URP/UI/Prerendered' - All subshaders removed
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+WARNING: Shader Unsupported: 'URP/UI/Prerendered' - All subshaders removed
+WARNING: Shader Did you use #pragma only_renderers and omit this platform?
+WARNING: Shader If subshaders removal was intentional, you may have forgotten turning Fallback off?
+Shader 'Oculus/OVRMRCameraFrameLit': fallback shader 'Alpha-Diffuse' not found
+Shader 'Meta/MRUK/Scene/HighlightsAndShadows': fallback shader 'Off' not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Refreshing native plugins compatible for Editor in 11.71 ms, found 13 plugins.
+Preloading 2 native plugins for Editor in 1.03 ms.
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 4904 unused Assets / (1.8 MB). Loaded Objects now: 5505.
+Memory consumption went from 185.0 MB to 183.2 MB.
+Total: 13.194700 ms (FindLiveObjects: 0.804200 ms CreateObjectMapping: 0.191700 ms MarkObjects: 10.075600 ms  DeleteObjects: 2.120500 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 25836.493638 seconds.
+  path: Assets/Tutorial.mat
+  artifactKey: Guid(6869652d8fa304f469d7a3acf70d2b48) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tutorial.mat using Guid(6869652d8fa304f469d7a3acf70d2b48) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '83e7974d5ce2e6012684ecf4e5e7d204') in 0.1780213 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 13.310710 seconds.
+  path: Assets/Tutorial.mat
+  artifactKey: Guid(6869652d8fa304f469d7a3acf70d2b48) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tutorial.mat using Guid(6869652d8fa304f469d7a3acf70d2b48) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '10a4cc7d8181ae06ab24b5a205b47a50') in 0.011488 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.733883 seconds.
+  path: Assets/tutorialBackground.fbx
+  artifactKey: Guid(1e4451f76a33a724da7de5f0073cb6fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/tutorialBackground.fbx using Guid(1e4451f76a33a724da7de5f0073cb6fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c2820fc73fbec04fcafd0f457e94b499') in 0.0430089 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 8
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.993010 seconds.
+  path: Assets/tutorialBackground.fbx
+  artifactKey: Guid(1e4451f76a33a724da7de5f0073cb6fe) Importer(2089858483,192608db42251d675da83286b1cce702)
+Start importing Assets/tutorialBackground.fbx using Guid(1e4451f76a33a724da7de5f0073cb6fe) Importer(2089858483,192608db42251d675da83286b1cce702) (ScriptedImporter) -> (artifact id: '3c3eddf8e9191663bc6087a3514912ba') in 0.1157 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 8
+
+========================================================================
+Received Import Request.
+  Time since last request: 489.463242 seconds.
+  path: Assets/tutorialBackground.fbx
+  artifactKey: Guid(1e4451f76a33a724da7de5f0073cb6fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/tutorialBackground.fbx using Guid(1e4451f76a33a724da7de5f0073cb6fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '71f40d3012b35048ced47d9ec76b69e6') in 0.0187273 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 8
+
+========================================================================
+Received Import Request.
+  Time since last request: 89.750562 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Surgery/Pills_01.fbx
+  artifactKey: Guid(ced423c2d2500a24592d9ff1e48968d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Surgery/Pills_01.fbx using Guid(ced423c2d2500a24592d9ff1e48968d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2f57f3a959d6ea30350cd4388cc2a10a') in 0.3991699 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 25
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Pipes_Wires/Pipes_04.fbx
+  artifactKey: Guid(8db2e5cb1b588af478018189c35a94fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Pipes_Wires/Pipes_04.fbx using Guid(8db2e5cb1b588af478018189c35a94fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'cc687173fb683dfaf6c561d583583e49') in 0.0898109 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 25
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Pipes_Wires/Pipes_02.fbx
+  artifactKey: Guid(21e371ae317edcb4e9aa99ff49e5c105) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Pipes_Wires/Pipes_02.fbx using Guid(21e371ae317edcb4e9aa99ff49e5c105) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ec39030b37655b2669da3e75d2a54b1f') in 0.0789824 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 25
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.192177 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Corridor/Trash_01.fbx
+  artifactKey: Guid(0278066ae1c2b3b4b9d18ea5c168c383) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Corridor/Trash_01.fbx using Guid(0278066ae1c2b3b4b9d18ea5c168c383) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ee7feaa8b556e234e92786c5bb48586f') in 0.0597374 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 19
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Corridor/Ventilation_System_03.fbx
+  artifactKey: Guid(1128867978c60d2439cc714d983587c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Corridor/Ventilation_System_03.fbx using Guid(1128867978c60d2439cc714d983587c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e5f9001bf5cad739985cd5a35f47e0b4') in 0.1030031 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 14
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Directors_Office/Curtain_02.fbx
+  artifactKey: Guid(77293318aa8e1bd419b5599d1649d9fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Directors_Office/Curtain_02.fbx using Guid(77293318aa8e1bd419b5599d1649d9fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '576c4b331e58331781430d1cd894de61') in 0.1104606 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 26
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Corridor/Ventilation_System_07.fbx
+  artifactKey: Guid(b9ec7e863813596409df54552a8e8a39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Corridor/Ventilation_System_07.fbx using Guid(b9ec7e863813596409df54552a8e8a39) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ccde13986ecd0e017f770d7d53d71faa') in 0.0506593 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 14
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Vegetation/Stump.fbx
+  artifactKey: Guid(2f1b79c61c4fdcb48ba5195d4c160c37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Vegetation/Stump.fbx using Guid(2f1b79c61c4fdcb48ba5195d4c160c37) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8d5faa4e99c259adbb96970e5de5fb11') in 0.119019 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 25
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.805026 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Directors_Office/Ashtray.fbx
+  artifactKey: Guid(fd092b5762f589b42a2979faa89f7afb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Directors_Office/Ashtray.fbx using Guid(fd092b5762f589b42a2979faa89f7afb) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7dc9dce68667e5984c655f0ed8e2ffb7') in 0.1912261 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 26
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Directors_Office/Bedside_Table.fbx
+  artifactKey: Guid(c0643c3b0a91300418333a89a0cdb17d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Props/Directors_Office/Bedside_Table.fbx using Guid(c0643c3b0a91300418333a89a0cdb17d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '52bc70f943d407a1e85d23ca14c91533') in 0.1327066 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 25
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Exterior/Brick_Trash_02.fbx
+  artifactKey: Guid(75127557322f16d42829e99c86d54bd4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Exterior/Brick_Trash_02.fbx using Guid(75127557322f16d42829e99c86d54bd4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd963de95e556637afdc8708b76e59ec1') in 0.0897177 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 25
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.255399 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Modules/Ashlar_Corner.fbx
+  artifactKey: Guid(f3adaaa9a28188645bc23ff08db92e31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Modules/Ashlar_Corner.fbx using Guid(f3adaaa9a28188645bc23ff08db92e31) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8e753680b6e2799282c6ff4eb507df64') in 0.0687277 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 14
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Abandoned_Psychiatric_Hospitals/Models/Vegetation/Aspen_02.fbx
+  artifactKey: Guid(a9c21e64b29514542aaa4e24adf291d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Abandoned_Psychiatric_Hospitals/Models/Vegetation/Aspen_02.fbx using Guid(a9c21e64b29514542aaa4e24adf291d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'da4dfe8ca6bd2c16a7f9cf84bd823d61') in 0.7487648 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 41
+
+========================================================================
+Received Import Request.
+  Time since last request: 1686.116396 seconds.
+  path: Assets/c00b1d9dac28cec95688e3a1a92e42b6.png
+  artifactKey: Guid(b524ca0eb4edd3a4988861d2269b59a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/c00b1d9dac28cec95688e3a1a92e42b6.png using Guid(b524ca0eb4edd3a4988861d2269b59a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9611b9997837d6a2d10b344df65c2ebc') in 0.0656555 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.930522 seconds.
+  path: Assets/c00b1d9dac28cec95688e3a1a92e42b6.png
+  artifactKey: Guid(b524ca0eb4edd3a4988861d2269b59a3) Importer(2089858483,192608db42251d675da83286b1cce702)
+Start importing Assets/c00b1d9dac28cec95688e3a1a92e42b6.png using Guid(b524ca0eb4edd3a4988861d2269b59a3) Importer(2089858483,192608db42251d675da83286b1cce702) (ScriptedImporter) -> (artifact id: '5dec2eaf4a3a5bfa1aee0c8c7af95366') in 0.0346312 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 234.187598 seconds.
+  path: Assets/c00b1d9dac28cec95688e3a1a92e42b6.png
+  artifactKey: Guid(b524ca0eb4edd3a4988861d2269b59a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/c00b1d9dac28cec95688e3a1a92e42b6.png using Guid(b524ca0eb4edd3a4988861d2269b59a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '113cd9a1c4e4e121832bd86f0fc6946b') in 0.0539184 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 59.358825 seconds.
+  path: Assets/New Material.mat
+  artifactKey: Guid(2b72d394e9e266c4885bd4ec3a8f3516) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/New Material.mat using Guid(2b72d394e9e266c4885bd4ec3a8f3516) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8afb744b93dd1216525b75e756272968') in 0.0127772 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.013870 seconds.
+  path: Assets/New Material.mat
+  artifactKey: Guid(2b72d394e9e266c4885bd4ec3a8f3516) Importer(2089858483,192608db42251d675da83286b1cce702)
+Start importing Assets/New Material.mat using Guid(2b72d394e9e266c4885bd4ec3a8f3516) Importer(2089858483,192608db42251d675da83286b1cce702) (ScriptedImporter) -> (artifact id: 'bd364c5f9ff2ecccba2bab8e199bab29') in 0.0105817 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.308353 seconds.
+  path: Assets/Horror.mat
+  artifactKey: Guid(2b72d394e9e266c4885bd4ec3a8f3516) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Horror.mat using Guid(2b72d394e9e266c4885bd4ec3a8f3516) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2a31a131c15032daeb72d42a2d6956b5') in 0.0112613 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.034399 seconds.
+  path: Assets/Horror.mat
+  artifactKey: Guid(2b72d394e9e266c4885bd4ec3a8f3516) Importer(2089858483,192608db42251d675da83286b1cce702)
+Start importing Assets/Horror.mat using Guid(2b72d394e9e266c4885bd4ec3a8f3516) Importer(2089858483,192608db42251d675da83286b1cce702) (ScriptedImporter) -> (artifact id: '58de1e39692b778156916ba6c8bbe03f') in 0.0158806 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 49.135870 seconds.
+  path: Assets/Tutorial.mat
+  artifactKey: Guid(6869652d8fa304f469d7a3acf70d2b48) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tutorial.mat using Guid(6869652d8fa304f469d7a3acf70d2b48) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '0897793a8e2491e6087211c52ca2d58f') in 0.0119227 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.940129 seconds.
+  path: Assets/Tutorial.mat
+  artifactKey: Guid(6869652d8fa304f469d7a3acf70d2b48) Importer(2089858483,192608db42251d675da83286b1cce702)
+Start importing Assets/Tutorial.mat using Guid(6869652d8fa304f469d7a3acf70d2b48) Importer(2089858483,192608db42251d675da83286b1cce702) (ScriptedImporter) -> (artifact id: '7249a1b1dc1d9ec69e1b1a0170954115') in 0.0106903 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
