@@ -63154,7 +63154,8 @@ Transform:
   m_LocalPosition: {x: -2.087, y: 3.043, z: -20.164}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 988056573}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &438623024
@@ -138944,12 +138945,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 988056571}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.580194, y: -0.92045903, z: -1.144064}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -9.509968, y: -1.9817295, z: -5.7465987}
+  m_LocalScale: {x: 0.49999988, y: 0.5, z: 0.49999988}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 438260960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &988056574
 MonoBehaviour:
@@ -283794,7 +283795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deviceName: 
   sampleRate: 48000
-  modelAsset: {fileID: 5022602860645237092, guid: 2593665cdd3dd9146acb9d38cf66042a, type: 3}
+  modelAsset: {fileID: 0}
   backend: 512
   clipDuration: 0.5
   classifyInterval: 0.25
@@ -283802,7 +283803,7 @@ MonoBehaviour:
   nFft: 2048
   hopLength: 512
   expectedTimeFrames: 47
-  confidenceThreshold: 0.5
+  confidenceThreshold: 1
   smoothSpeed: 8
   detectedClass: none
   inhaleConfidence: 0
@@ -308957,7 +308958,6 @@ SceneRoots:
   - {fileID: 1252447611}
   - {fileID: 904318941}
   - {fileID: 438260960}
-  - {fileID: 988056573}
   - {fileID: 2016603181}
   - {fileID: 7137050164142577659}
   - {fileID: 404771106}
