@@ -3,7 +3,7 @@ using UnityEngine;
 public class MonsterHearing : MonoBehaviour
 {
     [Header("Input")]
-    public BreathInput breath;
+    public BreathInputML breath;
     public Transform player;
 
     [Header("Hearing")]
@@ -52,19 +52,14 @@ public class MonsterHearing : MonoBehaviour
         // Use the new spectral-analysis outputs from BreathInput
         bool breathDetected = breath.isBreathing;
         float intensity = breath.breathIntensity01;
-        float bpm = breath.breathsPerMinute;
 
         bool heard = inRange && breathDetected && intensity >= intensityThreshold;
         isHearing = heard;
 
         if (heard)
         {
-            // Panic multiplier - fast breathing makes the monster notice faster
-            float panicMult = 1f;
-            if (bpm > panicBpmThreshold)
-                panicMult = panicGainMultiplier;
-
-            suspicion += intensity * distFactor * panicMult * gainPerSecond * Time.deltaTime;
+  
+            suspicion += intensity * distFactor * gainPerSecond * Time.deltaTime;
         }
         else
         {
