@@ -68,7 +68,7 @@ public class forwardMotion : MonoBehaviour
         else
         {
             // The player only goes forward in the direction of the chair
-            Vector3 chairDirection = controller.forward;
+            Vector3 chairDirection = controller.wheelchairModel.forward;
 
             // Get each hand's velocity (basically distance / time)
             Vector3 rightHandVelocity = (rightHandTransform.position - lastPositionR) / Mathf.Max(Time.deltaTime, 0.0001f);
@@ -83,8 +83,20 @@ public class forwardMotion : MonoBehaviour
             // This will punish the player for trying to move fast with one arm only
             float moveSpeedMultiplier = 2 * Mathf.Min(rightHandProjection, leftHandProjection);
 
-            float t = Mathf.InverseLerp(minimumHandMultiplier, maximumHandMuliplier, moveSpeedMultiplier);
-            float targetSpeed = Mathf.Lerp(minimumMoveSpeed, maximumMoveSpeed, t);
+            float targetSpeed;
+
+            if (moveSpeedMultiplier >= 0)
+            {
+                float t = Mathf.InverseLerp(minimumHandMultiplier, maximumHandMuliplier, moveSpeedMultiplier);
+                targetSpeed = Mathf.Lerp(minimumMoveSpeed, maximumMoveSpeed, t);
+            }
+
+            else
+            {
+                float t = Mathf.InverseLerp(-minimumHandMultiplier, -maximumHandMuliplier, moveSpeedMultiplier);
+                targetSpeed = Mathf.Lerp(-minimumMoveSpeed, -maximumMoveSpeed, t);
+            }
+
 
             // the largest objective speed gets smoothed with the speed in the previous update
             smoothedSpeed = Mathf.Lerp(smoothedSpeed, targetSpeed, 1f - Mathf.Exp(-smoothing * Time.deltaTime));

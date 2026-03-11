@@ -162,7 +162,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 2113836556}
   currentSpeed: 0
-  forward: {x: 0, y: 0, z: 0}
+  rotationSpeed: 0
+  wheelchairModel: {fileID: 0}
 --- !u!1001 &184828862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -225,6 +226,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7782734979979046067, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082104776597185065, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082104776597185065, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082104776597185065, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
