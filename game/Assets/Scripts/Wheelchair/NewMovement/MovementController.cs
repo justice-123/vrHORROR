@@ -27,11 +27,12 @@ public class MovementController : MonoBehaviour
 
         Vector3 movement = forward * currentSpeed;
         characterController.Move(movement * Time.deltaTime);
-
-        wheelchairModel.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-
-        head.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-
         
+    }
+
+    public void RotatePlayer(float degrees)
+    {
+        transform.RotateAround(head.position, Vector3.up, degrees);
+        wheelchairModel.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
     }
 }

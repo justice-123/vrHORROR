@@ -29,16 +29,23 @@ public class forwardMotion : MonoBehaviour
     public float minimumMoveSpeed = 0.2f;
     public float maximumMoveSpeed = 1.3f;
 
+    float pushStrength = 3f;
+    public float chairVelocity;
+    float pushDeadzone = 0.15f;
+
+    public float turnStrength = 60f;
+    float turnDeadzone = 0.2f;
+    
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Initialise last positions as the current position
-        lastPositionR = rightHandTransform.position;
-        lastPositionL = leftHandTransform.position;
+        
         // Initialise hands 
         rightHand = InputDevices.GetDeviceAtXRNode(rightHandNode);
         leftHand = InputDevices.GetDeviceAtXRNode(leftHandNode);
+        chairVelocity = 0f;
     }
 
     // Update is called once per frame
@@ -60,8 +67,8 @@ public class forwardMotion : MonoBehaviour
         // Only execute the move update if both grip buttons are held
         if (!(rightGripPressed && leftGripPressed))
         {
-            smoothedSpeed = Mathf.Lerp(smoothedSpeed, 0f, 1f - Mathf.Exp(-smoothing * Time.deltaTime));
-            if (controller != null) controller.currentSpeed = smoothedSpeed;
+            chairVelocity *= 0.96f;
+            controller.currentSpeed = chairVelocity;
             return;
         }
 
@@ -69,40 +76,48 @@ public class forwardMotion : MonoBehaviour
         {
             // The player only goes forward in the direction of the chair
             Vector3 chairDirection = controller.wheelchairModel.forward;
+            Debug.Log(chairDirection);
+            chairDirection.y = 0f;
+            chairDirection.Normalize();
 
-            // Get each hand's velocity (basically distance / time)
-            Vector3 rightHandVelocity = (rightHandTransform.position - lastPositionR) / Mathf.Max(Time.deltaTime, 0.0001f);
-            Vector3 leftHandVelocity = (leftHandTransform.position - lastPositionL) / Mathf.Max(Time.deltaTime, 0.0001f);
+            // Get each hand's velocity
+            rightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.deviceVelocity, out Vector3 rightHandVelocity);
+            leftHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.deviceVelocity, out Vector3 leftHandVelocity);
+
+            rightHandVelocity.y = 0f;
+            leftHandVelocity.y = 0f;
+
+            //Potentially holdm a rotation matrix???
+
+            //Vector3 rightLocalVelocity = controller.wheelchairModel.InverseTransformDirection(rightHandVelocity);
+            //Vector3 leftLocalVelocity = controller.wheelchairModel.InverseTransformDirection(leftHandVelocity);
 
             // I project the direction of the hand movement onto the direction the chair is facing
             // This should reward the player for pushing in the direction they're facing, and punish them for not
-            float rightHandProjection = Vector3.Dot(rightHandVelocity, chairDirection);
-            float leftHandProjection = Vector3.Dot(leftHandVelocity, chairDirection);
+            float rightHandImpulse = Vector3.Dot(rightHandVelocity, chairDirection);
+            float leftHandImpulse = Vector3.Dot(leftHandVelocity, chairDirection);
+            
 
-            // The scalar multiplier for movement speed doubles the minimum hand speed
-            // This will punish the player for trying to move fast with one arm only
-            float moveSpeedMultiplier = 2 * Mathf.Min(rightHandProjection, leftHandProjection);
+            if (rightHandImpulse < pushDeadzone) rightHandImpulse = 0f;
+            if (leftHandImpulse < pushDeadzone) leftHandImpulse = 0f;
 
-            float targetSpeed;
+            float forwardImpulse = 2 * Mathf.Min(rightHandImpulse, leftHandImpulse);
 
-            if (moveSpeedMultiplier >= 0)
-            {
-                float t = Mathf.InverseLerp(minimumHandMultiplier, maximumHandMuliplier, moveSpeedMultiplier);
-                targetSpeed = Mathf.Lerp(minimumMoveSpeed, maximumMoveSpeed, t);
-            }
+            float turnImpulse = rightHandImpulse - leftHandImpulse;
+            Debug.Log("turn impulse:" + turnImpulse);
+            if (Mathf.Abs(turnImpulse) < turnDeadzone) turnImpulse = 0f;
 
-            else
-            {
-                float t = Mathf.InverseLerp(-minimumHandMultiplier, -maximumHandMuliplier, moveSpeedMultiplier);
-                targetSpeed = Mathf.Lerp(-minimumMoveSpeed, -maximumMoveSpeed, t);
-            }
+            chairVelocity += forwardImpulse * pushStrength * Time.deltaTime;
 
+            float rotation = turnImpulse * turnStrength * Time.deltaTime;
+            Debug.Log(rotation);
+            
 
-            // the largest objective speed gets smoothed with the speed in the previous update
-            smoothedSpeed = Mathf.Lerp(smoothedSpeed, targetSpeed, 1f - Mathf.Exp(-smoothing * Time.deltaTime));
+            chairVelocity *= 0.96f;
+            chairVelocity = Mathf.Clamp(chairVelocity, 0, maximumMoveSpeed);
+            controller.currentSpeed = chairVelocity;
 
-            // updates the movement controller's speed
-            if (controller != null) controller.currentSpeed = smoothedSpeed;
+            controller.RotatePlayer(rotation);
         }
 
     }
