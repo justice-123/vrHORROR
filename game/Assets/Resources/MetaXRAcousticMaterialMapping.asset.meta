@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Resources/MetaXRAcousticMaterialMapping.asset.meta
 guid: 18a90b1a21969ee4290d808f1adb931b
+========
+guid: 8a72b16412872db48839282e6048c12f
+>>>>>>>> 55f1bb95b87b816d2067ea346ab04832189acc0c:game/Library/PackageCache/com.meta.xr.mrutilitykit@13793f91651b/Editor/BuildingBlocks/AnchorPrefabSpawner/AnchorPrefabSpawnerInstallationRoutine.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
