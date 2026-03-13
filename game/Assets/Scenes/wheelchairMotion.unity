@@ -119,75 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &125945222 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5587223999325945607, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-  m_PrefabInstance: {fileID: 184828862}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &125945231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125945222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43a035b0908090240a54431a6176c13b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 125945232}
-  rightHandTransform: {fileID: 1108456333}
-  leftHandTransform: {fileID: 661652934}
-  rightHandNode: 5
-  leftHandNode: 4
-  head: {fileID: 2113836556}
-  smoothedSpeed: 0
-  smoothing: 10
-  minimumHandMultiplier: 0.4
-  maximumHandMuliplier: 2.5
-  minimumMoveSpeed: 0.2
-  maximumMoveSpeed: 1.3
-  chairVelocity: 0
-  turnStrength: 120
---- !u!114 &125945232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125945222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a732db651256dd343b4dc100872da3a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  head: {fileID: 2113836556}
-  currentSpeed: 0
-  rotationSpeed: 0
-  wheelchairModel: {fileID: 1519650697}
---- !u!114 &125945239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125945222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 147b83e1efa969c44ac5f9e9cb98dc97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 125945232}
-  rightHandTransform: {fileID: 1108456333}
-  leftHandTransform: {fileID: 661652934}
-  rightHandNode: 5
-  leftHandNode: 4
-  head: {fileID: 2113836556}
-  minimumHandMultiplier: 0.4
-  maximumHandMultiplier: 2.5
-  minimumRotationSpeed: 0.2
-  maximumRotationSpeed: 1.3
 --- !u!1001 &184828862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -240,46 +171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VR Rig
       objectReference: {fileID: 0}
-    - target: {fileID: 7039380416166734118, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-      propertyPath: mover
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7039380416166734118, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7782734979979046067, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8082104776597185065, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8082104776597185065, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8082104776597185065, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7039380416166734118, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-    - {fileID: 1044759698199052767, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-    - {fileID: 7782734979979046067, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5587223999325945607, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 125945232}
-    - targetCorrespondingSourceObject: {fileID: 5587223999325945607, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 125945231}
-    - targetCorrespondingSourceObject: {fileID: 5587223999325945607, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 125945239}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
 --- !u!1 &203844586
 GameObject:
@@ -516,16 +411,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f1b79c61c4fdcb48ba5195d4c160c37, type: 3}
---- !u!4 &661652934 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 290244927430717298, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-  m_PrefabInstance: {fileID: 184828862}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1108456333 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3739975192294917338, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-  m_PrefabInstance: {fileID: 184828862}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1296581641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -640,11 +525,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7c4e28f3091e4045a3cdba19d673ce9, type: 3}
---- !u!4 &1519650697 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8082104776597185065, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-  m_PrefabInstance: {fileID: 184828862}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1858017401
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,11 +634,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &2113836556 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6280090011958278503, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
-  m_PrefabInstance: {fileID: 184828862}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -9,12 +9,15 @@ public class MovementController : MonoBehaviour
 
     CharacterController characterController;
 
+    public Vector3 initialForward;
+
     public Transform wheelchairModel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        initialForward = wheelchairModel.forward;
     }
 
     // Update is called once per frame
