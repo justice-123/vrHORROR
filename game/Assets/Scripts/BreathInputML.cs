@@ -38,12 +38,12 @@ public class BreathInputML : MonoBehaviour
     public int nFft = 2048;
     public int hopLength = 512;
     [Tooltip("Expected time frames from MFCC extraction (printed during training)")]
-    public int expectedTimeFrames = 43;
+    public int expectedTimeFrames = 47;
 
     [Header("Confidence")]
     [Tooltip("Minimum softmax probability to accept a classification")]
     [Range(0f, 1f)]
-    public float confidenceThreshold = 0.5f;
+    public float confidenceThreshold = 1f;
 
     [Header("Smoothing")]
     public float smoothSpeed = 8f;
@@ -176,33 +176,27 @@ public class BreathInputML : MonoBehaviour
         exhaleConfidence = expExhale / expSum;
         silenceConfidence = expSilence / expSum;
 
-        // Classify
-        float maxConf = Mathf.Max(inhaleConfidence,
-                        Mathf.Max(exhaleConfidence, silenceConfidence));
-
-        if (maxConf < confidenceThreshold)
-        {
-            detectedClass = "uncertain";
-            isBreathing = false;
-        }
-        else if (inhaleConfidence >= exhaleConfidence && inhaleConfidence >= silenceConfidence)
+        // Classify - only inhales count as breathing now
+        if (inhaleConfidence >= exhaleConfidence && inhaleConfidence >= silenceConfidence
+            && inhaleConfidence >= confidenceThreshold)
         {
             detectedClass = "inhale";
             isBreathing = true;
         }
-        else if (exhaleConfidence >= inhaleConfidence && exhaleConfidence >= silenceConfidence)
-        {
-            detectedClass = "exhale";
-            isBreathing = true;
-        }
         else
         {
-            detectedClass = "silence";
+            detectedClass = (exhaleConfidence > silenceConfidence) ? "exhale" : "silence";
             isBreathing = false;
         }
 
-        // Breath intensity from RMS when breathing detected
-        float targetIntensity = isBreathing ? Mathf.Clamp01(rms * 100f) : 0f;
+        // Intensity from inhale confidence + RMS boost
+        // Baseline of 0.5 ensures even quiet inhales are clearly visible
+        float targetIntensity = 0f;
+        if (isBreathing)
+        {
+            float rmsBoost = Mathf.Clamp01(rms * 200f); // 0-1 from RMS
+            targetIntensity = Mathf.Lerp(0.5f, 1f, rmsBoost); // 0.5 minimum, louder = closer to 1
+        }
         smoothedIntensity = Mathf.Lerp(smoothedIntensity, targetIntensity,
             1f - Mathf.Exp(-smoothSpeed * Time.deltaTime));
         breathIntensity01 = smoothedIntensity;
