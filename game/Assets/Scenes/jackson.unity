@@ -2411,6 +2411,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!20 &14185050 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2281922310711604588, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
+  m_PrefabInstance: {fileID: 14185036}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &14639560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133645,16 +133650,16 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 954743342}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 7da3ce9bfc396b640835ede489fe0e77, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: ff9bbaf3d501c284683061ab3a5e3a56, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: 614f0ea6c49e3c84fbe8ddffc5437a26, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: d13176c725576e8418833bbae44a9ab3, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
-  m_AspectRatio: 2
+  m_AspectRatio: 3
   m_DataSource: 0
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
@@ -133693,7 +133698,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: 614f0ea6c49e3c84fbe8ddffc5437a26, type: 2}
+  m_Texture: {fileID: 8400000, guid: d13176c725576e8418833bbae44a9ab3, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -184991,8 +184996,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10.5406, y: 7.0333}
-  m_SizeDelta: {x: 3, y: 2.5}
+  m_AnchoredPosition: {x: -10.967, y: 7.139}
+  m_SizeDelta: {x: 1.6475, y: 2.7584}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1306798115
 MonoBehaviour:
@@ -185044,7 +185049,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 14185050}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -221814,7 +221819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1582925070
 Transform:
   m_ObjectHideFlags: 0
@@ -221842,8 +221847,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abcf35dfbd5c27140ab18943dcf9546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EyeLidMat: {fileID: 2100000, guid: 00b5220b827596540907a666abb99631, type: 2}
-  fadeTime: 2
 --- !u!64 &1582925072
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: 227bb35ec6453a7428aba5f1f6af3b99
-MonoImporter:
+guid: f7ada0af4f174f0694ca6a487b8f543d
+ShaderImporter:
   externalObjects: {}
-  serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
-  icon: {instanceID: 0}
+  defaultTextures: []
+  nonModifiableTextures: []
   userData: 
   assetBundleName: 
   assetBundleVariant: 
