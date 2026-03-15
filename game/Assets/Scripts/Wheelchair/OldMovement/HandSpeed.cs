@@ -78,26 +78,31 @@ public class HandSpeed : MonoBehaviour
         //if not gripping, slow down smoothly and finish the update
         if (!rightGripPressed && !leftGripPressed)
         {
-            smoothedSpeed = Mathf.Lerp(smoothedSpeed, 0f, 1f - Mathf.Exp(-smoothing*Time.deltaTime));
+            smoothedSpeed = Mathf.Lerp(smoothedSpeed, 0f, 1f - Mathf.Exp(-smoothing * Time.deltaTime));
             if (mover != null) mover.currentSpeed = smoothedSpeed;
             return;
         }
 
-        if (!leftGripPressed) lastPositionL = leftHandTransform.position;
-        if (!rightGripPressed) lastPositionR = rightHandTransform.position;
+        else
+        {
 
-        // Creates a vector pointing to the right - removes the vertical component of the right of the headset.
-        Vector3 sideAxis = Vector3.ProjectOnPlane(head.right, Vector3.up).normalized;
+            if (!leftGripPressed) lastPositionL = leftHandTransform.position;
+            if (!rightGripPressed) lastPositionR = rightHandTransform.position;
 
-        float targetSpeedL = leftGripPressed ? CalculateLeftHandSpeed(sideAxis) : 0;
-        float targetSpeedR = rightGripPressed ? CalculateRightHandSpeed(sideAxis) : 0;
+            // Creates a vector pointing to the right - removes the vertical component of the right of the headset.
+            Vector3 sideAxis = Vector3.ProjectOnPlane(head.right, Vector3.up).normalized;
 
-        float targetSpeed = Mathf.Max(targetSpeedL, targetSpeedR);
-        // the largest objective speed gets smoothed with its speed in the previous update, makes movement less choppy
-        smoothedSpeed = Mathf.Lerp(smoothedSpeed, targetSpeed, 1f - Mathf.Exp(-smoothing * Time.deltaTime));
+            float targetSpeedL = leftGripPressed ? CalculateLeftHandSpeed(sideAxis) : 0;
+            float targetSpeedR = rightGripPressed ? CalculateRightHandSpeed(sideAxis) : 0;
 
-        //updates the movement controller's speed
-        if (mover != null) mover.currentSpeed = smoothedSpeed;
+            float targetSpeed = Mathf.Max(targetSpeedL, targetSpeedR);
+            // the largest objective speed gets smoothed with its speed in the previous update, makes movement less choppy
+            smoothedSpeed = Mathf.Lerp(smoothedSpeed, targetSpeed, 1f - Mathf.Exp(-smoothing * Time.deltaTime));
+
+            //updates the movement controller's speed
+            if (mover != null) mover.currentSpeed = smoothedSpeed;
+
+        }
 
     }
 
