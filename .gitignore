@@ -101,4 +101,9 @@ game/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 game/Assets/Abandoned_Psychiatric_Hospitals
 game/Assets/Abandoned_Psychiatric_Hospitals.meta
 
+game/Assets/Abandoned_Asylum
+game/Assets/Abandoned_Asylum.meta
+
+mlModels
+
 
