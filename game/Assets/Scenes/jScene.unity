@@ -284810,7 +284810,7 @@ MonoBehaviour:
   nFft: 2048
   hopLength: 512
   expectedTimeFrames: 47
-  confidenceThreshold: 0.5
+  confidenceThreshold: 0.95
   smoothSpeed: 8
   detectedClass: none
   inhaleConfidence: 0
