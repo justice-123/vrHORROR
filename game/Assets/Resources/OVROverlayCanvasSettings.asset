@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transparentImposterShader: {fileID: 0}
   _opaqueImposterShader: {fileID: 0}
-  MaxSimultaneousCanvases: 4
+  MaxSimultaneousCanvases: 1
   CanvasRenderLayer: 31
   CanvasLayer: -1

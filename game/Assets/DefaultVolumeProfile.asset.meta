@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 8f76c7eb2a823d54c9b3c1b26f750258
+<<<<<<<< HEAD:game/Assets/DefaultVolumeProfile.asset.meta
+guid: 8b31df0928ec3ad45bcff67d5733097e
+========
+guid: 8315793e13f2e644b96c5cc92441e538
+>>>>>>>> dev:game/Assets/Oculus/OculusProjectConfig.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
