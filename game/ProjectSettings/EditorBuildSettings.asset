@@ -8,12 +8,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/jScene.unity
     guid: 8b7eaa856d30e864c8e9b2483a3413db
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MVP/haptic_vest.unity
     guid: 0911dc45e975fd741af0264fc369c9d5
+  - enabled: 1
+    path: Assets/Scenes/kScene.unity
+    guid: 7944bb5d12293c34eb24ed8faa83b203
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4bf9bb893ef547a42b4d44c58dbad263, type: 2}

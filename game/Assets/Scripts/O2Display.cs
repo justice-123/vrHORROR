@@ -1,10 +1,12 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class O2Display : MonoBehaviour
 {
     public OxygenTank tank;
     public TextMeshProUGUI oxygenText;
+    public Image oxygenBarFill;
 
     [Header("Colours")]
     public Color normalColor = Color.green;
@@ -22,11 +24,24 @@ public class O2Display : MonoBehaviour
 
     void Update()
     {
-        if (tank == null || oxygenText == null) return;
+        if (tank == null) return;
 
         float oxygen = tank.oxygenLevel;
-        oxygenText.text = Mathf.RoundToInt(oxygen) + "%";
+        float normalizedOxygen = oxygen / 100f;
 
+        // Update text
+        if (oxygenText != null)
+        {
+            oxygenText.text = Mathf.RoundToInt(oxygen) + "%";
+        }
+
+        // Update bar amount
+        if (oxygenBarFill != null)
+        {
+            oxygenBarFill.fillAmount = normalizedOxygen;
+        }
+
+        // Update colours
         if (oxygen <= dangerThreshold)
         {
             float alpha = Mathf.Lerp(
@@ -37,15 +52,28 @@ public class O2Display : MonoBehaviour
 
             Color flashingRed = dangerColor;
             flashingRed.a = alpha;
-            oxygenText.color = flashingRed;
+
+            if (oxygenText != null)
+                oxygenText.color = flashingRed;
+
+            if (oxygenBarFill != null)
+                oxygenBarFill.color = flashingRed;
         }
         else if (oxygen <= warningThreshold)
         {
-            oxygenText.color = warningColor;
+            if (oxygenText != null)
+                oxygenText.color = warningColor;
+
+            if (oxygenBarFill != null)
+                oxygenBarFill.color = warningColor;
         }
         else
         {
-            oxygenText.color = normalColor;
+            if (oxygenText != null)
+                oxygenText.color = normalColor;
+
+            if (oxygenBarFill != null)
+                oxygenBarFill.color = normalColor;
         }
     }
 }
