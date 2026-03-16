@@ -10,7 +10,7 @@ public class HapticVestDoorClose : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        theDoor.GetComponent<Animator>().Play("hapticDoorClose");
+        theDoor.GetComponent<Animator>().Play("haptic_door_close");
         doorSlam.Play();
         this.GetComponent<BoxCollider>().enabled = false;
     }
