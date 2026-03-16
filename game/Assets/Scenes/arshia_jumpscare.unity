@@ -64616,15 +64616,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5608632531125172590, guid: 0ed0c5296d402da43adc6d516f062d86, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.171
+      value: -2.19
       objectReference: {fileID: 0}
     - target: {fileID: 5608632531125172590, guid: 0ed0c5296d402da43adc6d516f062d86, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.02
       objectReference: {fileID: 0}
     - target: {fileID: 5608632531125172590, guid: 0ed0c5296d402da43adc6d516f062d86, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.554
+      value: 1.56
       objectReference: {fileID: 0}
     - target: {fileID: 5608632531125172590, guid: 0ed0c5296d402da43adc6d516f062d86, type: 3}
       propertyPath: m_LocalRotation.w
@@ -114820,7 +114820,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 444252014}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1c78014f0c365eb4eb0b06b5bd3d2e66, type: 2}
   m_CullingMode: 0
@@ -151487,7 +151487,9 @@ PlayableDirector:
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: 5014743401166723846, guid: ce59c283772138848bea8310bee7793f, type: 2}
+    value: {fileID: 792748850}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1082054047
@@ -243274,6 +243276,7 @@ GameObject:
   - component: {fileID: 1726464386}
   - component: {fileID: 1726464385}
   - component: {fileID: 1726464384}
+  - component: {fileID: 1726464387}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -243290,8 +243293,8 @@ Transform:
   m_GameObject: {fileID: 1726464382}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.000000004127, y: -0.388, z: 3.5}
-  m_LocalScale: {x: 0.32535, y: 0.16208, z: 7.5119867}
+  m_LocalPosition: {x: -0.052, y: -0.44, z: 1.1}
+  m_LocalScale: {x: 0.32535, y: 0.16208, z: 8.8844595}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1989933534}
@@ -243370,6 +243373,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1726464382}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1726464387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726464382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc9b679f3eaddb4f927bb203131b7e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1726546327
 PrefabInstance:
   m_ObjectHideFlags: 0
