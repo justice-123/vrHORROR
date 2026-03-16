@@ -16,7 +16,7 @@ public class PattyCakeHands : MonoBehaviour
     [Range(0f, 1f)] public float hapticAmplitude = 0.5f;
     public float hapticDuration = 0.1f;
 
-    private float clapCooldown = 0.3f;
+    private float clapCooldown = 0f;
     private float lastClapTime = 0f;
 
 
