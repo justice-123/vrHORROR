@@ -14,8 +14,8 @@ public class O2Display : MonoBehaviour
     public Color dangerColor = Color.red;
 
     [Header("Thresholds")]
-    public float warningThreshold = 40f;
-    public float dangerThreshold = 10f;
+    public float warningThreshold = 49f;
+    public float dangerThreshold = 15f;
 
     [Header("Flashing")]
     public float flashSpeed = 6f;
