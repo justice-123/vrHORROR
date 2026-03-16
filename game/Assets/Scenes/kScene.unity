@@ -99253,7 +99253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e628051fcc284746b832ac76e4a5214, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.3735013
+      value: 0.38134575
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e628051fcc284746b832ac76e4a5214, type: 3}
       propertyPath: m_LocalPosition.y
@@ -99261,11 +99261,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e628051fcc284746b832ac76e4a5214, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00758934
+      value: -0.017578125
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e628051fcc284746b832ac76e4a5214, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9267717
+      value: 0.7662649
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e628051fcc284746b832ac76e4a5214, type: 3}
       propertyPath: m_LocalRotation.x
@@ -99273,7 +99273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e628051fcc284746b832ac76e4a5214, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.37562525
+      value: -0.64252484
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e628051fcc284746b832ac76e4a5214, type: 3}
       propertyPath: m_LocalRotation.z
@@ -99285,7 +99285,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e628051fcc284746b832ac76e4a5214, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -44.126
+      value: -79.961
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0e628051fcc284746b832ac76e4a5214, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -99346,7 +99346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17e2d244fd25134ebd82def87286847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oxygenLevel: 51.6
+  oxygenLevel: 64.2
   breathInput: {fileID: 2016603183}
   drainRate: 5
 --- !u!114 &684010983
