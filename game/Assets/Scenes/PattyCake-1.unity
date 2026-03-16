@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 3007622}
   m_Layer: 0
   m_Name: Target Left
-  m_TagString: TargetLeftBox
+  m_TagString: TargetBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,7 +185,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1, y: 1.1, z: 1.1}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &3007624
 MeshRenderer:
@@ -255,7 +255,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &400897125
+--- !u!1 &44161815
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,29 +263,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 400897126}
+  - component: {fileID: 44161817}
+  - component: {fileID: 44161816}
   m_Layer: 0
-  m_Name: Hands Colliders
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &400897126
+--- !u!114 &44161816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44161815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8e317d1cce9fb41b172a25d924cb2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetBoxes:
+  - {fileID: 3007624}
+  - {fileID: 832569786}
+  - {fileID: 1121036409}
+  clapSound: {fileID: 8300000, guid: dc6de29609ce1724baf6431cdd3d7d84, type: 3}
+  inactiveMaterial: {fileID: 0}
+  activeMaterial: {fileID: 2100000, guid: fc226930e8fad4c499969204cecfbc05, type: 2}
+--- !u!4 &44161817
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 400897125}
+  m_GameObject: {fileID: 44161815}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.9102564, y: 3.8979063, z: 8.19247}
+  m_LocalPosition: {x: -8.386047, y: 3.1054828, z: 5.499784}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1050763241}
-  - {fileID: 1121036411}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &768296654
@@ -372,7 +390,7 @@ GameObject:
   - component: {fileID: 832569784}
   m_Layer: 0
   m_Name: Target Right
-  m_TagString: TargetRightBox
+  m_TagString: TargetBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -510,7 +528,7 @@ GameObject:
   - component: {fileID: 1050763243}
   m_Layer: 0
   m_Name: LeftHandCollider
-  m_TagString: Untagged
+  m_TagString: TargetBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -625,11 +643,11 @@ Transform:
   m_GameObject: {fileID: 1050763235}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.59, y: -0.965, z: -2.341}
+  m_LocalPosition: {x: -6.320256, y: 2.9329064, z: 5.8514695}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 400897126}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1050763242
 MonoBehaviour:
@@ -656,8 +674,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82fcf8af969424d4baae9b827dadca86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clapSound: {fileID: 8300000, guid: dc6de29609ce1724baf6431cdd3d7d84, type: 3}
-  targetTag: TargetLeftBox
+  gameManager: {fileID: 44161816}
+  isLeftHand: 1
+  hapticAmplitude: 0.5
+  hapticDuration: 0.1
 --- !u!1 &1121036406
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +695,7 @@ GameObject:
   - component: {fileID: 1121036413}
   m_Layer: 0
   m_Name: RightHandCollider
-  m_TagString: Untagged
+  m_TagString: TargetBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -790,11 +810,11 @@ Transform:
   m_GameObject: {fileID: 1121036406}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.42725658, y: -0.881, z: -1.7544694}
+  m_LocalPosition: {x: -6.483, y: 3.0169063, z: 6.438}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 400897126}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1121036412
 MonoBehaviour:
@@ -821,13 +841,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82fcf8af969424d4baae9b827dadca86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clapSound: {fileID: 8300000, guid: dc6de29609ce1724baf6431cdd3d7d84, type: 3}
-  targetTag: TargetRightBox
+  gameManager: {fileID: 44161816}
+  isLeftHand: 0
+  hapticAmplitude: 0.5
+  hapticDuration: 0.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 768296654}
-  - {fileID: 400897126}
   - {fileID: 3007626}
   - {fileID: 832569788}
+  - {fileID: 44161817}
+  - {fileID: 1050763241}
+  - {fileID: 1121036411}
