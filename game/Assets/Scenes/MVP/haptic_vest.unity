@@ -4789,7 +4789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorSlam: {fileID: 779249039}
-  theDoor: {fileID: 1938504145}
+  theDoor: {fileID: 5951875647461618445}
 --- !u!1001 &1021022709
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6574,7 +6574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorSlam: {fileID: 779249039}
-  theDoor: {fileID: 1938504145}
+  theDoor: {fileID: 5951875647461618445}
 --- !u!65 &1413959754
 BoxCollider:
   m_ObjectHideFlags: 0

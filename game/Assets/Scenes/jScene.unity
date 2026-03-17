@@ -175174,6 +175174,7 @@ GameObject:
   - component: {fileID: 1234138097}
   - component: {fileID: 1234138096}
   - component: {fileID: 1234138099}
+  - component: {fileID: 1234138100}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -175211,7 +175212,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -175284,6 +175285,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorSlam: {fileID: 1185483712}
   theDoor: {fileID: 0}
+--- !u!114 &1234138100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234138094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 602e09211de9da1418a1c8a45106a922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  candlePrefab: {fileID: 1947416712}
+  spawnPoints:
+  - {fileID: 1146975499}
+  - {fileID: 1936059057}
+  - {fileID: 1016424710}
+  - {fileID: 619950551}
+  - {fileID: 676501072}
+  - {fileID: 1084249297}
+  - {fileID: 1867731672}
+  - {fileID: 1445634151}
+  - {fileID: 676857948}
+  - {fileID: 669063083}
+  - {fileID: 184961245}
+  - {fileID: 1514445080}
+  spawnInterval: 0.3
+  lightFadeInDuration: 1.5
 --- !u!1001 &1235508154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -275702,6 +275731,11 @@ MonoBehaviour:
 --- !u!4 &1947416711 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9040597566791986349, guid: ac6810805f8089b48a03a97fcaae1bea, type: 3}
+  m_PrefabInstance: {fileID: 1947416708}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1947416712 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8520097164927825431, guid: ac6810805f8089b48a03a97fcaae1bea, type: 3}
   m_PrefabInstance: {fileID: 1947416708}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1948046756
