@@ -21,7 +21,7 @@ public class MySceneManager : MonoBehaviour
     public void UnloadOldScene(string sceneName)
     {
         Debug.Log("Scene Unloading");
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("CoreScene")); 
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("CoreSceneMain")); 
         SceneManager.UnloadSceneAsync(sceneName);
     }
 
