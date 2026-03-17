@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Resources/ImmersiveDebuggerSettings.asset.meta
 guid: 46617cd7f44f7ce43a7978c662e40a7f
+========
+guid: 77088e58ea680884d9b11e7455ce0456
+>>>>>>>> 55f1bb95b87b816d2067ea346ab04832189acc0c:game/Library/PackageCache/com.meta.xr.mrutilitykit@13793f91651b/Core/InspectedData/MRUKInspectedData.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
