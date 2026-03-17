@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Scripts.meta
 guid: d9b7fc31d216ffe42ae3b97109663b8d
+========
+guid: 7990ba1a4f8e14f33a258f84c46b4b5a
+>>>>>>>> 55f1bb95b87b816d2067ea346ab04832189acc0c:game/Library/PackageCache/com.meta.xr.mrutilitykit@13793f91651b/Core/Scripts.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

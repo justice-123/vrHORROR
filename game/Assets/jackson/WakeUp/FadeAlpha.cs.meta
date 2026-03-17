@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 914187b5a3eb1b841be54ebde276514a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - eyelidMaterial: {fileID: 2100000, guid: ed34255d7cc1c7948be3ad92c69b50c1, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
