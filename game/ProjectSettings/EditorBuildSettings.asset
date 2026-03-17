@@ -6,7 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/CoreScene.unity
+    path: Assets/Scenes/CoreSceneMain.unity
+    guid: 07c150994dab3b443a923a8573d20af9
+  - enabled: 0
+    path: Assets/Scenes/OLDCoreScene.unity
     guid: 8900a0a24218c144190337d4f21f3ca0
   - enabled: 1
     path: Assets/Scenes/PattyCake-1.unity
