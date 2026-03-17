@@ -57788,7 +57788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb0920d2e32a3849a7d0405a4a20c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToTest: PattyCake-1
+  sceneToTest: Tutorial
 --- !u!4 &855087345
 Transform:
   m_ObjectHideFlags: 0

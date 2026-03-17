@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class TestScene : MonoBehaviour
 {
 
-    public string sceneToTest = "PattyCake-1";
+    public string sceneToTest = "Tutorial";
 
     void Start()
     {
