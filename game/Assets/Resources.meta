@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Resources.meta
 guid: 605c3b97541a3474abe2c60e2eecbe40
+========
+guid: bf3f8d888928821429769ec821d8d4c2
+>>>>>>>> 55f1bb95b87b816d2067ea346ab04832189acc0c:game/Library/PackageCache/com.meta.xr.sdk.core@503a72ca5496/Scripts/ImmersiveDebugger/UserInterface/Resources.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

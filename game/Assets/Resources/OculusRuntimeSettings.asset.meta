@@ -1,8 +1,16 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Resources/OculusRuntimeSettings.asset.meta
 guid: bda2916c0c9cf6f449e44d41c8a48e5b
 NativeFormatImporter:
+========
+guid: 4ac6c49828f594127a174e9ebb132050
+MonoImporter:
+>>>>>>>> 55f1bb95b87b816d2067ea346ab04832189acc0c:game/Library/PackageCache/com.unity.visualscripting@6279e2b7c485/Editor/VisualScripting.Core/Products/ProductContainer.cs.meta
   externalObjects: {}
-  mainObjectFileID: 11400000
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
