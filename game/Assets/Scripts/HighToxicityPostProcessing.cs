@@ -67,7 +67,7 @@ public class HighToxicityPostProcessing : MonoBehaviour
         if (toxicity >= dangerThreshold)
         {
             float severity = Mathf.InverseLerp(dangerThreshold, 100f, toxicity);
-            float pulse = toxicityDevice.currentPulse01;
+            float pulse = (Mathf.Sin(Time.time * 6f) + 1f) * 0.5f;
 
             float effectStrength = Mathf.Lerp(0.4f, 1f, pulse) * severity;
 
