@@ -19,6 +19,7 @@ public class PattyCakeGameManager : MonoBehaviour
     public AudioClip scream;
     public AudioClip youFailed;
     public AudioClip wellPlayed;
+    public AudioClip letsPlay;
 
     private AudioSource audioSource;
 
@@ -45,6 +46,7 @@ public class PattyCakeGameManager : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.playOnAwake = false;
+        audioSource.PlayOneShot(letsPlay);
 
         // Start the game by lighting up the first box
         PickNextTarget();
@@ -142,11 +144,13 @@ public class PattyCakeGameManager : MonoBehaviour
 
                 if (currentActiveIndex == targetBoxesB4Baby.Length)
                 {
-                    //// disable all boxes
-                    //startBoxes.SetActive(false);
-                    //BBoxes.SetActive(false);
-                    //girl.SetActive(false);
-                    MySceneManager.Instance.UnloadOldScene("PattyCake-1");
+                //// disable all boxes
+                startBoxes.SetActive(false);
+                BBoxes.SetActive(false);
+                //girl.SetActive(false);
+                audioSource.PlayOneShot(wellPlayed);
+                yield return new WaitForSeconds(wellPlayed.length);
+                MySceneManager.Instance.UnloadOldScene("PattyCake-1");
                 }
 
                 targetBoxesB4Baby[currentActiveIndex].material = activeMaterial;

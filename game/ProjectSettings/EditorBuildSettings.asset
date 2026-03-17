@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/PattyCake.unity
     guid: 7322d61a7a31b684fa2ce93701292c0b
+  - enabled: 1
+    path: Assets/Scenes/RedLightGreenLightMain.unity
+    guid: f8aa5c231d1a3c64aa95ceddcc55da73
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4bf9bb893ef547a42b4d44c58dbad263, type: 2}

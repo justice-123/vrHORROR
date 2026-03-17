@@ -322,8 +322,9 @@ MonoBehaviour:
   clapSound: {fileID: 8300000, guid: dc6de29609ce1724baf6431cdd3d7d84, type: 3}
   pattyCakeSound: {fileID: 8300000, guid: c026b398e02676f4ea12ebfebd608903, type: 3}
   scream: {fileID: 8300000, guid: 95d91dacf9d16544aa2edcc0875e5d35, type: 3}
-  youFailed: {fileID: 8300000, guid: 016cfece01d1d4f4eab892d776e1cb10, type: 3}
-  wellPlayed: {fileID: 8300000, guid: 016cfece01d1d4f4eab892d776e1cb10, type: 3}
+  youFailed: {fileID: 8300000, guid: cb0b02d0a4cc9e546baf3046db3d75e4, type: 3}
+  wellPlayed: {fileID: 8300000, guid: c02c0e05f4580974e9a31999ff6d4975, type: 3}
+  letsPlay: {fileID: 8300000, guid: 088651a434777074c8ed1b3f7d385334, type: 3}
   inactiveMaterial: {fileID: 2100000, guid: 53c29ec87eeff704794bf7ea5a34c545, type: 2}
   activeMaterial: {fileID: 2100000, guid: fd9c7dd680cab2e4981b749961de9a1a, type: 2}
 --- !u!4 &44161817
