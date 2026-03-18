@@ -16,7 +16,7 @@ EditorBuildSettings:
     guid: f947eaf9a28a5934faaad7bd76721bae
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    guid: 3924078c439f84642b6ab9790d74c8c5
   - enabled: 0
     path: Assets/Scenes/jScene.unity
     guid: 8b7eaa856d30e864c8e9b2483a3413db
@@ -31,8 +31,8 @@ EditorBuildSettings:
     guid: 27f179dad82e6ed498426e1fe6cc207b
   - enabled: 0
     path: Assets/PattyCake.unity
-    guid: 7322d61a7a31b684fa2ce93701292c0b
-  - enabled: 1
+    guid: d8b7bfbb59c7c5442a2e3b941384cb01
+  - enabled: 0
     path: Assets/Scenes/RedLightGreenLightMain.unity
     guid: f8aa5c231d1a3c64aa95ceddcc55da73
   m_configObjects:
