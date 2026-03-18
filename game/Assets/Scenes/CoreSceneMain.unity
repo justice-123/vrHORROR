@@ -70495,6 +70495,7 @@ GameObject:
   - component: {fileID: 488938943}
   - component: {fileID: 488938942}
   - component: {fileID: 488938945}
+  - component: {fileID: 488938946}
   m_Layer: 0
   m_Name: Refill_Cube
   m_TagString: Untagged
@@ -70603,6 +70604,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a1133a4cddec743986eaea6df9b396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visual: {fileID: 488938946}
+--- !u!114 &488938946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488938940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3acac778794d03b449bcba278ddb6863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubeRenderer: {fileID: 488938943}
+  pulseSpeed: 2
+  minEmission: 0.3
+  maxEmission: 1.5
+  isRefilling: 0
 --- !u!4 &489176802 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7253666424041113967, guid: 75ea1ffb83466d94999e7221724c4167, type: 3}
