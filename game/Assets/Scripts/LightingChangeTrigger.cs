@@ -16,6 +16,6 @@ public class LightingChangeTrigger : MonoBehaviour
         }
 
         candleSpawner.ActivateCandles();
-        this.GetComponent<BoxCollider>().enabled = false;
+        Debug.Log("activating candles");
     }
 }

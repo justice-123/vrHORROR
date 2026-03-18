@@ -39,11 +39,14 @@ public class PattyCakeGameManager : MonoBehaviour
 
 
     private bool isWaiting = false;
+    private bool isGameOver = false;
+    private bool isTimerRunning = false;
 
 
 
     void Start()
     {
+        Debug.Log("Loaded Patty Cake");
         audioSource = GetComponent<AudioSource>();
         audioSource.playOnAwake = false;
         audioSource.PlayOneShot(letsPlay);
@@ -52,10 +55,22 @@ public class PattyCakeGameManager : MonoBehaviour
         PickNextTarget();
     }
 
+    void Update()
+    {
+        if (isTimerRunning && !isGameOver)
+        {
+            if (Time.time > gameStartTime + gameAllowedTime)
+            {
+                // Timer ran out! Trigger the lose sequence.
+                StartCoroutine(TriggerLoseSequence());
+            }
+        }
+    }
+
     public void PickNextTarget()
     {
 
-        if (isWaiting) return;
+        if (isWaiting || isGameOver) return;
 
         StartCoroutine(PickNextTargetRoutine());
     }
@@ -112,6 +127,7 @@ public class PattyCakeGameManager : MonoBehaviour
             audioSource.PlayOneShot(pattyCakeSound);
             Debug.Log("Patty Cake Sound Playing");
             gameStartTime = Time.time;
+            isTimerRunning = true;
         }
 
 
@@ -140,10 +156,12 @@ public class PattyCakeGameManager : MonoBehaviour
         //if (gameCounter > 21) // after 21 hits, switch to baby part
         if (B4Baby) // after 21 hits, switch to baby part
             {
+                
                 currentActiveIndex++;
 
                 if (currentActiveIndex == targetBoxesB4Baby.Length)
                 {
+                isGameOver = true;
                 //// disable all boxes
                 startBoxes.SetActive(false);
                 BBoxes.SetActive(false);
@@ -160,10 +178,20 @@ public class PattyCakeGameManager : MonoBehaviour
             }
 
 
-        if (Time.time > gameStartTime + gameAllowedTime)   // if time runs out, you failed
-        {
-            
+        //if (Time.time > gameStartTime + gameAllowedTime)   // if time runs out, you failed
+       
+        
 
+
+        isWaiting = false;
+
+    }
+    private IEnumerator TriggerLoseSequence()
+    {
+        {
+
+            isGameOver = true;
+            isTimerRunning = false;
 
             // disable all boxes
             startBoxes.SetActive(false);
@@ -182,7 +210,7 @@ public class PattyCakeGameManager : MonoBehaviour
 
 
             // flashing lights for 2 secs,
-            
+
             int totalFlashes = 6;
             float waitTime = 0.14f;
 
@@ -202,10 +230,6 @@ public class PattyCakeGameManager : MonoBehaviour
             MySceneManager.Instance.UnloadOldScene("PattyCake-1");
 
         }
-
-
-        isWaiting = false;
-
     }
 
 

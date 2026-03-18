@@ -9,7 +9,10 @@ public class SceneLoader : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SceneManager.LoadScene(SceneName, LoadSceneMode.Additive);
+            if (!SceneManager.GetSceneByName(SceneName).isLoaded)
+            {
+                SceneManager.LoadScene(SceneName, LoadSceneMode.Additive);
+            }
         }
     }
 }
