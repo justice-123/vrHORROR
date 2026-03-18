@@ -21,6 +21,8 @@ public class CandleSpawner : MonoBehaviour
             Light candleLight = candle.GetComponentInChildren<Light>();
             if (candleLight != null)
                 StartCoroutine(FadeInLight(candleLight));
+                Debug.Log("spawning in candles");
+
             yield return new WaitForSeconds(spawnInterval);
         }
     }
