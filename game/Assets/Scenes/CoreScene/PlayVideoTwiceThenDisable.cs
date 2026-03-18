@@ -27,7 +27,7 @@ public class PlayVideoTwiceThenDisable : MonoBehaviour
         else
         {
             DisableVideo();
-            MySceneManager.Instance.LoadNewScene("PattyCake-1");
+            //MySceneManager.Instance.LoadNewScene("PattyCake-1");
         }
     }
 

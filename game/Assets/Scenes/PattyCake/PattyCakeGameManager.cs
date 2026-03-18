@@ -116,7 +116,7 @@ public class PattyCakeGameManager : MonoBehaviour
 
 
 
-        if (gameCounter == 21) // after 21 hits, switch to baby part
+        if (gameCounter == 11) // after 21 hits, switch to baby part
         //if (gameCounter == 21) // after 21 hits, switch to baby part
         {
             // disable old boxes
