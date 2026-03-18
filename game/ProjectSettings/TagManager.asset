@@ -9,6 +9,8 @@ TagManager:
   - TargetRightBox
   - TargetLeftBox
   - TargetBox
+  - Left Hand Box
+  - Right Hand Box
   layers:
   - Default
   - TransparentFX

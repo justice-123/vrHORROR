@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class TestScene : MonoBehaviour
 {
 
-    public string sceneToTest = "Tutorial";
+    public string sceneToTest = "RedLightGreenLightMain";
 
     void Start()
     {
