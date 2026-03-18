@@ -1,8 +1,6 @@
 using TMPro;
 using UnityEngine;
-//using UnityEngine.InputSystem;
-//using UnityEngine.SceneManagement;
-using UnityEngine.XR.Interaction.Toolkit;
+
 using System.Collections;
 
 public class GameManagerScript : MonoBehaviour
@@ -25,21 +23,23 @@ public class GameManagerScript : MonoBehaviour
     private float angularVelocityThreshold = 1.0f; // head turning
 
     [Header("References")]
-    public Renderer cubeRenderer;
-    public Transform playerTransform; // XR Origin
-    public Transform headTransform;   // Main camera
-    public Transform leftHandTransform;  // Left Controller 
-    public Transform rightHandTransform; // Right Controller
+
     public Transform spawnPoint;
 
 
     [Header("Jumpscare References")]
-    public GameObject jumpscareUI;    // Canvas/Image here
+    //public GameObject jumpscareUI;    // Canvas/Image here
     public AudioSource scareAudio;    // AudioSource here
     public float scareDuration = 1.0f;
 
 
+    private Renderer cubeRenderer;
+    private Transform playerTransform; // XR Origin
+    private Transform headTransform;   // Main camera
+    private Transform leftHandTransform;  // Left Controller 
+    private Transform rightHandTransform; // Right Controller
 
+    private CharacterController playerCC;
 
 
     private Vector3 lastHeadPos;
@@ -62,6 +62,22 @@ public class GameManagerScript : MonoBehaviour
         //lastRotation = playerTransform.rotation;
 
         //UpdateCubeColor();
+
+        GameObject xrOrigin = GameObject.FindGameObjectWithTag("Player");
+        GameObject mainCam = GameObject.FindGameObjectWithTag("MainCamera");
+        GameObject leftHand = GameObject.FindGameObjectWithTag("Left Hand Box");
+        GameObject rightHand = GameObject.FindGameObjectWithTag("Right Hand Box");
+
+
+
+        playerTransform = xrOrigin.transform;
+        playerCC = xrOrigin.GetComponent<CharacterController>(); 
+
+        headTransform = mainCam.transform;
+        leftHandTransform = leftHand.transform;
+        rightHandTransform = rightHand.transform;
+
+        UpdateTrackingData(); // Set initial positions 
 
     }
 
@@ -147,31 +163,31 @@ public class GameManagerScript : MonoBehaviour
             bodySpeed > 0.1f)
         {
             Debug.Log("ELIMINATED: Motion detected!");
-            if (Jumpscaring == false) StartCoroutine(JumpscareThenReset());
+            //if (Jumpscaring == false) StartCoroutine(JumpscareThenReset());
         }
     }
 
-    IEnumerator JumpscareThenReset()
-    {
+    //IEnumerator JumpscareThenReset()
+    //{
 
-        Jumpscaring = true;
+        //Jumpscaring = true;
 
-        jumpscareUI.SetActive(true);
-        scareAudio.Play();
-
-        
-        yield return new WaitForSeconds(scareDuration);
+        //jumpscareUI.SetActive(true);
+        //scareAudio.Play();
 
         
-        jumpscareUI.SetActive(false);
+        //yield return new WaitForSeconds(scareDuration);
+
+        
+        //jumpscareUI.SetActive(false);
 
 
 
 
-        ResetPlayer();
-        Jumpscaring = false;
+        //ResetPlayer();
+        //Jumpscaring = false;
 
-    }
+    //}
 
     public void SetPlayerInZone(bool inside)
     {
@@ -213,11 +229,14 @@ public class GameManagerScript : MonoBehaviour
 
     public void ResetPlayer()
     {
-        
 
+        playerCC.enabled = false;
         playerTransform.position = spawnPoint.position;
         playerTransform.rotation = spawnPoint.rotation;
         Physics.SyncTransforms();
+
+        playerCC.enabled = true;
+
 
 
         // reset
@@ -226,7 +245,6 @@ public class GameManagerScript : MonoBehaviour
         currentState = GameState.Green;
         timer = 3f;
         UpdateCubeColor();
-
 
         UpdateTrackingData();
 

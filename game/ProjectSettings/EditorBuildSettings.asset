@@ -16,7 +16,7 @@ EditorBuildSettings:
     guid: f947eaf9a28a5934faaad7bd76721bae
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    guid: 3924078c439f84642b6ab9790d74c8c5
   - enabled: 0
     path: Assets/Scenes/jScene.unity
     guid: 8b7eaa856d30e864c8e9b2483a3413db
@@ -31,7 +31,10 @@ EditorBuildSettings:
     guid: 27f179dad82e6ed498426e1fe6cc207b
   - enabled: 0
     path: Assets/PattyCake.unity
-    guid: 7322d61a7a31b684fa2ce93701292c0b
+    guid: d8b7bfbb59c7c5442a2e3b941384cb01
+  - enabled: 0
+    path: Assets/Scenes/RedLightGreenLightMain.unity
+    guid: f8aa5c231d1a3c64aa95ceddcc55da73
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4bf9bb893ef547a42b4d44c58dbad263, type: 2}

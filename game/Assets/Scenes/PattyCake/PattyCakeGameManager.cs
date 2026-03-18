@@ -1,4 +1,6 @@
+using Unity.Hierarchy;
 using UnityEngine;
+using System.Collections;
 
 public class PattyCakeGameManager : MonoBehaviour
 {
@@ -7,10 +9,18 @@ public class PattyCakeGameManager : MonoBehaviour
     public GameObject startBoxes; 
     public GameObject BBoxes;
     public GameObject girl;
+    public GameObject monster;
+    public GameObject spotlight;
 
     public Renderer[] targetBoxes; 
     public Renderer[] targetBoxesB4Baby;
     public AudioClip clapSound;
+    public AudioClip pattyCakeSound;
+    public AudioClip scream;
+    public AudioClip youFailed;
+    public AudioClip wellPlayed;
+    public AudioClip letsPlay;
+
     private AudioSource audioSource;
 
     [Header("Colors")]
@@ -24,19 +34,55 @@ public class PattyCakeGameManager : MonoBehaviour
 
     private bool B4Baby = false; // 
 
+    private float gameStartTime = 0f;
+    private float gameAllowedTime = 13f;
+
+
+    private bool isWaiting = false;
+    private bool isGameOver = false;
+    private bool isTimerRunning = false;
+
 
 
     void Start()
     {
+        Debug.Log("started pattycake scene");
+
         audioSource = GetComponent<AudioSource>();
         audioSource.playOnAwake = false;
+        audioSource.PlayOneShot(letsPlay);
 
         // Start the game by lighting up the first box
-        PickNextTarget();
+        //PickNextTarget();
+        StartCoroutine(PickNextTargetRoutine());
+
+    }
+
+    private void Update()
+    {
+        if (isTimerRunning && !isGameOver)
+        {
+            if (Time.time > gameStartTime + gameAllowedTime)
+            {
+                StartCoroutine(TriggerFailSequence());
+            }
+        }
     }
 
     public void PickNextTarget()
-    { 
+    {
+
+        if (isWaiting || !isGameOver) return;
+
+        StartCoroutine(PickNextTargetRoutine());
+    }
+
+    private IEnumerator PickNextTargetRoutine()
+    {
+        Debug.Log("Picking target");
+
+        isWaiting = true;
+
         if (!B4Baby)
         {
 
@@ -80,8 +126,18 @@ public class PattyCakeGameManager : MonoBehaviour
 
         gameCounter++;
 
+        if (gameCounter == 2) // when game starts
+        {
+            audioSource.PlayOneShot(pattyCakeSound);
+            Debug.Log("Patty Cake Sound Playing");
+            gameStartTime = Time.time;
+            isTimerRunning = true;
+        }
+
+
+
+        if (gameCounter == 11) // after 21 hits, switch to baby part
         //if (gameCounter == 21) // after 21 hits, switch to baby part
-        if (gameCounter == 21) // after 21 hits, switch to baby part
         {
             // disable old boxes
             startBoxes.SetActive(false);
@@ -100,6 +156,7 @@ public class PattyCakeGameManager : MonoBehaviour
         }
 
 
+
         //if (gameCounter > 21) // after 21 hits, switch to baby part
         if (B4Baby) // after 21 hits, switch to baby part
             {
@@ -107,12 +164,18 @@ public class PattyCakeGameManager : MonoBehaviour
 
                 if (currentActiveIndex == targetBoxesB4Baby.Length)
                 {
-                //// disable all boxes
-                //startBoxes.SetActive(false);
-                //BBoxes.SetActive(false);
+                isGameOver = true;
+
+                //// disable all boxess
+                startBoxes.SetActive(false);
+                BBoxes.SetActive(false);
                 //girl.SetActive(false);
+                audioSource.PlayOneShot(wellPlayed);
+                yield return new WaitForSeconds(wellPlayed.length);
+
                 MySceneManager.Instance.UnloadOldScene("PattyCake-1");
-                return;
+
+                yield break;
             }
 
                 targetBoxesB4Baby[currentActiveIndex].material = activeMaterial;
@@ -121,16 +184,67 @@ public class PattyCakeGameManager : MonoBehaviour
 
             }
 
-        
+
+        if (Time.time > gameStartTime + gameAllowedTime)   // if time runs out, you failed
+        {
+            
+
+        }
 
 
-        
+        isWaiting = false;
+
+    }
+
+    private IEnumerator TriggerFailSequence()
+    {
+        isGameOver = true;
+
+
+        gameStartTime = 0f;
+
+        // disable all boxes
+        startBoxes.SetActive(false);
+        BBoxes.SetActive(false);
+        // play you failed sound
+        audioSource.PlayOneShot(youFailed);
+        yield return new WaitForSeconds(youFailed.length);
+
+        // switch to monster
+        girl.SetActive(false);
+        monster.SetActive(true);
+
+        // play scream
+        audioSource.PlayOneShot(scream);
+        yield return new WaitForSeconds(scream.length);
+
+
+        // flashing lights for 2 secs,
+
+        int totalFlashes = 6;
+        float waitTime = 0.14f;
+
+        for (int i = 0; i < totalFlashes; i++)
+        {
+            spotlight.SetActive(true);
+            yield return new WaitForSeconds(waitTime);
+
+            spotlight.SetActive(false);
+
+            yield return new WaitForSeconds(waitTime);
+        }
+
+        spotlight.SetActive(false);
+
+        MySceneManager.Instance.UnloadOldScene("PattyCake-1");
+
     }
 
 
     // called by pattycake hands when collide with a box, returns true if it was the correct box
     public bool TryHit(GameObject hitBox)
     {
+        if (isGameOver || isWaiting) return false;
         GameObject expectedBox;
 
         if (B4Baby) {
@@ -155,5 +269,11 @@ public class PattyCakeGameManager : MonoBehaviour
 
         return false; // Wrong box hit
     }
+
+
+
+
 }
+
+
 
