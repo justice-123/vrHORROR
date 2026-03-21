@@ -43,7 +43,7 @@ public class WheelchairTutorial : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // ── Part 3: Turn right (left hand forward) ──────
-        tutorialUI.Show("Push LEFT hand forward to turn right");
+        tutorialUI.Show("Push LEFT arm forward to turn right");
         pushArrows.leftController  = leftController;
         pushArrows.rightController = null;
         pushArrows.StartArrows();
@@ -54,7 +54,7 @@ public class WheelchairTutorial : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // ── Part 4: Turn left (right hand forward) ──────
-        tutorialUI.Show("Push RIGHT hand forward to turn left");
+        tutorialUI.Show("Push RIGHT arm forward to turn left");
         pushArrows.leftController  = null;
         pushArrows.rightController = rightController;
         pushArrows.StartArrows();
