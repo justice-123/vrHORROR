@@ -27,10 +27,18 @@ public class PushArrowAnimator : MonoBehaviour
     {
         if (playing) return;
         playing = true;
-        leftArrow  = CreateArrow("LeftArrow");
-        rightArrow = CreateArrow("RightArrow");
-        StartCoroutine(AnimateArrow(leftArrow,  leftController));
-        StartCoroutine(AnimateArrow(rightArrow, rightController));
+
+        if (leftController != null)
+        {
+            leftArrow = CreateArrow("LeftArrow");
+            StartCoroutine(AnimateArrow(leftArrow, leftController));
+        }
+
+        if (rightController != null)
+        {
+            rightArrow = CreateArrow("RightArrow");
+            StartCoroutine(AnimateArrow(rightArrow, rightController));
+        }
     }
 
     public void StopArrows()
