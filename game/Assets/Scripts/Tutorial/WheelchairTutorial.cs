@@ -47,7 +47,7 @@ public class WheelchairTutorial : MonoBehaviour
         pushArrows.leftController  = leftController;
         pushArrows.rightController = null;
         pushArrows.StartArrows();
-        yield return StartCoroutine(WaitForPush(both: false, detectLeft: true));  // 直接等推动
+        yield return StartCoroutine(WaitForPush(both: false, detectLeft: true));  
         pushArrows.StopArrows();
         PlayDing();
 
@@ -58,10 +58,10 @@ public class WheelchairTutorial : MonoBehaviour
         pushArrows.leftController  = null;
         pushArrows.rightController = rightController;
         pushArrows.StartArrows();
-        yield return StartCoroutine(WaitForPush(both: false, detectLeft: false));  // 直接等推动
+        yield return StartCoroutine(WaitForPush(both: false, detectLeft: false));  
         pushArrows.StopArrows();
         PlayDing();
-        
+
         yield return new WaitForSeconds(0.5f);
 
         // ── Complete ────────────────────────────────────
@@ -100,9 +100,9 @@ public class WheelchairTutorial : MonoBehaviour
     }
 
     // ── Detect forward push ───────────────────────────
-    // both=true  → 双手都要推
-    // both=false, detectLeft=true  → 只检测左手
-    // both=false, detectLeft=false → 只检测右手
+    // both=true  → both arms
+    // both=false, detectLeft=true  → left arm
+    // both=false, detectLeft=false → right arm
 
     IEnumerator WaitForPush(bool both, bool detectLeft = true)
     {
@@ -119,7 +119,7 @@ public class WheelchairTutorial : MonoBehaviour
 
         while (!leftPushed || !rightPushed)
         {
-            // 获取设备
+            // get VR device
             if (leftHand.Count == 0)
                 InputDevices.GetDevicesWithCharacteristics(
                     InputDeviceCharacteristics.Left | InputDeviceCharacteristics.Controller,
@@ -129,11 +129,11 @@ public class WheelchairTutorial : MonoBehaviour
                     InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller,
                     rightHand);
 
-            // 检测左手：必须同时握住 Grip 才算推动有效
+            // detect left arm : should hold grip button
             if (!leftPushed && leftController != null && leftHand.Count > 0)
             {
                 leftHand[0].TryGetFeatureValue(CommonUsages.gripButton, out bool leftGrip);
-                if (leftGrip)  // 必须握住
+                if (leftGrip)  // should hold
                 {
                     Vector3 delta = leftController.position - prevLeft;
                     if (delta.z > threshold) leftPushed = true;
@@ -141,11 +141,11 @@ public class WheelchairTutorial : MonoBehaviour
                 prevLeft = leftController.position;
             }
 
-            // 检测右手：必须同时握住 Grip 才算推动有效
+            // detect right arm : should hold grip button
             if (!rightPushed && rightController != null && rightHand.Count > 0)
             {
                 rightHand[0].TryGetFeatureValue(CommonUsages.gripButton, out bool rightGrip);
-                if (rightGrip)  // 必须握住
+                if (rightGrip)  // should hold
                 {
                     Vector3 delta = rightController.position - prevRight;
                     if (delta.z > threshold) rightPushed = true;
