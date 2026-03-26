@@ -2019,8 +2019,8 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings:
       - m_Name: 
-        m_Id: 92025ba3-cfd0-45d5-b1b4-45bb85bf361d
-        m_Path: <QuestTouchPlusController>/primaryButton
+        m_Id: 42ed2b8a-f388-4f6a-b07c-44e213aa311c
+        m_Path: <XRController>{RightHand}/primaryButton
         m_Interactions: 
         m_Processors: 
         m_Groups: 
