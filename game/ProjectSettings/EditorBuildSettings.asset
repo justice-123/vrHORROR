@@ -6,28 +6,28 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/CoreSceneMain.unity
+    path: Assets/Scenes/CoreScene/CoreSceneMain.unity
     guid: 07c150994dab3b443a923a8573d20af9
   - enabled: 0
     path: Assets/Scenes/MVP/haptic_vest.unity
     guid: 0911dc45e975fd741af0264fc369c9d5
   - enabled: 0
-    path: Assets/Scenes/PattyCake-1.unity
+    path: Assets/Scenes/Beta (Old)/PattyCake/PattyCake-1.unity
     guid: f947eaf9a28a5934faaad7bd76721bae
   - enabled: 0
-    path: Assets/Scenes/jScene.unity
+    path: Assets/Scenes/Beta (Old)/jScene.unity
     guid: 8b7eaa856d30e864c8e9b2483a3413db
   - enabled: 0
-    path: Assets/Scenes/OLDCoreScene.unity
+    path: Assets/Scenes/Beta (Old)/OLDCoreScene.unity
     guid: 8900a0a24218c144190337d4f21f3ca0
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
-    path: Assets/Scenes/RedlightScene/Basic-1.unity
+    path: Assets/Scenes/All Scenes/RedlightScene/Basic-1.unity
     guid: d4d6507e70366cb4eb67c97a9ac811b1
   - enabled: 0
-    path: Assets/Scenes/RedlightScene/Basic-2.unity
+    path: Assets/Scenes/All Scenes/RedlightScene/Basic-2.unity
     guid: 27f179dad82e6ed498426e1fe6cc207b
   - enabled: 0
     path: Assets/PattyCake.unity
