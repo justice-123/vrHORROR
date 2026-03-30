@@ -3,6 +3,7 @@ using Microsoft.VisualBasic;
 using Oculus.Interaction;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.XR;
 
 public class forwardMotion : MonoBehaviour
@@ -22,15 +23,16 @@ public class forwardMotion : MonoBehaviour
 
     public float friction = 0.99f;
 
-    public float maximumMoveSpeed = 1.3f;
+    public float maximumMoveSpeed = 1.5f;
 
-    float pushStrength = 3f;
+    float pushStrength = 4f;
     public float chairVelocity;
     float pushDeadzone = 0.2f;
 
     public float turnStrength = 60f;
     float turnDeadzone = 0.6f;
-    
+
+    public Wheelchair_Vignette vignette;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -97,6 +99,9 @@ public class forwardMotion : MonoBehaviour
         {
             chairVelocity *= friction;
             controller.currentSpeed = chairVelocity;
+
+            vignette.currentSpeed = chairVelocity;
+            vignette.currentRotationSpeed = 0f;
             return;
         }
 
@@ -113,16 +118,27 @@ public class forwardMotion : MonoBehaviour
             if (rightHandImpulse >= 0 && leftHandImpulse >= 0)
             {
                 forwardImpulse = 2 * Mathf.Min(rightHandImpulse, leftHandImpulse);
+                turnImpulse = 0;
             } else if (rightHandImpulse < 0 && leftHandImpulse < 0)
             {
                 forwardImpulse = 2 * Mathf.Max(rightHandImpulse, leftHandImpulse);
+                turnImpulse = 0;
             } else
             {
-                forwardImpulse = (rightHandImpulse + leftHandImpulse) / 2;
+                forwardImpulse = 0;
+
+                //one arm forward and one backward means rotate only
+                float minimumMagnitude = Mathf.Min(Mathf.Abs(leftHandImpulse), Mathf.Abs(rightHandImpulse));
+
+                if (leftHandImpulse > 0)
+                {
+                    turnImpulse = minimumMagnitude * 2f;
+                } else
+                {
+                    turnImpulse = -minimumMagnitude * 2f;
+                }
             }
 
-            // finds the difference between the left and right hand impulses to decide whether to turn or not
-            turnImpulse = leftHandImpulse - rightHandImpulse;
             // naturally the hands will move at slightly different speeds so we introduce a deadzone to try mitigate accidental turning.
             if (Mathf.Abs(turnImpulse) < turnDeadzone) turnImpulse = 0f;
 
@@ -132,7 +148,8 @@ public class forwardMotion : MonoBehaviour
         // increment the chair's velocity by how fast we're going at this current frame
         chairVelocity += forwardImpulse * pushStrength * Time.deltaTime;
         // do the same with rotation
-        float rotation = turnImpulse * turnStrength * Time.deltaTime;
+        float turnSpeed = turnImpulse * turnStrength;
+        float rotation = turnSpeed * Time.deltaTime;
         
         // apply a friction constant to smoothly slow down
         chairVelocity *= friction;
@@ -140,6 +157,11 @@ public class forwardMotion : MonoBehaviour
         // ensures the player's speed can't go above a certain value
         chairVelocity = Mathf.Clamp(chairVelocity, -maximumMoveSpeed, maximumMoveSpeed);
         controller.currentSpeed = chairVelocity;
+
+        //updates the vignette script with turning and forward velocities
+        vignette.currentSpeed = Mathf.Abs(chairVelocity);
+        vignette.currentRotationSpeed = Mathf.Abs(turnSpeed);
+        
 
         controller.RotatePlayer(rotation);
 
