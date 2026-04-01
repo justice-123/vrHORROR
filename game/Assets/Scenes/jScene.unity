@@ -284707,23 +284707,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deviceName: 
   sampleRate: 48000
-  modelAsset: {fileID: 5022602860645237092, guid: 2593665cdd3dd9146acb9d38cf66042a, type: 3}
+  modelAsset: {fileID: 5022602860645237092, guid: 4c90ab649aef9a745a4e289669bf7fd2, type: 3}
   backend: 512
   clipDuration: 0.5
   classifyInterval: 0.25
   nMfcc: 13
   nFft: 2048
   hopLength: 512
-  expectedTimeFrames: 47
-  confidenceThreshold: 0.5
+  expectedTimeFrames: 43
+  confidenceThreshold: 0.95
+  maxInhaleRms: 0.02
+  minPitchHz: 70
+  maxPitchHz: 400
+  pitchConfidenceThreshold: 0.4
+  minLoudBreathRms: 0.005
   smoothSpeed: 8
   detectedClass: none
+  detectionPath: none
   inhaleConfidence: 0
   exhaleConfidence: 0
   silenceConfidence: 0
+  noiseConfidence: 0
   isBreathing: 0
   breathIntensity01: 0
   debugRms: 0
+  debugPitchConfidence: 0
 --- !u!1001 &2016923663
 PrefabInstance:
   m_ObjectHideFlags: 0

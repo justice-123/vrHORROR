@@ -15,6 +15,8 @@ public class BreathDebugHUD : MonoBehaviour
             color = "#00FFFF";
         else if (breath.detectedClass == "exhale")
             color = "#FF8800";
+        else if (breath.detectedClass == "noise")
+            color = "#FF0000";
         else if (breath.detectedClass == "silence")
             color = "#888888";
         else
@@ -23,13 +25,16 @@ public class BreathDebugHUD : MonoBehaviour
         debugText.text =
             "<b>ML Breath Debug</b>\n" +
             "Class: <color=" + color + ">" + breath.detectedClass + "</color>\n" +
+            "Path:  " + breath.detectionPath + "\n" +
             "\n" +
             "Inhale:   " + (breath.inhaleConfidence * 100f).ToString("F1") + "%\n" +
             "Exhale:   " + (breath.exhaleConfidence * 100f).ToString("F1") + "%\n" +
             "Silence:  " + (breath.silenceConfidence * 100f).ToString("F1") + "%\n" +
+            "Noise:    " + (breath.noiseConfidence * 100f).ToString("F1") + "%\n" +
             "\n" +
             "Breathing: " + breath.isBreathing + "\n" +
             "Intensity: " + breath.breathIntensity01.ToString("F2") + "\n" +
-            "RMS:       " + breath.debugRms.ToString("F6");
+            "RMS:       " + breath.debugRms.ToString("F6") + "\n" +
+            "PitchConf: " + breath.debugPitchConfidence.ToString("F3");
     }
 }
