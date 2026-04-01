@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: TestInvKey
   holdOffset: {x: 0, y: 0, z: 0}
-  holdRotation: {x: 0, y: 0, z: 0}
+  holdRotation: {x: 90, y: 180, z: 0}
   itemId: 
 --- !u!1001 &8245936388465569683
 PrefabInstance:
