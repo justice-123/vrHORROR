@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Door : MonoBehaviour
+public class KeypadDoor : MonoBehaviour
 {
     private bool open = false;
 
@@ -29,14 +29,8 @@ public class Door : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider coll)
+    public void correctCombination()
     {
-        if (coll.CompareTag("Player") && !soundEffectPlayed)
-        {
-            open = true;
-            if (audioSource != null) audioSource.Play();
-        }
-
-        soundEffectPlayed = true;
+        open = true;
     }
 }
