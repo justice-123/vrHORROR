@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.03
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.00045026926, g: 0.00045026926, b: 0.00045026926, a: 1}
+  m_AmbientSkyColor: {r: 0.46107572, g: 0.46107572, b: 0.46107572, a: 1}
   m_AmbientEquatorColor: {r: 0.12548949, g: 0.16340332, b: 0.18867922, a: 1}
   m_AmbientGroundColor: {r: 0.0977661, g: 0.10423676, b: 0.122641504, a: 1}
   m_AmbientIntensity: 1.3
@@ -2260,7 +2260,7 @@ PrefabInstance:
     - target: {fileID: 2460679463734724365, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: volume
       value: 
-      objectReference: {fileID: 1727190137}
+      objectReference: {fileID: 1730463863}
     - target: {fileID: 2460679463734724365, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: maxIntensity
       value: 0.85
@@ -126910,7 +126910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &894126430
 Transform:
   m_ObjectHideFlags: 0
@@ -132632,6 +132632,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3395024720214244077, guid: 172896519ceb4b1409a6771e3ab5dd30, type: 3}
   m_PrefabInstance: {fileID: 283249576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!143 &940280207 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 7400020956573625834, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
+  m_PrefabInstance: {fileID: 14185036}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &940849138
 PrefabInstance:
@@ -183809,6 +183814,7 @@ GameObject:
   - component: {fileID: 1292080285}
   - component: {fileID: 1292080284}
   - component: {fileID: 1292080283}
+  - component: {fileID: 1292080286}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -184083,6 +184089,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1292080286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292080282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0508f243550d146a00c60cb5983a95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstSceneName: First Area
+  characterController: {fileID: 940280207}
 --- !u!1001 &1292086719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -242745,7 +242765,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 7e7fdce296827b740999bf4c4b1ff5d8, type: 2}
+  sharedProfile: {fileID: 11400000, guid: ef15f645400291443944873fb8031289, type: 2}
 --- !u!4 &1727190138
 Transform:
   m_ObjectHideFlags: 0
