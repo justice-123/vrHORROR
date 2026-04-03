@@ -190774,6 +190774,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VR Rig
       objectReference: {fileID: 0}
+    - target: {fileID: 5587223999325945607, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6489262391363484155, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_RenderPostProcessing
       value: 1
