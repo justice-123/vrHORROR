@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/CoreScene/CoreSceneMain.unity
     guid: 07c150994dab3b443a923a8573d20af9
+  - enabled: 1
+    path: Assets/Scenes/TestScenes/grabDifferentSceneTest.unity
+    guid: dc96c85f2b743df49b0de25584f16a7a
   - enabled: 0
     path: Assets/Scenes/MVP/haptic_vest.unity
     guid: 0911dc45e975fd741af0264fc369c9d5
@@ -35,12 +38,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Second Area.unity
     guid: 0549a015663ccc645a8289aa0ec02bdd
-  - enabled: 1
-    path: Assets/Scenes/All Scenes/First/First Area.unity
+  - enabled: 0
+    path: Assets/Abandoned_Psychiatric_Hospitals/Scenes/AP_Demo.unity
     guid: 1bafc89e0c2524a4996d0dd284a28aee
-  - enabled: 1
-    path: Assets/Scenes/TestScenes/grabDifferentSceneTest.unity
-    guid: dc96c85f2b743df49b0de25584f16a7a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4bf9bb893ef547a42b4d44c58dbad263, type: 2}
