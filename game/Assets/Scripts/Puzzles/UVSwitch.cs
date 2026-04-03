@@ -4,12 +4,15 @@ public class UVSwitch : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public UVLamp uvLamp;
+    public KeypadLight keypadLight;
 
     private bool canToggle = true;
     public float cooldown = 1f;
 
     public void pressSwitch()
     {
+
+        keypadLight.enableKeyPadLight();
 
         if (canToggle)
         {//flips the switch
