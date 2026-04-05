@@ -116,4 +116,21 @@ public class InventoryManager : MonoBehaviour
 
         activeInstance = null;
     }
+
+    public void DeleteCurrentItem()
+    {
+        if (currentIndex < 0 || currentIndex >= items.Count) return;
+
+        InventoryItem item = items[currentIndex];
+        items.RemoveAt(currentIndex);
+        currentIndex = -1;
+        item.transform.SetParent(null);
+
+        activeInstance = null;
+    }
+
+    public string getActiveItemID()
+    {
+        return currentIndex != -1 ? items[currentIndex].itemId : "-1";
+    }
 }
