@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 05d45e46be4552145877983d695851f6, type: 2}
+  m_LightingDataAsset: {fileID: 112000002, guid: 8b1fe70a247aeb34d99cbd04562ed6cd, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: a107207066adc2b4f9b864717ff64f0e, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -15676,9 +15676,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3612927489962293171, guid: feb33812d6e24f448acb22912cc1c9af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 784906805}
-    - targetCorrespondingSourceObject: {fileID: 3612927489962293171, guid: feb33812d6e24f448acb22912cc1c9af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 784906812}
   m_SourcePrefab: {fileID: 100100000, guid: feb33812d6e24f448acb22912cc1c9af, type: 3}
 --- !u!4 &147767146 stripped
 Transform:
@@ -81656,10 +81653,10 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Spatialize: 1
+  Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 119
-  DopplerLevel: 1
+  Priority: 0
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -81696,7 +81693,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.9
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -81751,22 +81748,6 @@ MonoBehaviour:
   smooth: 1
   DoorOpenAngle: 120
   audioSource: {fileID: 784906805}
---- !u!114 &784906812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 784906803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a07f270ac36c49789466c75ceb88424c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableSpatialization: 1
-  gainBoostDb: 0
-  enableAcoustics: 0
-  reverbSendDb: 0
 --- !u!1001 &785033749
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -130478,8 +130459,8 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
+  Priority: 0
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -130516,7 +130497,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.9
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -130556,22 +130537,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1253937841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253937835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a07f270ac36c49789466c75ceb88424c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableSpatialization: 1
-  gainBoostDb: 0
-  enableAcoustics: 0
-  reverbSendDb: 0
 --- !u!4 &1254588329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8662285493368225008, guid: 0f886ed2df0f16043bec6034b1aae96a, type: 3}
@@ -158494,10 +158459,10 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Spatialize: 1
-  SpatializePostEffects: 1
-  Priority: 128
-  DopplerLevel: 1
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 0
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -158534,7 +158499,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.9
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -158574,22 +158539,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1545240256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1545240243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a07f270ac36c49789466c75ceb88424c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableSpatialization: 1
-  gainBoostDb: 0
-  enableAcoustics: 0
-  reverbSendDb: 0
 --- !u!1001 &1545376767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -166461,9 +166410,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34364d6f75274dd47a6d0654d7d17753, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1253937839}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34364d6f75274dd47a6d0654d7d17753, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1253937841}
   m_SourcePrefab: {fileID: 100100000, guid: 34364d6f75274dd47a6d0654d7d17753, type: 3}
 --- !u!1001 &1620106232
 PrefabInstance:
@@ -186524,6 +186470,14 @@ PrefabInstance:
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
       objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319332, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: Priority
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319332, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -200581,9 +200535,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5951875646402302491, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1545240250}
-    - targetCorrespondingSourceObject: {fileID: 5951875646402302491, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1545240256}
   m_SourcePrefab: {fileID: 100100000, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
 --- !u!1001 &1923465539
 PrefabInstance:
