@@ -125,6 +125,7 @@ public class InventoryManager : MonoBehaviour
         items.RemoveAt(currentIndex);
         currentIndex = -1;
         item.transform.SetParent(null);
+        Destroy(activeInstance);
 
         activeInstance = null;
     }

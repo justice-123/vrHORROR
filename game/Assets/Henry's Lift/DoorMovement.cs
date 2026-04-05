@@ -6,12 +6,15 @@ public class DoorMovement : MonoBehaviour
 
     public Transform leftDoor;
     public Transform rightDoor;
+    public AudioSource doorOpen;
+    public AudioSource doorClose;
 
 // move to y = 0
     public void openDoors()
     {
         StartCoroutine(moveDoor(leftDoor, 0f, 5f));
         StartCoroutine(moveDoor(rightDoor, 0f, 5f));
+        doorOpen.Play();
     }
 
 // move left door to y = -1
@@ -20,6 +23,7 @@ public class DoorMovement : MonoBehaviour
     {
         StartCoroutine(moveDoor(leftDoor, -1f, 5f));
         StartCoroutine(moveDoor(rightDoor, 1f, 5f));
+        doorClose.Play();
     }
 
     public IEnumerator moveDoor(Transform door, float targetY, float duration)
