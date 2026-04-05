@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Scanner : MonoBehaviour
 {
-    
-    public InventoryManager inventoryManager;
     public DoorMovement doorMovement;
     public Material lights;
     public AudioSource audioSource;
@@ -26,7 +24,7 @@ public class Scanner : MonoBehaviour
 
     public IEnumerator cardCheck()
     {
-        if (inventoryManager.getActiveItemID() == "liftcard")
+        if (InventoryManager.Instance.getActiveItemID() == "liftcard")
         {
             lights.SetColor("_EmissionColor", Color.green * 1.5f);
 
@@ -35,7 +33,7 @@ public class Scanner : MonoBehaviour
             doorMovement.openDoors();
             doorsOpened = true;
 
-            inventoryManager.DeleteCurrentItem();
+            InventoryManager.Instance.DeleteCurrentItem();
 
             yield return null;
         }

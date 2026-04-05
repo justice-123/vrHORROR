@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DoorMovement : MonoBehaviour
@@ -24,6 +25,9 @@ public class DoorMovement : MonoBehaviour
         StartCoroutine(moveDoor(leftDoor, -1f, 5f));
         StartCoroutine(moveDoor(rightDoor, 1f, 5f));
         doorClose.Play();
+
+        StartCoroutine(LiftLoadingAreas());
+
     }
 
     public IEnumerator moveDoor(Transform door, float targetY, float duration)
@@ -45,6 +49,14 @@ public class DoorMovement : MonoBehaviour
         }
 
         door.localPosition = endPos;
+    }
+
+    public IEnumerator LiftLoadingAreas()
+    {
+        yield return new WaitForSeconds(10f);
+
+        MySceneManager.Instance.UnloadOldScene("First Area");
+        MySceneManager.Instance.LoadNewScene("Second Area");
     }
 
 }

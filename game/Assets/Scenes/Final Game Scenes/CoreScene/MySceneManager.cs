@@ -13,6 +13,12 @@ public class MySceneManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Start()
+    {
+        LoadNewScene("First Area");
+        LoadNewScene("Lift");
+    }
+
     public void LoadNewScene(string sceneName)
     {
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive); // adds scene stuff without deleting rest
