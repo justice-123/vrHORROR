@@ -79784,8 +79784,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b83095b7d0d742745a2e09ba6cf087a7, type: 2}
+  m_sharedMaterial: {fileID: 7558373159039718549, guid: b83095b7d0d742745a2e09ba6cf087a7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -261861,6 +261861,7 @@ MonoBehaviour:
   tutorialUI: {fileID: 331539927}
   audioSource: {fileID: 1872717612}
   successClip: {fileID: 8300000, guid: 6ae74aae24c2516499795007a3f149fa, type: 3}
+  clipStartTime: 0.2
   pushArrows: {fileID: 539376087}
   leftController: {fileID: 1870777995}
   rightController: {fileID: 1121026258}
