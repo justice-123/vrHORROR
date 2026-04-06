@@ -17277,6 +17277,7 @@ GameObject:
   - component: {fileID: 4619836126904657663}
   - component: {fileID: 717493866613602669}
   - component: {fileID: 4763236765422436564}
+  - component: {fileID: 2460679463734724365}
   m_Layer: 2
   m_Name: VR Rig
   m_TagString: Untagged
@@ -17449,10 +17450,32 @@ MonoBehaviour:
   rightHandNode: 5
   leftHandNode: 4
   head: {fileID: 6280090011958278503}
-  friction: 0.98
-  maximumMoveSpeed: 1.3
+  friction: 0.99
+  maximumMoveSpeed: 1.5
   chairVelocity: 0
-  turnStrength: 120
+  turnStrength: 60
+  vignette: {fileID: 2460679463734724365}
+--- !u!114 &2460679463734724365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5587223999325945607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4f8793ec209b2b40b4323773d5779f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 0}
+  vrRig: {fileID: 1703456524548354351}
+  currentSpeed: 0
+  currentRotationSpeed: 0
+  maxIntensity: 0.75
+  speedMultiplier: 0.4
+  turnMultiplier: 0.25
+  smoothing: 5
+  currentIntensity: 0
 --- !u!1 &5598628335892864393
 GameObject:
   m_ObjectHideFlags: 0
@@ -17757,7 +17780,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
