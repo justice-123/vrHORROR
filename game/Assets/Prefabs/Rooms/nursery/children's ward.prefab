@@ -5112,10 +5112,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 3364478349527830211}
     m_Modifications:
     - target: {fileID: 5986959810539382970, guid: 9a3196992f050004a826df3a57670fc4, type: 3}
-      propertyPath: m_RootOrder
-      value: 504
-      objectReference: {fileID: 0}
-    - target: {fileID: 5986959810539382970, guid: 9a3196992f050004a826df3a57670fc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8
       objectReference: {fileID: 0}
@@ -5159,14 +5155,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floor_01 (186)
       objectReference: {fileID: 0}
-    - target: {fileID: 7271206952054502145, guid: 9a3196992f050004a826df3a57670fc4, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 88e3430e6b1aa4739b5aa702783253c2, type: 2}
-    - target: {fileID: 7271206952054502145, guid: 9a3196992f050004a826df3a57670fc4, type: 3}
-      propertyPath: 'm_Materials.Array.data[1]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 88e3430e6b1aa4739b5aa702783253c2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9441,7 +9429,8 @@ PrefabInstance:
       value: Interior_Wall_01 (14)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1234765659682635260, guid: 215b168281e2cee4f8c76c8f8532d156, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3860973601278748460, guid: 215b168281e2cee4f8c76c8f8532d156, type: 3}
       insertIndex: -1
