@@ -680,7 +680,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3364478349527830211}
   m_Layer: 0
-  m_Name: Nursery
+  m_Name: children's ward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
