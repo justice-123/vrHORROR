@@ -7,6 +7,7 @@ public class DoorFallingOver : MonoBehaviour
 
     private Rigidbody rb;
     private bool hasFallen = false;
+    private bool visitedEChair = true;
 
     void Awake()
     {
@@ -16,14 +17,21 @@ public class DoorFallingOver : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (hasFallen || other.tag != "Player") return;
+        if (!hasFallen && visitedEChair && other.tag == "Player") {
 
-        hasFallen = true;
-        rb.isKinematic = false;
+            hasFallen = true;
+            rb.isKinematic = false;
 
-        Vector3 force = Vector3.forward * pushForce;
+            Vector3 force = Vector3.forward * pushForce;
 
-        rb.AddForceAtPosition(force, transform.position + hitOffset, ForceMode.Impulse);
+            rb.AddForceAtPosition(force, transform.position + hitOffset, ForceMode.Impulse);
+
+        }
+    }
+
+    public void visitEChair()
+    {
+        visitedEChair = true;
     }
 
 }
