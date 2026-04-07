@@ -39,7 +39,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Second Area.unity
     guid: 0549a015663ccc645a8289aa0ec02bdd
   - enabled: 0
-    path: Assets/Abandoned_Psychiatric_Hospitals/Scenes/AP_Demo.unity
+    path: Assets/Scenes/First Area.unity
     guid: 1bafc89e0c2524a4996d0dd284a28aee
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
