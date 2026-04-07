@@ -641,6 +641,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Henry's Lift
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e82cd32c0d3e7bd44891f34fe4e40b1b, type: 3}
+      propertyPath: m_TagString
+      value: Lift
+      objectReference: {fileID: 0}
     - target: {fileID: 5835192962157261381, guid: e82cd32c0d3e7bd44891f34fe4e40b1b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 

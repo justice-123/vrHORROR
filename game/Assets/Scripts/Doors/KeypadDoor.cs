@@ -11,8 +11,7 @@ public class KeypadDoor : MonoBehaviour
     private Vector3 defaulRot;
     private Vector3 openRot;
 
-    public AudioSource audioSource;
-    private bool soundEffectPlayed = false;
+
 
     void Start()
     {

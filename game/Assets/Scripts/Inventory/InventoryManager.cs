@@ -96,6 +96,9 @@ public class InventoryManager : MonoBehaviour
             rb.isKinematic = true;
         }
 
+        Collider col = obj.GetComponent<BoxCollider>();
+        col.isTrigger = true;
+
         XRGrabInteractable grab = obj.GetComponent<XRGrabInteractable>();
         if (grab != null)
         {
