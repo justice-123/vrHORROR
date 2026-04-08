@@ -4,6 +4,7 @@ public class WoodBreak : MonoBehaviour
 {
     public bool woodBroken;
     public GameObject brokenPrefab;
+    public AudioSource brokenSound;
 
     void Start()
     {
@@ -12,6 +13,7 @@ public class WoodBreak : MonoBehaviour
 
     public void swapToBrokenModel()
     {
+        brokenSound.Play();
         woodBroken = true;
         GameObject brokenModel = Instantiate(brokenPrefab, transform.position, transform.rotation);
         Destroy(gameObject);

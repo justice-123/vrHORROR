@@ -8,6 +8,7 @@ public class DoorFallingOver : MonoBehaviour
     private Rigidbody rb;
     private bool hasFallen = false;
     private bool visitedEChair = true;
+    public AudioSource doorSound;
 
     void Awake()
     {
@@ -25,6 +26,8 @@ public class DoorFallingOver : MonoBehaviour
             Vector3 force = Vector3.forward * pushForce;
 
             rb.AddForceAtPosition(force, transform.position + hitOffset, ForceMode.Impulse);
+
+            doorSound.Play();
 
         }
     }
