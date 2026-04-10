@@ -53,10 +53,11 @@ public class DoorMovement : MonoBehaviour
 
     public IEnumerator LiftLoadingAreas()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
 
-        MySceneManager.Instance.UnloadOldScene("First Area");
-        MySceneManager.Instance.LoadNewScene("Second Area");
+        yield return StartCoroutine(AreaTransition.Instance.StartAreaTransition());
+
+        openDoors();
     }
 
 }

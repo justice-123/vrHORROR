@@ -8,23 +8,23 @@ public class AutoDoor : MonoBehaviour
     public float smooth = 3.0f;
     public float DoorOpenAngle = 120.0f;
 
-    private Vector3 defaulRot;
-    private Vector3 openRot;
+    private Quaternion defaultRot;
+    private Quaternion openRot;
 
     public AudioSource audioSource;
     private bool soundEffectPlayed = false;
 
     void Start()
     {
-        defaulRot = transform.eulerAngles;
-        openRot = new Vector3(defaulRot.x, defaulRot.y + DoorOpenAngle, defaulRot.z);
+        defaultRot = transform.localRotation;
+        openRot = defaultRot * Quaternion.Euler(0, DoorOpenAngle, 0);
     }
 
     void Update()
     {
         if (open)
         {
-            transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, openRot, Time.deltaTime * smooth);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, openRot, Time.deltaTime * smooth);
         
         }
     }
