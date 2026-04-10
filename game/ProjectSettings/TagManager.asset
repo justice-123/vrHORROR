@@ -11,6 +11,7 @@ TagManager:
   - TargetBox
   - Left Hand Box
   - Right Hand Box
+  - Lift
   layers:
   - Default
   - TransparentFX
