@@ -80181,7 +80181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 422920, guid: f2942792173dfdd41aec1c5e9a317b85, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.9714113
+      value: 0.66966176
       objectReference: {fileID: 0}
     - target: {fileID: 422920, guid: f2942792173dfdd41aec1c5e9a317b85, type: 3}
       propertyPath: m_LocalPosition.x
@@ -80281,7 +80281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19893346, guid: f2942792173dfdd41aec1c5e9a317b85, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
-      value: 300
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 19893346, guid: f2942792173dfdd41aec1c5e9a317b85, type: 3}
       propertyPath: InitialModule.startRotation.scalar
