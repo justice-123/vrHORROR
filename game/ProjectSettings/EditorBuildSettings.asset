@@ -6,6 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/Scenes/CoreScene/CoreSceneMain.unity
     guid: 07c150994dab3b443a923a8573d20af9
   - enabled: 0
@@ -34,7 +35,19 @@ EditorBuildSettings:
     guid: d8b7bfbb59c7c5442a2e3b941384cb01
   - enabled: 0
     path: Assets/Scenes/Second Area.unity
+=======
+    path: Assets/Scenes/Final Game Scenes/CoreScene/CoreSceneMain.unity
+    guid: 07c150994dab3b443a923a8573d20af9
+  - enabled: 1
+    path: Assets/Scenes/Final Game Scenes/First Area/First Area.unity
+    guid: 8702698176d181e48abb397bece1d2ce
+  - enabled: 1
+    path: Assets/Scenes/Final Game Scenes/Second Area/Second Area.unity
+>>>>>>> dev
     guid: 0549a015663ccc645a8289aa0ec02bdd
+  - enabled: 1
+    path: Assets/Scenes/Final Game Scenes/Lift/Lift.unity
+    guid: b972eef735e67fb4988a9ed0861b72c0
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4bf9bb893ef547a42b4d44c58dbad263, type: 2}
