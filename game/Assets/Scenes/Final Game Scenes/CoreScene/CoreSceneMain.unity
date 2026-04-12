@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.03
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.00045026926, g: 0.00045026926, b: 0.00045026926, a: 1}
+  m_AmbientSkyColor: {r: 0.46107572, g: 0.46107572, b: 0.46107572, a: 1}
   m_AmbientEquatorColor: {r: 0.12548949, g: 0.16340332, b: 0.18867922, a: 1}
   m_AmbientGroundColor: {r: 0.0977661, g: 0.10423676, b: 0.122641504, a: 1}
   m_AmbientIntensity: 1.3
@@ -3215,6 +3215,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4455526831903547416, guid: 8e4941b4c14328f43ac806b0acbc7254, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1966438230}
+    - targetCorrespondingSourceObject: {fileID: 4455526831903547416, guid: 8e4941b4c14328f43ac806b0acbc7254, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1966438232}
+    - targetCorrespondingSourceObject: {fileID: 4455526831903547416, guid: 8e4941b4c14328f43ac806b0acbc7254, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1966438231}
   m_SourcePrefab: {fileID: 100100000, guid: 8e4941b4c14328f43ac806b0acbc7254, type: 3}
 --- !u!4 &1966438228 stripped
 Transform:
@@ -3246,6 +3252,37 @@ MonoBehaviour:
   startColor: {r: 1, g: 1, b: 1, a: 1}
   endColor: {r: 0.030037368, g: 0.7075472, b: 0.030037368, a: 1}
   emissionStrength: 1.5
+--- !u!114 &1966438231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966438229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6284c061dab51ab44853786776727543, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toxicity: {fileID: 1966438230}
+  volume: {fileID: 490958115}
+  activateAbove: 40
+--- !u!114 &1966438232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966438229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f8133792f2c3e4d94288999ac3beb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toxicity: {fileID: 1966438230}
+  lights:
+  - {fileID: 0}
+  activateAbove: 40
 --- !u!1 &1986266914
 GameObject:
   m_ObjectHideFlags: 0
