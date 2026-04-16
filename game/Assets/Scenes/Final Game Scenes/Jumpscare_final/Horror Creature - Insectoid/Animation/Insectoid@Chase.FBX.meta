@@ -1,116 +1,297 @@
 fileFormatVersion: 2
 guid: 0ce6857fb8ae46e468a2fa8bef1eba12
-timeCreated: 1504186389
-licenseType: Store
 ModelImporter:
-  serializedVersion: 21
-  fileIDToRecycleName:
-    100000: BackSpiderLLeg1
-    100002: BackSpiderLLeg2
-    100004: BackSpiderLLeg3
-    100006: BackSpiderLLegPlatform1
-    100008: BackSpiderRLeg1
-    100010: BackSpiderRLeg2
-    100012: BackSpiderRLeg3
-    100014: BackSpiderRLegPlatform1
-    100016: FrontSpiderLLeg1
-    100018: FrontSpiderLLeg2
-    100020: FrontSpiderLLeg3
-    100022: FrontSpiderLLegPlatform
-    100024: FrontSpiderRLeg1
-    100026: FrontSpiderRLeg2
-    100028: FrontSpiderRLeg3
-    100030: FrontSpiderRLegPlatform
-    100032: insectoid
-    100034: //RootNode
-    100036: Spider1Bone001
-    100038: Spider1Bone002
-    100040: Spider2Bone001
-    100042: Spider2Bone002
-    100044: SpiderHub003
-    100046: SpiderHub005
-    100048: SpiderHub005Bone001
-    100050: SpiderHub005Bone002
-    100052: SpiderHub005Bone004
-    100054: SpiderHub005Bone004 1
-    100056: SpiderHub005Bone005
-    100058: SpiderHub005Bone006
-    100060: SpiderLArm1
-    100062: SpiderLArm2
-    100064: SpiderLArmCollarbone
-    100066: SpiderLArmPalm
-    100068: SpiderRArm1
-    100070: SpiderRArm2
-    100072: SpiderRArmCollarbone
-    100074: SpiderRArmPalm
-    100076: SpiderSpine1
-    100078: SpiderSpine2
-    100080: SpiderTail1
-    100082: SpiderTail2
-    100084: SpiderTail3
-    400000: BackSpiderLLeg1
-    400002: BackSpiderLLeg2
-    400004: BackSpiderLLeg3
-    400006: BackSpiderLLegPlatform1
-    400008: BackSpiderRLeg1
-    400010: BackSpiderRLeg2
-    400012: BackSpiderRLeg3
-    400014: BackSpiderRLegPlatform1
-    400016: FrontSpiderLLeg1
-    400018: FrontSpiderLLeg2
-    400020: FrontSpiderLLeg3
-    400022: FrontSpiderLLegPlatform
-    400024: FrontSpiderRLeg1
-    400026: FrontSpiderRLeg2
-    400028: FrontSpiderRLeg3
-    400030: FrontSpiderRLegPlatform
-    400032: insectoid
-    400034: //RootNode
-    400036: Spider1Bone001
-    400038: Spider1Bone002
-    400040: Spider2Bone001
-    400042: Spider2Bone002
-    400044: SpiderHub003
-    400046: SpiderHub005
-    400048: SpiderHub005Bone001
-    400050: SpiderHub005Bone002
-    400052: SpiderHub005Bone004
-    400054: SpiderHub005Bone004 1
-    400056: SpiderHub005Bone005
-    400058: SpiderHub005Bone006
-    400060: SpiderLArm1
-    400062: SpiderLArm2
-    400064: SpiderLArmCollarbone
-    400066: SpiderLArmPalm
-    400068: SpiderRArm1
-    400070: SpiderRArm2
-    400072: SpiderRArmCollarbone
-    400074: SpiderRArmPalm
-    400076: SpiderSpine1
-    400078: SpiderSpine2
-    400080: SpiderTail1
-    400082: SpiderTail2
-    400084: SpiderTail3
-    4300000: insectoid
-    7400000: Take 001
-    9500000: //RootNode
-    13700000: insectoid
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: BackSpiderLLeg1
+  - first:
+      1: 100002
+    second: BackSpiderLLeg2
+  - first:
+      1: 100004
+    second: BackSpiderLLeg3
+  - first:
+      1: 100006
+    second: BackSpiderLLegPlatform1
+  - first:
+      1: 100008
+    second: BackSpiderRLeg1
+  - first:
+      1: 100010
+    second: BackSpiderRLeg2
+  - first:
+      1: 100012
+    second: BackSpiderRLeg3
+  - first:
+      1: 100014
+    second: BackSpiderRLegPlatform1
+  - first:
+      1: 100016
+    second: FrontSpiderLLeg1
+  - first:
+      1: 100018
+    second: FrontSpiderLLeg2
+  - first:
+      1: 100020
+    second: FrontSpiderLLeg3
+  - first:
+      1: 100022
+    second: FrontSpiderLLegPlatform
+  - first:
+      1: 100024
+    second: FrontSpiderRLeg1
+  - first:
+      1: 100026
+    second: FrontSpiderRLeg2
+  - first:
+      1: 100028
+    second: FrontSpiderRLeg3
+  - first:
+      1: 100030
+    second: FrontSpiderRLegPlatform
+  - first:
+      1: 100032
+    second: insectoid
+  - first:
+      1: 100034
+    second: //RootNode
+  - first:
+      1: 100036
+    second: Spider1Bone001
+  - first:
+      1: 100038
+    second: Spider1Bone002
+  - first:
+      1: 100040
+    second: Spider2Bone001
+  - first:
+      1: 100042
+    second: Spider2Bone002
+  - first:
+      1: 100044
+    second: SpiderHub003
+  - first:
+      1: 100046
+    second: SpiderHub005
+  - first:
+      1: 100048
+    second: SpiderHub005Bone001
+  - first:
+      1: 100050
+    second: SpiderHub005Bone002
+  - first:
+      1: 100052
+    second: SpiderHub005Bone004
+  - first:
+      1: 100054
+    second: SpiderHub005Bone004 1
+  - first:
+      1: 100056
+    second: SpiderHub005Bone005
+  - first:
+      1: 100058
+    second: SpiderHub005Bone006
+  - first:
+      1: 100060
+    second: SpiderLArm1
+  - first:
+      1: 100062
+    second: SpiderLArm2
+  - first:
+      1: 100064
+    second: SpiderLArmCollarbone
+  - first:
+      1: 100066
+    second: SpiderLArmPalm
+  - first:
+      1: 100068
+    second: SpiderRArm1
+  - first:
+      1: 100070
+    second: SpiderRArm2
+  - first:
+      1: 100072
+    second: SpiderRArmCollarbone
+  - first:
+      1: 100074
+    second: SpiderRArmPalm
+  - first:
+      1: 100076
+    second: SpiderSpine1
+  - first:
+      1: 100078
+    second: SpiderSpine2
+  - first:
+      1: 100080
+    second: SpiderTail1
+  - first:
+      1: 100082
+    second: SpiderTail2
+  - first:
+      1: 100084
+    second: SpiderTail3
+  - first:
+      4: 400000
+    second: BackSpiderLLeg1
+  - first:
+      4: 400002
+    second: BackSpiderLLeg2
+  - first:
+      4: 400004
+    second: BackSpiderLLeg3
+  - first:
+      4: 400006
+    second: BackSpiderLLegPlatform1
+  - first:
+      4: 400008
+    second: BackSpiderRLeg1
+  - first:
+      4: 400010
+    second: BackSpiderRLeg2
+  - first:
+      4: 400012
+    second: BackSpiderRLeg3
+  - first:
+      4: 400014
+    second: BackSpiderRLegPlatform1
+  - first:
+      4: 400016
+    second: FrontSpiderLLeg1
+  - first:
+      4: 400018
+    second: FrontSpiderLLeg2
+  - first:
+      4: 400020
+    second: FrontSpiderLLeg3
+  - first:
+      4: 400022
+    second: FrontSpiderLLegPlatform
+  - first:
+      4: 400024
+    second: FrontSpiderRLeg1
+  - first:
+      4: 400026
+    second: FrontSpiderRLeg2
+  - first:
+      4: 400028
+    second: FrontSpiderRLeg3
+  - first:
+      4: 400030
+    second: FrontSpiderRLegPlatform
+  - first:
+      4: 400032
+    second: insectoid
+  - first:
+      4: 400034
+    second: //RootNode
+  - first:
+      4: 400036
+    second: Spider1Bone001
+  - first:
+      4: 400038
+    second: Spider1Bone002
+  - first:
+      4: 400040
+    second: Spider2Bone001
+  - first:
+      4: 400042
+    second: Spider2Bone002
+  - first:
+      4: 400044
+    second: SpiderHub003
+  - first:
+      4: 400046
+    second: SpiderHub005
+  - first:
+      4: 400048
+    second: SpiderHub005Bone001
+  - first:
+      4: 400050
+    second: SpiderHub005Bone002
+  - first:
+      4: 400052
+    second: SpiderHub005Bone004
+  - first:
+      4: 400054
+    second: SpiderHub005Bone004 1
+  - first:
+      4: 400056
+    second: SpiderHub005Bone005
+  - first:
+      4: 400058
+    second: SpiderHub005Bone006
+  - first:
+      4: 400060
+    second: SpiderLArm1
+  - first:
+      4: 400062
+    second: SpiderLArm2
+  - first:
+      4: 400064
+    second: SpiderLArmCollarbone
+  - first:
+      4: 400066
+    second: SpiderLArmPalm
+  - first:
+      4: 400068
+    second: SpiderRArm1
+  - first:
+      4: 400070
+    second: SpiderRArm2
+  - first:
+      4: 400072
+    second: SpiderRArmCollarbone
+  - first:
+      4: 400074
+    second: SpiderRArmPalm
+  - first:
+      4: 400076
+    second: SpiderSpine1
+  - first:
+      4: 400078
+    second: SpiderSpine2
+  - first:
+      4: 400080
+    second: SpiderTail1
+  - first:
+      4: 400082
+    second: SpiderTail2
+  - first:
+      4: 400084
+    second: SpiderTail3
+  - first:
+      43: 4300000
+    second: insectoid
+  - first:
+      74: 7400000
+    second: Chase
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: insectoid
+  externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -118,37 +299,85 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Chase
+      takeName: Take 001
+      internalID: 7400000
+      firstFrame: 390
+      lastFrame: 416
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 390
     isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -158,14 +387,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
