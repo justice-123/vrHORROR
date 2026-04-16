@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: baa053711e4378d4fbd6c8f67c3ba2ac, type: 2}
+  m_LightingDataAsset: {fileID: 112000002, guid: 8b1fe70a247aeb34d99cbd04562ed6cd, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: a107207066adc2b4f9b864717ff64f0e, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -125991,27 +125991,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9584006
+      value: 0.6608359
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.9584006
+      value: 0.6608359
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.9584006
+      value: 0.6608359
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.3826
+      value: -9.124
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.077
+      value: 5.051
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.64958
+      value: -10.65
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalRotation.w
@@ -126087,7 +126087,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c846d0f3d557f14ab04796560ed6a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visual: {fileID: 0}
 --- !u!1001 &1124214970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -165502,9 +165501,9 @@ MonoBehaviour:
   - m_EditModeType: 1
     m_Knots:
     - Position:
-        x: 0.05499979
-        y: 1.3530002
-        z: -0.103000194
+        x: 0.055000607
+        y: 1.3529994
+        z: -0.10299986
       TangentIn:
         x: 0
         y: 0
@@ -165574,9 +165573,9 @@ MonoBehaviour:
           z: -0.5031197
           w: -0.39109042
     - Position:
-        x: -0.7630003
-        y: 0.23000021
-        z: -0.52300006
+        x: -0.76299995
+        y: 0.22999974
+        z: -0.523
       TangentIn:
         x: 0
         y: 0
@@ -202052,7 +202051,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
