@@ -7,20 +7,24 @@ public class ShadowPeripheral : MonoBehaviour
     public Transform monsterModel;
     public Animator monsterAnimator;
     public float activateAbove = 40f;
-    public float followSpeed = 2f;
-    public float fleeSpeed = 8f;
+    public float followSpeed = 8f;
     public float hideAngle = 30f;
+    public float fadeSpeed = 3f;
 
     [Header("Distortion")]
     public float distortSpeed = 1.5f;
     public float distortAmount = 0.3f;
 
+    [Header("Audio")]
+    public AudioSource crawlSource;
+    public AudioClip crawlClip;
+
     Transform player;
     Vector3 startPos;
     Vector3 baseScale;
     float baseIntensity;
-    float sideSign = 1f;
-    float flipCooldown;
+    float currentIntensity;
+    bool wasVisible;
 
     void Start()
     {
@@ -29,9 +33,10 @@ public class ShadowPeripheral : MonoBehaviour
 
         player = Camera.main.transform;
         startPos = transform.position;
-        baseIntensity = spotLight.intensity;
         baseScale = monsterModel.localScale;
-        spotLight.enabled = false;
+        baseIntensity = spotLight.intensity;
+        currentIntensity = 0f;
+        spotLight.intensity = 0f;
 
         if (monsterAnimator != null)
             monsterAnimator.enabled = false;
@@ -41,51 +46,67 @@ public class ShadowPeripheral : MonoBehaviour
     {
         if (toxicity == null || toxicity.toxicityLevel < activateAbove)
         {
-            spotLight.enabled = false;
-            if (monsterAnimator != null)
-                monsterAnimator.enabled = false;
+            currentIntensity = Mathf.MoveTowards(currentIntensity, 0f, fadeSpeed * Time.deltaTime);
+            spotLight.intensity = currentIntensity;
+            if (currentIntensity <= 0f)
+            {
+                if (monsterAnimator != null)
+                    monsterAnimator.enabled = false;
+                if (crawlSource != null && crawlSource.isPlaying)
+                    crawlSource.Stop();
+            }
+            wasVisible = false;
             return;
         }
 
         if (player == null) return;
 
-        Vector3 toShadow = transform.position - player.position;
+        int layerMask = ~LayerMask.GetMask("ShadowOnly");
+        Vector3 shadowPoint;
+        RaycastHit hit;
+        if (Physics.Raycast(spotLight.transform.position, spotLight.transform.forward, out hit, Mathf.Infinity, layerMask))
+            shadowPoint = hit.point;
+        else
+            shadowPoint = spotLight.transform.position + spotLight.transform.forward * 5f;
+
+        Vector3 toShadow = shadowPoint - player.position;
         toShadow.y = 0f;
         Vector3 playerForward = player.forward;
         playerForward.y = 0f;
         float angle = Vector3.Angle(playerForward, toShadow);
 
-        flipCooldown -= Time.deltaTime;
+        bool looking = angle < hideAngle;
 
-        if (angle < hideAngle)
+        float targetIntensity = looking ? 0f : baseIntensity;
+        currentIntensity = Mathf.MoveTowards(currentIntensity, targetIntensity, fadeSpeed * Time.deltaTime);
+        spotLight.intensity = currentIntensity;
+
+        if (currentIntensity <= 0f)
         {
-            if (flipCooldown <= 0f)
-            {
-                sideSign *= -1f;
-                flipCooldown = 1f;
-            }
-            spotLight.enabled = false;
             if (monsterAnimator != null)
                 monsterAnimator.enabled = false;
+            if (crawlSource != null && crawlSource.isPlaying)
+                crawlSource.Stop();
+            wasVisible = false;
             return;
         }
 
-        spotLight.enabled = true;
         if (monsterAnimator != null)
             monsterAnimator.enabled = true;
 
-        // follow player along wall, offset to one side
-        float offset = sideSign * 3f;
-        Vector3 target = new Vector3(
+        if (!wasVisible && crawlSource != null && crawlClip != null)
+        {
+            crawlSource.clip = crawlClip;
+            crawlSource.Play();
+        }
+        wasVisible = true;
+
+        transform.position = new Vector3(
             startPos.x,
             startPos.y,
-            player.position.z + offset
+            player.position.z
         );
-        transform.position = Vector3.Lerp(
-            transform.position, target, followSpeed * Time.deltaTime
-        );
-
-        // distort the monster shape
+        // distort
         float t = (toxicity.toxicityLevel - activateAbove)
                 / (100f - activateAbove);
         float time = Time.time * distortSpeed;
