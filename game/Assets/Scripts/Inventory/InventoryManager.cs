@@ -7,6 +7,20 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class InventoryManager : MonoBehaviour
 {
+
+    public static InventoryManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance  = this;
+    }
+
     [Header("References")]
     [SerializeField] private NearFarInteractor handInteractor;
     [SerializeField] private Transform holdPoint;
@@ -82,6 +96,9 @@ public class InventoryManager : MonoBehaviour
             rb.isKinematic = true;
         }
 
+        Collider col = obj.GetComponent<BoxCollider>();
+        col.isTrigger = true;
+
         XRGrabInteractable grab = obj.GetComponent<XRGrabInteractable>();
         if (grab != null)
         {
@@ -115,5 +132,23 @@ public class InventoryManager : MonoBehaviour
         }
 
         activeInstance = null;
+    }
+
+    public void DeleteCurrentItem()
+    {
+        if (currentIndex < 0 || currentIndex >= items.Count) return;
+
+        InventoryItem item = items[currentIndex];
+        items.RemoveAt(currentIndex);
+        currentIndex = -1;
+        item.transform.SetParent(null);
+        Destroy(activeInstance);
+
+        activeInstance = null;
+    }
+
+    public string getActiveItemID()
+    {
+        return currentIndex != -1 ? items[currentIndex].itemId : "-1";
     }
 }
