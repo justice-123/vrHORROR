@@ -31,5 +31,11 @@ public class MySceneManager : MonoBehaviour
         SceneManager.UnloadSceneAsync(sceneName);
     }
 
+    public void TransitionToFinalScene(string sceneToUnload)
+    {
+        UnloadOldScene(sceneToUnload);
+        LoadNewScene("final_jumpscare");
+    }
+
 
 }
