@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class OxygenTank : MonoBehaviour
 {
+    public static OxygenTank Instance { get; private set; }
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     [Range(0f, 100f)]
     public float oxygenLevel = 100f;
 
