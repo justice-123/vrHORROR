@@ -4027,7 +4027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toxicityLevel: 50
   fillRate: 3
-  drainRate: 4
+  drainRate: 8
   breathInput: {fileID: 1292080283}
   lightRenderer: {fileID: 865982530}
   startColor: {r: 1, g: 1, b: 1, a: 1}
