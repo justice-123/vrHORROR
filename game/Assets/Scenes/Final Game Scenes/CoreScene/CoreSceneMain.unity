@@ -2452,7 +2452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17e2d244fd25134ebd82def87286847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oxygenLevel: 100
+  oxygenLevel: 47.1
   breathInput: {fileID: 1292080283}
   drainRate: 2
   refillRate: 15

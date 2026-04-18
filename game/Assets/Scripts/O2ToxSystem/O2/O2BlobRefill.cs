@@ -10,11 +10,13 @@ public class O2BlobRefill : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float travelTime = 0.8f;
+    [SerializeField] private float pulseInterval = 0.8f;
     [SerializeField] private bool faceDirection = true;
 
     private bool isTravelling = false;
     private bool wasRefilling = false;
     private float t = 0f;
+    private float pulseTimer = 0f;
 
     void Start()
     {
@@ -29,22 +31,32 @@ public class O2BlobRefill : MonoBehaviour
 
         bool isRefilling = OxygenTank.Instance.isRefilling;
 
-        // refill just started
         if (isRefilling && !wasRefilling)
         {
+            pulseTimer = 0f;
             StartPulse();
         }
 
-        // refill stopped
-        if (!isRefilling && wasRefilling)
+        if (isRefilling)
         {
-            StopPulse();
+            pulseTimer += Time.deltaTime;
+
+            if (!isTravelling && pulseTimer >= pulseInterval)
+            {
+                StartPulse();
+                pulseTimer = 0f;
+            }
+        }
+        else
+        {
+            pulseTimer = 0f;
+
+            if (isTravelling)
+                StopPulse();
         }
 
         if (isTravelling)
-        {
             MoveBlobAlongSpline();
-        }
 
         wasRefilling = isRefilling;
     }
