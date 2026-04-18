@@ -4,6 +4,8 @@ using Unity.Mathematics;
 
 public class O2BlobRefill : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem sparkle;
+
     [Header("References")]
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private Transform blob;
@@ -22,6 +24,9 @@ public class O2BlobRefill : MonoBehaviour
     {
         if (blob != null)
             blob.gameObject.SetActive(false);
+
+        if (sparkle != null)
+            sparkle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 
     void Update()
@@ -69,11 +74,21 @@ public class O2BlobRefill : MonoBehaviour
 
         float3 startPos = splineContainer.EvaluatePosition(0f);
         blob.position = (Vector3)startPos;
+
+        if (sparkle != null)
+        {
+            sparkle.Clear();
+            sparkle.Play();
+        }
     }
 
     void StopPulse()
     {
         isTravelling = false;
+
+        if (sparkle != null)
+            sparkle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
         blob.gameObject.SetActive(false);
     }
 
@@ -95,6 +110,10 @@ public class O2BlobRefill : MonoBehaviour
         if (t >= 1f)
         {
             isTravelling = false;
+
+            if (sparkle != null)
+                sparkle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
             blob.gameObject.SetActive(false);
         }
     }

@@ -2452,10 +2452,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17e2d244fd25134ebd82def87286847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oxygenLevel: 47.1
+  oxygenLevel: 25
   breathInput: {fileID: 1292080283}
   drainRate: 2
-  refillRate: 15
+  refillRate: 7
   isRefilling: 0
 --- !u!65 &1412068416
 BoxCollider:
