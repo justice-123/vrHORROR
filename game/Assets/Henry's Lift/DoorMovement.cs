@@ -18,17 +18,36 @@ public class DoorMovement : MonoBehaviour
         doorOpen.Play();
     }
 
-// move left door to y = -1
-// move right door to y = 1
+    // move left door to y = -1
+    // move right door to y = 1
     public void closeDoors()
     {
+        if (LiftScare.Instance != null)
+        {
+            StartCoroutine(LiftScare.Instance.PlayScare());
+            return;
+        }
+
+
+        Debug.LogWarning("[Lift] closeDoors called");
         StartCoroutine(moveDoor(leftDoor, -1f, 5f));
         StartCoroutine(moveDoor(rightDoor, 1f, 5f));
         doorClose.Play();
 
         StartCoroutine(LiftLoadingAreas());
 
+
+
+
     }
+
+    public void crackDoorsOpen()
+    {
+        StartCoroutine(moveDoor(leftDoor, -0.3f, 1.5f));
+        StartCoroutine(moveDoor(rightDoor, 0.3f, 1.5f));
+        doorOpen.Play();
+    }
+
 
     public IEnumerator moveDoor(Transform door, float targetY, float duration)
     {
@@ -53,11 +72,22 @@ public class DoorMovement : MonoBehaviour
 
     public IEnumerator LiftLoadingAreas()
     {
+        Debug.LogWarning("[Lift] LiftLoadingAreas: waiting 5s for doors");
         yield return new WaitForSeconds(5f);
-
+        Debug.LogWarning("[Lift] LiftLoadingAreas: starting area transition");
         yield return StartCoroutine(AreaTransition.Instance.StartAreaTransition());
-
+        Debug.LogWarning("[Lift] LiftLoadingAreas: transition done, opening doors");
         openDoors();
+    }
+
+
+    public IEnumerator closeDoorsRoutine()
+    {
+        Coroutine left = StartCoroutine(moveDoor(leftDoor, -1f, 2.5f));
+        Coroutine right = StartCoroutine(moveDoor(rightDoor, 1f, 2.5f));
+        doorClose.Play();
+        yield return left;
+        yield return right;
     }
 
 }
