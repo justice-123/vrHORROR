@@ -8,16 +8,10 @@ public class HallucinationPostFX : MonoBehaviour
     public Volume volume;
     public float activateAbove = 40f;
 
-    [Header("Choking Audio")]
-    public AudioSource chokingSource;
-    public AudioClip chokingClip;
-
     ChromaticAberration chromatic;
     LensDistortion lensDistortion;
     FilmGrain filmGrain;
     ColorAdjustments colorAdj;
-
-    bool wasActive;
 
     void Start()
     {
@@ -29,20 +23,7 @@ public class HallucinationPostFX : MonoBehaviour
 
     void Update()
     {
-        bool isActive = toxicity.toxicityLevel >= activateAbove;
-
-        if (isActive && !wasActive)
-        {
-            if (chokingSource != null && chokingClip != null)
-            {
-                chokingSource.clip = chokingClip;
-                chokingSource.Play();
-            }
-        }
-
-        wasActive = isActive;
-
-        if (!isActive)
+        if (toxicity.toxicityLevel < activateAbove)
         {
             SetEffects(0f);
             return;
