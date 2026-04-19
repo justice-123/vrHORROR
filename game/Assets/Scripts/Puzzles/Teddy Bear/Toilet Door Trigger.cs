@@ -4,8 +4,7 @@ public class ToiletDoorTrigger : MonoBehaviour
 {
     
     public bool triggered;
-    public ToiletDoor toiletDoor;
-    public AudioSource toiletAudio;
+    public ToiletLight toiletLight;
 
     void Start()
     {
@@ -17,8 +16,7 @@ public class ToiletDoorTrigger : MonoBehaviour
         if (!triggered)
         {
             triggered = true;
-            toiletDoor.visitNursery();
-            toiletAudio.Play();
+            toiletLight.enableLight();
         }
     }
 
