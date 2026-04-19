@@ -80,6 +80,12 @@ public class DoorMovement : MonoBehaviour
         openDoors();
     }
 
+    public IEnumerator TransitionAndOpenDoors()
+    {
+        yield return StartCoroutine(AreaTransition.Instance.StartAreaTransition());
+        openDoors();
+    }
+
 
     public IEnumerator closeDoorsRoutine()
     {

@@ -74,7 +74,6 @@ public class LiftScare : MonoBehaviour
 
         yield return new WaitForSeconds(attackTailDuration);
 
-        yield return StartCoroutine(AreaTransition.Instance.StartAreaTransition());
-        doors.openDoors();
+        doors.StartCoroutine(doors.TransitionAndOpenDoors());
     }
 }
