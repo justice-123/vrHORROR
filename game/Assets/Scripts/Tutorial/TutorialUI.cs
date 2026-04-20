@@ -17,7 +17,7 @@ public class TutorialUI : MonoBehaviour
     public void ShowSuccess()
     {
         StopAllCoroutines();
-        mainText.text = "Great!";
+        mainText.text = "Try to escape here";
         StartCoroutine(FadeOutAfter(2.5f));
     }
 

@@ -48,6 +48,7 @@ EditorBuildSettings:
     path: Assets/Scenes/All Scenes/Tutorial-2.unity
     guid: 951061a252cca31488cc93f7b5b37604
   m_configObjects:
+    com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4bf9bb893ef547a42b4d44c58dbad263, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: c718e26290ccc1a47ac495a6415f9523, type: 2}

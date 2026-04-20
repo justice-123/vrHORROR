@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class WheelchairTutorial : MonoBehaviour
 {
@@ -18,20 +19,29 @@ public class WheelchairTutorial : MonoBehaviour
     public Transform leftController;
     public Transform rightController;
 
+    [Header("Grab Tutorial")]
+    public InventoryManager inventory;       // Assign InventoryManager in Inspector
+    public TutorialPickupItem pickupSpawner; // Assign the GameObject with TutorialPickupItem
+
+    // Flags used by the grab tutorial steps
+    bool itemGrabbed = false;
+    bool itemStored  = false;
+    bool itemCycled  = false;
+
     void Start() => StartCoroutine(RunTutorial());
 
     IEnumerator RunTutorial()
     {
         yield return null;
 
-        // ── Part 1: Grip ───────────────────────────────
+        // Part 1: Grip
         tutorialUI.Show("Hold both Grip buttons to grab both wheels");
         yield return StartCoroutine(WaitBothGrips());
         PlayDing();
 
         yield return new WaitForSeconds(1f);
 
-        // ── Part 2: Push forward (both hands) ──────────
+        // Part 2: Push forward with both hands
         tutorialUI.Show("Push both hands forward to move");
         pushArrows.leftController  = leftController;
         pushArrows.rightController = rightController;
@@ -42,32 +52,105 @@ public class WheelchairTutorial : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        // ── Part 3: Turn right (left hand forward) ──────
+        // Part 3: Turn right by pushing left hand forward
         tutorialUI.Show("Push LEFT arm forward to turn right");
         pushArrows.leftController  = leftController;
         pushArrows.rightController = null;
         pushArrows.StartArrows();
-        yield return StartCoroutine(WaitForPush(both: false, detectLeft: true));  
+        yield return StartCoroutine(WaitForPush(both: false, detectLeft: true));
         pushArrows.StopArrows();
         PlayDing();
 
         yield return new WaitForSeconds(1f);
 
-        // ── Part 4: Turn left (right hand forward) ──────
+        // Part 4: Turn left by pushing right hand forward
         tutorialUI.Show("Push RIGHT arm forward to turn left");
         pushArrows.leftController  = null;
         pushArrows.rightController = rightController;
         pushArrows.StartArrows();
-        yield return StartCoroutine(WaitForPush(both: false, detectLeft: false));  
+        yield return StartCoroutine(WaitForPush(both: false, detectLeft: false));
         pushArrows.StopArrows();
+        PlayDing();
+
+        yield return new WaitForSeconds(1f);
+
+        // Part 5: Breathing info (timed, no input needed)
+        tutorialUI.Show("Breath");
+        yield return new WaitForSeconds(3f);
+
+        tutorialUI.Show("Look down to the left of your wheelchair\nthere is an oxygen indicator");
+        yield return new WaitForSeconds(5f);
+
+        tutorialUI.Show("Breathing consumes oxygen\nyou can find refill stations on the map");
+        yield return new WaitForSeconds(5f);
+
+        // Part 6: Grab tutorial
+        yield return StartCoroutine(RunGrabTutorial());
+
+        // All steps done
+        tutorialUI.ShowSuccess();
+    }
+
+    // ── Grab Tutorial ─────────────────────────────────
+
+    IEnumerator RunGrabTutorial()
+    {
+        // Reset flags before starting
+        itemGrabbed = false;
+        itemStored  = false;
+        itemCycled  = false;
+
+        // Subscribe to inventory events
+        inventory.OnItemStored    += OnItemStored;
+        inventory.OnItemCycledOut += OnItemCycledOut;
+
+        // Subscribe to the grab interactable on the spawned item
+        XRGrabInteractable grabInteractable = null;
+        if (pickupSpawner != null && pickupSpawner.spawnedItem != null)
+        {
+            grabInteractable = pickupSpawner.spawnedItem.GetComponent<XRGrabInteractable>();
+            if (grabInteractable != null)
+                grabInteractable.selectEntered.AddListener(_ => itemGrabbed = true);
+        }
+
+        // Step 1: Pick up the item
+        tutorialUI.Show("Pull the Right Trigger to grab the item in front of you");
+        yield return new WaitUntil(() => itemGrabbed);
         PlayDing();
 
         yield return new WaitForSeconds(0.5f);
 
-        // ── Complete ────────────────────────────────────
-        tutorialUI.ShowSuccess();
+        // Step 2: Store the item in inventory by releasing trigger
+        tutorialUI.Show("Release the Trigger to store it in your inventory");
+        yield return new WaitUntil(() => itemStored);
+        PlayDing();
+
+        yield return new WaitForSeconds(0.5f);
+
+        // Step 3: Retrieve the item from inventory by pressing A
+        tutorialUI.Show("Press A to take it out from your inventory");
+        yield return new WaitUntil(() => itemCycled);
+        PlayDing();
+
+        yield return new WaitForSeconds(0.5f);
+
+        // Unsubscribe from all events and clean up
+        inventory.OnItemStored    -= OnItemStored;
+        inventory.OnItemCycledOut -= OnItemCycledOut;
+
+        if (grabInteractable != null)
+            grabInteractable.selectEntered.RemoveAllListeners();
+
+        // Destroy the placeholder item after tutorial is done
+        if (pickupSpawner != null)
+            pickupSpawner.DestroyItem();
     }
-    // ── Detect both grips pressed ─────────────────────
+
+    // Event callbacks for inventory
+    void OnItemStored()    => itemStored = true;
+    void OnItemCycledOut() => itemCycled = true;
+
+    // ── Wait for both grip buttons to be pressed ──────
 
     IEnumerator WaitBothGrips()
     {
@@ -99,27 +182,81 @@ public class WheelchairTutorial : MonoBehaviour
         }
     }
 
-    // ── Detect forward push ───────────────────────────
-    // both=true  → both arms
-    // both=false, detectLeft=true  → left arm
-    // both=false, detectLeft=false → right arm
+    // Returns the player's horizontal forward direction based on the headset
+    Vector3 GetPlayerForward()
+    {
+        Vector3 forward = Camera.main.transform.forward;
+        forward.y = 0f;
+        forward.Normalize();
+        return forward;
+    }
 
+    // Waits until the relevant hands stop moving, preventing the previous
+    // step from accidentally triggering the next one
+    IEnumerator WaitForHandsToSettle(bool both, bool detectLeft)
+    {
+        float settleThreshold = 0.002f; // movement below this is considered still
+        float settleTime      = 0.25f;  // hands must be still for this long
+        float stillTimer      = 0f;
+
+        Vector3 prevLeft  = leftController  != null ? leftController.position  : Vector3.zero;
+        Vector3 prevRight = rightController != null ? rightController.position : Vector3.zero;
+
+        while (stillTimer < settleTime)
+        {
+            bool leftNeedsCheck  = both || detectLeft;
+            bool rightNeedsCheck = both || !detectLeft;
+
+            bool leftStill  = true;
+            bool rightStill = true;
+
+            Vector3 playerForward = GetPlayerForward();
+
+            if (leftNeedsCheck && leftController != null)
+            {
+                float leftMotion = Mathf.Abs(Vector3.Dot(leftController.position - prevLeft, playerForward));
+                leftStill = leftMotion < settleThreshold;
+                prevLeft  = leftController.position;
+            }
+
+            if (rightNeedsCheck && rightController != null)
+            {
+                float rightMotion = Mathf.Abs(Vector3.Dot(rightController.position - prevRight, playerForward));
+                rightStill = rightMotion < settleThreshold;
+                prevRight  = rightController.position;
+            }
+
+            if (leftStill && rightStill)
+                stillTimer += Time.deltaTime;
+            else
+                stillTimer = 0f; // hand is still moving, reset the timer
+
+            yield return null;
+        }
+    }
+
+    // Waits for the specified hand(s) to push forward while holding grip.
+    // both=true               : both hands
+    // both=false, detectLeft=true  : left hand only
+    // both=false, detectLeft=false : right hand only
     IEnumerator WaitForPush(bool both, bool detectLeft = true)
     {
         bool leftPushed  = !both && !detectLeft;
         bool rightPushed = !both &&  detectLeft;
 
+        // Wait for hands to settle before checking for a new push
+        yield return StartCoroutine(WaitForHandsToSettle(both, detectLeft));
+
         Vector3 prevLeft  = leftController  != null ? leftController.position  : Vector3.zero;
         Vector3 prevRight = rightController != null ? rightController.position : Vector3.zero;
 
-        float threshold = 0.004f;
+        float threshold = 0.004f; // minimum forward movement to count as a push
 
         var leftHand  = new List<InputDevice>();
         var rightHand = new List<InputDevice>();
 
         while (!leftPushed || !rightPushed)
         {
-            // get VR device
             if (leftHand.Count == 0)
                 InputDevices.GetDevicesWithCharacteristics(
                     InputDeviceCharacteristics.Left | InputDeviceCharacteristics.Controller,
@@ -129,26 +266,29 @@ public class WheelchairTutorial : MonoBehaviour
                     InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller,
                     rightHand);
 
-            // detect left arm : should hold grip button
+            // Use headset forward direction so pushing backward never triggers completion
+            Vector3 playerForward = GetPlayerForward();
+
+            // Left hand: must hold grip and push forward
             if (!leftPushed && leftController != null && leftHand.Count > 0)
             {
                 leftHand[0].TryGetFeatureValue(CommonUsages.gripButton, out bool leftGrip);
-                if (leftGrip)  // should hold
+                if (leftGrip)
                 {
                     Vector3 delta = leftController.position - prevLeft;
-                    if (delta.z > threshold) leftPushed = true;
+                    if (Vector3.Dot(delta, playerForward) > threshold) leftPushed = true;
                 }
                 prevLeft = leftController.position;
             }
 
-            // detect right arm : should hold grip button
+            // Right hand: must hold grip and push forward
             if (!rightPushed && rightController != null && rightHand.Count > 0)
             {
                 rightHand[0].TryGetFeatureValue(CommonUsages.gripButton, out bool rightGrip);
-                if (rightGrip)  // should hold
+                if (rightGrip)
                 {
                     Vector3 delta = rightController.position - prevRight;
-                    if (delta.z > threshold) rightPushed = true;
+                    if (Vector3.Dot(delta, playerForward) > threshold) rightPushed = true;
                 }
                 prevRight = rightController.position;
             }
@@ -157,7 +297,7 @@ public class WheelchairTutorial : MonoBehaviour
         }
     }
 
-    // ── Play ding ─────────────────────────────────────
+    // ── Play success sound ────────────────────────────
 
     void PlayDing()
     {
