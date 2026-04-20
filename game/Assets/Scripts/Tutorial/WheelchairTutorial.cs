@@ -53,7 +53,7 @@ public class WheelchairTutorial : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Part 3: Turn right by pushing left hand forward
-        tutorialUI.Show("Push LEFT arm forward to turn RIGHT");
+        tutorialUI.Show("Push LEFT arm forward and RIGHT arm backward to turn RIGHT");
         pushArrows.leftController  = leftController;
         pushArrows.rightController = null;
         pushArrows.StartArrows();
@@ -64,7 +64,7 @@ public class WheelchairTutorial : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Part 4: Turn left by pushing right hand forward
-        tutorialUI.Show("Push RIGHT arm forward to turn LEFT");
+        tutorialUI.Show("Oppsite direction to turn LEFT");
         pushArrows.leftController  = null;
         pushArrows.rightController = rightController;
         pushArrows.StartArrows();
@@ -114,7 +114,7 @@ public class WheelchairTutorial : MonoBehaviour
         }
 
         // Step 1: Pick up the item
-        tutorialUI.Show("PULL and HOLD the Right Trigger to grab the blue square");
+        tutorialUI.Show("PULL and HOLD the Right Trigger to grab the white square");
         yield return new WaitUntil(() => itemGrabbed);
         PlayDing();
 
