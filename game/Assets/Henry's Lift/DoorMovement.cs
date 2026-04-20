@@ -87,6 +87,15 @@ public class DoorMovement : MonoBehaviour
     }
 
 
+    public IEnumerator openDoorsRoutine()
+    {
+        Coroutine left = StartCoroutine(moveDoor(leftDoor, 0f, 2.5f));
+        Coroutine right = StartCoroutine(moveDoor(rightDoor, 0f, 2.5f));
+        doorOpen.Play();
+        yield return left;
+        yield return right;
+    }
+
     public IEnumerator closeDoorsRoutine()
     {
         Coroutine left = StartCoroutine(moveDoor(leftDoor, -1f, 2.5f));

@@ -29,8 +29,9 @@ public class LiftScare : MonoBehaviour
     [SerializeField] private Light silhouetteLight;
     [SerializeField] private string firstAreaSceneName = "First Area";
 
-    [Header("Door Close Duration")]
-    [SerializeField] private float doorCloseDuration = 2.5f;
+    [Header("Timing")]
+    [SerializeField] private float postFirstCloseDelay = 0.5f;
+    [SerializeField] private float allIsWellDuration = 1.0f;
 
     private DoorMovement doors;
     private Transform playerHead;
@@ -127,11 +128,22 @@ public class LiftScare : MonoBehaviour
             yield break;
         }
 
+        Debug.LogWarning("[LiftScare] first close (normal)");
+        yield return StartCoroutine(doors.closeDoorsRoutine());
+
+        yield return new WaitForSeconds(postFirstCloseDelay);
+
         DisableFirstAreaLights();
         if (silhouetteLight != null) silhouetteLight.enabled = true;
 
+        Debug.LogWarning("[LiftScare] doors reopening into darkness");
+        yield return StartCoroutine(doors.openDoorsRoutine());
+
+        Debug.LogWarning("[LiftScare] all is well pause");
+        yield return new WaitForSeconds(allIsWellDuration);
+
         StartCoroutine(doors.closeDoorsRoutine());
-        Debug.LogWarning("[LiftScare] doors closing");
+        Debug.LogWarning("[LiftScare] second close + approach");
 
         yield return new WaitForSeconds(emergenceDelay);
 
@@ -147,8 +159,6 @@ public class LiftScare : MonoBehaviour
             hissLoop.volume = hissMinVolume;
             hissLoop.Play();
         }
-
-        Debug.LogWarning("[LiftScare] monster emerging, walking toward lift");
 
         Quaternion startRot = startPoint.rotation;
         float elapsed = 0f;
