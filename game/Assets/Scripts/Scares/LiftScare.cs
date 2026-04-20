@@ -33,6 +33,7 @@ public class LiftScare : MonoBehaviour
     [SerializeField] private float doorCloseDuration = 2.5f;
 
     private DoorMovement doors;
+    private Transform playerHead;
     private List<Light> disabledLights = new List<Light>();
 
     private Color cachedAmbientLight;
@@ -113,6 +114,12 @@ public class LiftScare : MonoBehaviour
                 doors = lift.GetComponentInChildren<DoorMovement>();
         }
 
+        if (playerHead == null)
+        {
+            if (Camera.main != null)
+                playerHead = Camera.main.transform;
+        }
+
         if (monster == null || monsterAnimator == null || doors == null ||
             startPoint == null || endPoint == null)
         {
@@ -143,6 +150,7 @@ public class LiftScare : MonoBehaviour
 
         Debug.LogWarning("[LiftScare] monster emerging, walking toward lift");
 
+        Quaternion startRot = startPoint.rotation;
         float elapsed = 0f;
         while (elapsed < approachDuration)
         {
@@ -153,6 +161,17 @@ public class LiftScare : MonoBehaviour
                 endPoint.position,
                 t
             );
+
+            if (playerHead != null)
+            {
+                Vector3 toPlayer = playerHead.position - monster.transform.position;
+                toPlayer.y = 0f;
+                if (toPlayer.sqrMagnitude > 0.001f)
+                {
+                    Quaternion lookAtPlayer = Quaternion.LookRotation(toPlayer);
+                    monster.transform.rotation = Quaternion.Slerp(startRot, lookAtPlayer, t);
+                }
+            }
 
             if (hissLoop != null)
             {
