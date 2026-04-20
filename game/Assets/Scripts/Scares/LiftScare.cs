@@ -11,21 +11,26 @@ public class LiftScare : MonoBehaviour
     [Header("Monster")]
     [SerializeField] private GameObject monster;
     [SerializeField] private Animator monsterAnimator;
-    [SerializeField] private string idleStateName = "Idle";
-    [SerializeField] private string attackStateName = "Attack";
+    [SerializeField] private string walkStateName = "MonsterWalk";
+
+    [Header("Approach Path")]
+    [SerializeField] private Transform startPoint;
+    [SerializeField] private Transform endPoint;
+    [SerializeField] private float emergenceDelay = 1.0f;
+    [SerializeField] private float approachDuration = 1.5f;
 
     [Header("Audio")]
-    [SerializeField] private AudioSource peekAudio;
-    [SerializeField] private AudioSource screechAudio;
+    [SerializeField] private AudioSource footstepLoop;
+    [SerializeField] private AudioSource hissLoop;
+    [SerializeField] private float hissMinVolume = 0.1f;
+    [SerializeField] private float hissMaxVolume = 1.0f;
 
     [Header("Lighting")]
     [SerializeField] private Light silhouetteLight;
     [SerializeField] private string firstAreaSceneName = "First Area";
 
-    [Header("Timing")]
-    [SerializeField] private float silenceBeforeScare = 1.5f;
-    [SerializeField] private float idleDuration = 0.4f;
-    [SerializeField] private float attackTailDuration = 0.5f;
+    [Header("Door Close Duration")]
+    [SerializeField] private float doorCloseDuration = 2.5f;
 
     private DoorMovement doors;
     private List<Light> disabledLights = new List<Light>();
@@ -108,39 +113,65 @@ public class LiftScare : MonoBehaviour
                 doors = lift.GetComponentInChildren<DoorMovement>();
         }
 
-        if (monster == null || monsterAnimator == null || doors == null)
+        if (monster == null || monsterAnimator == null || doors == null ||
+            startPoint == null || endPoint == null)
         {
             Debug.LogWarning("[LiftScare] references not set");
             yield break;
         }
 
-        Debug.LogWarning("[LiftScare] closing doors");
-        yield return StartCoroutine(doors.closeDoorsRoutine());
-
-        yield return new WaitForSeconds(silenceBeforeScare);
-
         DisableFirstAreaLights();
         if (silhouetteLight != null) silhouetteLight.enabled = true;
 
+        StartCoroutine(doors.closeDoorsRoutine());
+        Debug.LogWarning("[LiftScare] doors closing");
+
+        yield return new WaitForSeconds(emergenceDelay);
+
+        monster.transform.position = startPoint.position;
+        monster.transform.rotation = startPoint.rotation;
         monster.SetActive(true);
         yield return null;
-        monsterAnimator.Play(idleStateName, 0, 0f);
-        if (peekAudio != null) peekAudio.Play();
 
-        doors.crackDoorsOpen();
-        Debug.LogWarning("[LiftScare] doors cracking open, idle phase");
+        monsterAnimator.Play(walkStateName, 0, 0f);
+        if (footstepLoop != null) footstepLoop.Play();
+        if (hissLoop != null)
+        {
+            hissLoop.volume = hissMinVolume;
+            hissLoop.Play();
+        }
 
-        yield return new WaitForSeconds(idleDuration);
+        Debug.LogWarning("[LiftScare] monster emerging, walking toward lift");
 
-        if (peekAudio != null && peekAudio.isPlaying) peekAudio.Stop();
-        monsterAnimator.Play(attackStateName, 0, 0f);
-        if (screechAudio != null) screechAudio.Play();
+        float elapsed = 0f;
+        while (elapsed < approachDuration)
+        {
+            float t = elapsed / approachDuration;
 
-        StartCoroutine(doors.closeDoorsRoutine());
-        Debug.LogWarning("[LiftScare] attack + doors closing simultaneously");
+            monster.transform.position = Vector3.Lerp(
+                startPoint.position,
+                endPoint.position,
+                t
+            );
 
-        yield return new WaitForSeconds(attackTailDuration);
+            if (hissLoop != null)
+            {
+                hissLoop.volume = Mathf.Lerp(hissMinVolume, hissMaxVolume, t);
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        monster.transform.position = endPoint.position;
+
+        if (footstepLoop != null) footstepLoop.Stop();
+        if (hissLoop != null) hissLoop.Stop();
+
+        Debug.LogWarning("[LiftScare] monster reached lift, doors shut");
+
         RestoreFirstAreaLights();
+
         doors.StartCoroutine(doors.TransitionAndOpenDoors());
     }
 }
