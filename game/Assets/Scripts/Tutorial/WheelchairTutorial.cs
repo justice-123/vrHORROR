@@ -20,8 +20,8 @@ public class WheelchairTutorial : MonoBehaviour
     public Transform rightController;
 
     [Header("Grab Tutorial")]
-    public InventoryManager inventory;       // Assign InventoryManager in Inspector
-    public TutorialPickupItem pickupSpawner; // Assign the GameObject with TutorialPickupItem
+    public InventoryManager inventory;       
+    public TutorialPickupItem pickupSpawner; 
 
     // Flags used by the grab tutorial steps
     bool itemGrabbed = false;
@@ -196,7 +196,7 @@ public class WheelchairTutorial : MonoBehaviour
     IEnumerator WaitForHandsToSettle(bool both, bool detectLeft)
     {
         float settleThreshold = 0.002f; // movement below this is considered still
-        float settleTime      = 0.25f;  // hands must be still for this long
+        float settleTime      = 0.1f;  // hands must be still for this long
         float stillTimer      = 0f;
 
         Vector3 prevLeft  = leftController  != null ? leftController.position  : Vector3.zero;
