@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/CoreScene/CoreSceneMain.unity
+    path: Assets/Scenes/Final Game Scenes/CoreScene/CoreSceneMain.unity
     guid: 07c150994dab3b443a923a8573d20af9
   - enabled: 0
     path: Assets/Scenes/TestScenes/grabDifferentSceneTest.unity
@@ -15,13 +15,13 @@ EditorBuildSettings:
     path: Assets/Scenes/MVP/haptic_vest.unity
     guid: 0911dc45e975fd741af0264fc369c9d5
   - enabled: 0
-    path: Assets/Scenes/Beta (Old)/PattyCake/PattyCake-1.unity
+    path: Assets/Scenes/Old Scenes/Beta (Old)/PattyCake/PattyCake-1.unity
     guid: f947eaf9a28a5934faaad7bd76721bae
   - enabled: 0
-    path: Assets/Scenes/Beta (Old)/jScene.unity
+    path: Assets/Scenes/Old Scenes/Beta (Old)/jScene.unity
     guid: 8b7eaa856d30e864c8e9b2483a3413db
   - enabled: 0
-    path: Assets/Scenes/Beta (Old)/OLDCoreScene.unity
+    path: Assets/Scenes/Old Scenes/Beta (Old)/OLDCoreScene.unity
     guid: 8900a0a24218c144190337d4f21f3ca0
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
@@ -36,7 +36,7 @@ EditorBuildSettings:
     path: Assets/PattyCake.unity
     guid: d8b7bfbb59c7c5442a2e3b941384cb01
   - enabled: 0
-    path: Assets/Scenes/Second Area.unity
+    path: Assets/Scenes/Final Game Scenes/Second Area/Second Area.unity
     guid: 0549a015663ccc645a8289aa0ec02bdd
   - enabled: 0
     path: Assets/Abandoned_Psychiatric_Hospitals/Scenes/AP_Demo.unity

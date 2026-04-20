@@ -11,6 +11,9 @@ TagManager:
   - TargetBox
   - Left Hand Box
   - Right Hand Box
+  - Lift
+  - DoorFragment
+  - DoorPiece
   layers:
   - Default
   - TransparentFX
