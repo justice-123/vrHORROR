@@ -39,7 +39,7 @@ public class TutorialPickupItem : MonoBehaviour
         visual.transform.localScale    = Vector3.one * itemSize;
 
         // Apply colour
-        var mat = new Material(Shader.Find("Standard"));
+        var mat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
         mat.color = itemColor;
         visual.GetComponent<Renderer>().material = mat;
 

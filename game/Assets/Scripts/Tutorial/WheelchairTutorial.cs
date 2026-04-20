@@ -35,14 +35,14 @@ public class WheelchairTutorial : MonoBehaviour
         yield return null;
 
         // Part 1: Grip
-        tutorialUI.Show("Hold both Grip buttons to grab both wheels");
+        tutorialUI.Show("Hold both Grip buttons to grab wheels");
         yield return StartCoroutine(WaitBothGrips());
         PlayDing();
 
         yield return new WaitForSeconds(1f);
 
         // Part 2: Push forward with both hands
-        tutorialUI.Show("Push both hands forward to move");
+        tutorialUI.Show("Push both arms forward to move forward");
         pushArrows.leftController  = leftController;
         pushArrows.rightController = rightController;
         pushArrows.StartArrows();
@@ -53,7 +53,7 @@ public class WheelchairTutorial : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Part 3: Turn right by pushing left hand forward
-        tutorialUI.Show("Push LEFT arm forward to turn right");
+        tutorialUI.Show("Push LEFT arm forward to turn RIGHT");
         pushArrows.leftController  = leftController;
         pushArrows.rightController = null;
         pushArrows.StartArrows();
@@ -64,7 +64,7 @@ public class WheelchairTutorial : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Part 4: Turn left by pushing right hand forward
-        tutorialUI.Show("Push RIGHT arm forward to turn left");
+        tutorialUI.Show("Push RIGHT arm forward to turn LEFT");
         pushArrows.leftController  = null;
         pushArrows.rightController = rightController;
         pushArrows.StartArrows();
@@ -114,14 +114,14 @@ public class WheelchairTutorial : MonoBehaviour
         }
 
         // Step 1: Pick up the item
-        tutorialUI.Show("Pull the Right Trigger to grab the item in front of you");
+        tutorialUI.Show("PULL and HOLD the Right Trigger to grab the blue square");
         yield return new WaitUntil(() => itemGrabbed);
         PlayDing();
 
         yield return new WaitForSeconds(0.5f);
 
         // Step 2: Store the item in inventory by releasing trigger
-        tutorialUI.Show("Release the Trigger to store it in your inventory");
+        tutorialUI.Show("Release the button to store it in your inventory");
         yield return new WaitUntil(() => itemStored);
         PlayDing();
 
@@ -132,7 +132,7 @@ public class WheelchairTutorial : MonoBehaviour
         yield return new WaitUntil(() => itemCycled);
         PlayDing();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(5f);
 
         // Unsubscribe from all events and clean up
         inventory.OnItemStored    -= OnItemStored;
