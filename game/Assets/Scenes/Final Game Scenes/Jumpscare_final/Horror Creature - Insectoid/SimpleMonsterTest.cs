@@ -9,25 +9,21 @@ public class SimpleMonsterTest : MonoBehaviour
 
     void Start()
     {
-        Debug.LogWarning(" SimpleMonsterTest is running");
+        Debug.LogWarning(" SimpleMonsterTest starting");
 
-        // Auto-find camera if not assigned
         if (playerCamera == null && Camera.main != null)
-        {
             playerCamera = Camera.main.transform;
-            Debug.LogWarning(" Found camera: " + playerCamera.name);
-        }
 
-        // Auto-find monster if not assigned
-        if (monsterToSpawn == null)
+        // Find monster WHILE IT'S STILL ENABLED
+        monsterToSpawn = GameObject.Find("Insectoid (1)");
+        Debug.LogWarning(" Found monster: " + (monsterToSpawn != null ? monsterToSpawn.name : "NONE"));
+
+        // Now disable it so it's hidden until the scare
+        if (monsterToSpawn != null)
         {
-            monsterToSpawn = GameObject.Find("Insectoid (1)");
-            if (monsterToSpawn == null) monsterToSpawn = GameObject.Find("Insectoid");
-            Debug.LogWarning(" Found monster: " + (monsterToSpawn != null ? monsterToSpawn.name : "NONE"));
+            monsterToSpawn.SetActive(false);
+            Debug.LogWarning(" Monster hidden until triggered");
         }
-
-        // Start with monster hidden
-        if (monsterToSpawn != null) monsterToSpawn.SetActive(false);
     }
 
     void OnTriggerEnter(Collider other)
