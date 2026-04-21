@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Horror Creatures/Demo/LightingData.asset.meta
 guid: dc4c24db19afa6b4e862429e3a28aa55
+========
+guid: 5068cc1ad60cd9c4fb4eb94d50e78646
+>>>>>>>> a09c9d5 (Squashed commit of the following:):game/Assets/Materials/Red.mat.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 112000000
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

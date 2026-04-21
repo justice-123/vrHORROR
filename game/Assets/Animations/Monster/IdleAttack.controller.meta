@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Animations/Monster/IdleAttack.controller.meta
 guid: 6214ac3799476184192880b76e37bffe
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 9100000
+========
+guid: 6a95e11321345f34bba2fd9e15ce7062
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+>>>>>>>> a09c9d5 (Squashed commit of the following:):game/Assets/Materials/Front_Door.mat.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 
