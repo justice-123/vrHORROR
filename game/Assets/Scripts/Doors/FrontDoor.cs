@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class OldFrontDoor : MonoBehaviour
+public class FrontDoor : MonoBehaviour
 {
     public bool woodChopped;
     public bool keypadBroken;
