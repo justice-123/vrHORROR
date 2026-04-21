@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 
 public class WheelchairFinale : MonoBehaviour
 {
     [Header("Monster")]
-    [Tooltip("Leave ENABLED in hierarchy. Script disables it in Awake.")]
     [SerializeField] private GameObject monster;
     [SerializeField] private Animator monsterAnimator;
 
@@ -13,50 +14,49 @@ public class WheelchairFinale : MonoBehaviour
     [SerializeField] private string chaseStateName = "Chase";
     [SerializeField] private string attackStateName = "Attack";
 
+    [Header("Cross-scene references - leave empty, auto-found at runtime")]
+    [Tooltip("Name of the door GameObject in the scene. Must match exactly.")]
+    [SerializeField] private string doorGameObjectName = "Front Door";
+    [Tooltip("Tag of your player rig. Default is 'Player'.")]
+    [SerializeField] private string playerTag = "Player";
+
+    // These get found at runtime
+    private Transform doorPosition;
+    private Transform playerRig;
+    private ContinuousMoveProvider moveProvider;
+    private ContinuousTurnProvider turnProvider;
+    private SnapTurnProvider snapTurnProvider;
+
     [Header("Audio")]
-    [Tooltip("The audio that plays BEHIND the player to make them turn around. Spatial 3D.")]
-    [SerializeField] private AudioSource lurePhaseSound;
-    [Tooltip("The moment of reveal - plays when the monster materialises in front of them.")]
+    [SerializeField] private AudioSource crashOrCrySound;
     [SerializeField] private AudioSource revealStinger;
-    [Tooltip("The final attack screech.")]
     [SerializeField] private AudioSource attackScreech;
 
     [Header("Sequence Timing")]
-    [Tooltip("Distance BEHIND the player the lure sound plays from.")]
-    [SerializeField] private float lureSoundDistance = 5f;
-    [Tooltip("How long the lure sound plays so player has time to turn around.")]
-    [SerializeField] private float lureDuration = 3f;
-    [Tooltip("How far away the monster appears when it materialises in front.")]
-    [SerializeField] private float monsterRevealDistance = 10f;
-    [Tooltip("Brief moment of silence before charge starts. Dread.")]
-    [SerializeField] private float silenceBeforeCharge = 0.4f;
-    [Tooltip("Starting chase speed.")]
+    [SerializeField] private float freezeDuration = 2f;
+    [SerializeField] private float fadeOutDuration = 1f;
+    [SerializeField] private float blackHoldDuration = 0.8f;
+    [SerializeField] private float fadeInDuration = 0.4f;
     [SerializeField] private float startChaseSpeed = 8f;
-    [Tooltip("Maximum chase speed (accelerates up to this).")]
     [SerializeField] private float maxChaseSpeed = 14f;
-    [Tooltip("How fast the monster accelerates.")]
     [SerializeField] private float chaseAcceleration = 6f;
-    [Tooltip("Monster triggers attack when this close.")]
-    [SerializeField] private float attackDistance = 1.3f;
-    [Tooltip("Safety cap.")]
+    [SerializeField] private float attackDistance = 1.5f;
     [SerializeField] private float maxChaseTime = 4f;
 
     [Header("Ground Snapping")]
     [SerializeField] private LayerMask groundMask = ~0;
     [SerializeField] private float groundRayStartHeight = 2f;
     [SerializeField] private float groundRayDistance = 10f;
+    [Tooltip("Vertical offset so monster stops at camera height for attack, not above or below.")]
+    [SerializeField] private float attackHeightOffset = 0f;
 
     [Header("Impact Effects")]
-    [Tooltip("How long the red flash lasts before cut to black.")]
     [SerializeField] private float redFlashDuration = 0.3f;
-    [Tooltip("Hold on the black screen.")]
     [SerializeField] private float holdOnBlackDuration = 3f;
-    [Tooltip("Optional: existing full-screen Image. If empty, one is created.")]
     [SerializeField] private Image fadeImage;
 
     private Transform playerCamera;
     private bool hasTriggered = false;
-    private GameObject lureSoundObject;
 
     private void Awake()
     {
@@ -74,6 +74,38 @@ public class WheelchairFinale : MonoBehaviour
         StartCoroutine(PlayScare());
     }
 
+    private void FindCrossSceneReferences()
+    {
+        // Find player rig by tag
+        GameObject playerObj = GameObject.FindGameObjectWithTag(playerTag);
+        if (playerObj != null)
+        {
+            playerRig = playerObj.transform;
+            Debug.LogError("[WheelchairFinale] found player rig: " + playerRig.name);
+
+            // Find locomotion providers on the player hierarchy
+            moveProvider = playerObj.GetComponentInChildren<ContinuousMoveProvider>();
+            turnProvider = playerObj.GetComponentInChildren<ContinuousTurnProvider>();
+            snapTurnProvider = playerObj.GetComponentInChildren<SnapTurnProvider>();
+        }
+        else
+        {
+            Debug.LogError("[WheelchairFinale] no GameObject with tag '" + playerTag + "' found!");
+        }
+
+        // Find door by name
+        GameObject doorObj = GameObject.Find(doorGameObjectName);
+        if (doorObj != null)
+        {
+            doorPosition = doorObj.transform;
+            Debug.LogError("[WheelchairFinale] found door: " + doorPosition.name);
+        }
+        else
+        {
+            Debug.LogError("[WheelchairFinale] no GameObject named '" + doorGameObjectName + "' found!");
+        }
+    }
+
     private Transform FindPlayerCamera()
     {
         if (Camera.main != null) return Camera.main.transform;
@@ -84,50 +116,67 @@ public class WheelchairFinale : MonoBehaviour
 
     private IEnumerator PlayScare()
     {
+        // Auto-find all cross-scene references
         playerCamera = FindPlayerCamera();
+        FindCrossSceneReferences();
 
-        if (monster == null || monsterAnimator == null || playerCamera == null)
+        if (monster == null || monsterAnimator == null || playerCamera == null || doorPosition == null || playerRig == null)
         {
             Debug.LogError("[WheelchairFinale] refs missing: monster=" + (monster != null) +
-                           " anim=" + (monsterAnimator != null) + " cam=" + (playerCamera != null));
+                           " anim=" + (monsterAnimator != null) +
+                           " cam=" + (playerCamera != null) +
+                           " door=" + (doorPosition != null) +
+                           " rig=" + (playerRig != null));
             yield break;
         }
 
-        // === PHASE 1: THE LURE - play sound BEHIND the player ===
-        Debug.LogError("[WheelchairFinale] Phase 1: Lure sound behind player");
-        PlayLureSoundBehindPlayer();
+        // === PHASE 1: FREEZE PLAYER ===
+        Debug.LogError("[WheelchairFinale] Phase 1: Freeze player");
+        DisableControllers();
+        if (crashOrCrySound != null) crashOrCrySound.Play();
 
-        // Let the player hear it and turn around
-        yield return new WaitForSeconds(lureDuration);
+        // === PHASE 2: 2 SECONDS FROZEN SILENCE ===
+        yield return new WaitForSeconds(freezeDuration);
 
-        // Stop the lure
-        if (lurePhaseSound != null && lurePhaseSound.isPlaying) lurePhaseSound.Stop();
+        // === PHASE 3: FADE TO BLACK ===
+        Debug.LogError("[WheelchairFinale] Phase 3: Fade to black");
+        EnsureFadeImageExists();
+        yield return StartCoroutine(FadeColor(
+            new Color(0, 0, 0, 0),
+            new Color(0, 0, 0, 1),
+            fadeOutDuration));
 
-        // === PHASE 2: BRIEF SILENCE - dread ===
-        Debug.LogError("[WheelchairFinale] Phase 2: Silence");
-        yield return new WaitForSeconds(silenceBeforeCharge);
+        // === PHASE 4: ROTATE PLAYER TO FACE DOOR (in darkness) ===
+        Debug.LogError("[WheelchairFinale] Phase 4: Rotate player to face door");
+        RotatePlayerToFaceDoor();
 
-        // === PHASE 3: MATERIALISE - monster appears in front of wherever they're looking ===
-        Debug.LogError("[WheelchairFinale] Phase 3: Materialise in front of player's gaze");
-        SpawnMonsterInFrontOfGaze();
+        // Place monster at the door, hidden behind black screen
+        monster.transform.position = doorPosition.position;
+        Debug.LogError("[WheelchairFinale] Monster spawned at: " + monster.transform.position + " DoorMarker at: " + doorPosition.position);
+        FacePlayerHorizontal();
         monster.SetActive(true);
-        yield return null; // let it register
-
-        // Play reveal stinger
-        if (revealStinger != null) revealStinger.Play();
         monsterAnimator.Play(chaseStateName, 0, 0f);
+        if (revealStinger != null) revealStinger.Play();
 
-        // === PHASE 4: THE CHASE - fast with acceleration ===
-        Debug.LogError("[WheelchairFinale] Phase 4: Chase");
+        // === PHASE 5: HOLD ON BLACK BRIEFLY ===
+        yield return new WaitForSeconds(blackHoldDuration);
+
+        // === PHASE 6: FADE IN - monster is already charging ===
+        Debug.LogError("[WheelchairFinale] Phase 6: Fade back in");
+        yield return StartCoroutine(FadeColor(
+            new Color(0, 0, 0, 1),
+            new Color(0, 0, 0, 0),
+            fadeInDuration));
+
+        // === PHASE 7: THE CHASE ===
+        Debug.LogError("[WheelchairFinale] Phase 7: Chase");
         float currentSpeed = startChaseSpeed;
         float timer = 0f;
 
         while (timer < maxChaseTime)
         {
-            // Accelerate speed
             currentSpeed = Mathf.Min(currentSpeed + chaseAcceleration * Time.deltaTime, maxChaseSpeed);
 
-            // Target is player's XZ
             Vector3 horizontalTarget = new Vector3(playerCamera.position.x,
                                                    monster.transform.position.y,
                                                    playerCamera.position.z);
@@ -160,64 +209,54 @@ public class WheelchairFinale : MonoBehaviour
             yield return null;
         }
 
-        // === PHASE 5: ATTACK + RED FLASH + MONSTER FILLS VISION ===
-        Debug.LogError("[WheelchairFinale] Phase 5: ATTACK");
+        // === PHASE 8: STOP AT CORRECT HEIGHT BEFORE ATTACKING ===
+        Debug.LogError("[WheelchairFinale] Phase 8: Position for attack");
+        // Bring monster to camera height so attack plays in your face, not above
+        Vector3 attackPos = monster.transform.position;
+        attackPos.y = playerCamera.position.y + attackHeightOffset;
+
+        // Also pull it in close
+        Vector3 dirToPlayer = (playerCamera.position - monster.transform.position);
+        dirToPlayer.y = 0;
+        dirToPlayer.Normalize();
+        attackPos = playerCamera.position - dirToPlayer * 0.8f; // Just in front of camera
+        attackPos.y = playerCamera.position.y + attackHeightOffset;
+        monster.transform.position = attackPos;
+        FacePlayerHorizontal();
+
+        // === PHASE 9: ATTACK + RED FLASH ===
+        Debug.LogError("[WheelchairFinale] Phase 9: ATTACK");
         monsterAnimator.Play(attackStateName, 0, 0f);
         if (attackScreech != null) attackScreech.Play();
 
-        // Red flash + monster lunges into camera simultaneously
         yield return StartCoroutine(RedFlashAndFillVision());
 
-        // === PHASE 6: HOLD ON BLACK ===
+        // === PHASE 10: HOLD ON BLACK ===
         yield return new WaitForSeconds(holdOnBlackDuration);
 
         OnFinaleComplete();
     }
 
-    private void PlayLureSoundBehindPlayer()
+    private void DisableControllers()
     {
-        if (lurePhaseSound == null) return;
-
-        // Create a temp GameObject so we can position the sound source behind the player
-        // This way the spatial 3D audio comes from BEHIND
-        lureSoundObject = new GameObject("LureSoundPosition");
-        Vector3 behindDir = -playerCamera.forward;
-        behindDir.y = 0;
-        behindDir.Normalize();
-        lureSoundObject.transform.position = playerCamera.position + behindDir * lureSoundDistance;
-
-        // Move the AudioSource to this position (temporarily)
-        lurePhaseSound.transform.position = lureSoundObject.transform.position;
-        lurePhaseSound.spatialBlend = 1f; // Full 3D
-        lurePhaseSound.Play();
+        Debug.LogError("[WheelchairFinale] Disabling controllers");
+        if (moveProvider != null) moveProvider.enabled = false;
+        if (turnProvider != null) turnProvider.enabled = false;
+        if (snapTurnProvider != null) snapTurnProvider.enabled = false;
     }
 
-    private void SpawnMonsterInFrontOfGaze()
+    private void RotatePlayerToFaceDoor()
     {
-        // Wherever the player is looking NOW, spawn the monster there
-        Vector3 forwardDir = playerCamera.forward;
-        forwardDir.y = 0;
-        forwardDir.Normalize();
+        if (playerRig == null) return;
 
-        Vector3 spawnPos = playerCamera.position + forwardDir * monsterRevealDistance;
+        // Calculate direction from player to door
+        Vector3 dirToDoor = doorPosition.position - playerRig.position;
+        dirToDoor.y = 0;
+        dirToDoor.Normalize();
 
-        // Ground snap the spawn
-        if (Physics.Raycast(spawnPos + Vector3.up * groundRayStartHeight,
-                            Vector3.down,
-                            out RaycastHit hit,
-                            groundRayDistance * 2f,
-                            groundMask,
-                            QueryTriggerInteraction.Ignore))
-        {
-            spawnPos.y = hit.point.y;
-        }
-        else
-        {
-            spawnPos.y = playerCamera.position.y - 1.5f;
-        }
-
-        monster.transform.position = spawnPos;
-        FacePlayerHorizontal();
+        // Rotate the rig to face that direction
+        Quaternion targetRot = Quaternion.LookRotation(dirToDoor);
+        playerRig.rotation = targetRot;
     }
 
     private void FacePlayerHorizontal()
@@ -228,18 +267,27 @@ public class WheelchairFinale : MonoBehaviour
         monster.transform.LookAt(lookTarget);
     }
 
+    private IEnumerator FadeColor(Color startColor, Color endColor, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            fadeImage.color = Color.Lerp(startColor, endColor, elapsed / duration);
+            yield return null;
+        }
+        fadeImage.color = endColor;
+    }
+
     private IEnumerator RedFlashAndFillVision()
     {
         EnsureFadeImageExists();
 
-        // Phase A: Red flash (bright red, instant)
         Color red = new Color(0.8f, 0f, 0f, 0.7f);
         Color black = new Color(0f, 0f, 0f, 1f);
-        Color transparent = new Color(0f, 0f, 0f, 0f);
 
         fadeImage.color = red;
 
-        // Animate monster filling vision - move it TO the camera while red flash holds
         Vector3 monsterStart = monster.transform.position;
         Vector3 cameraPos = playerCamera.position;
         float elapsed = 0f;
@@ -249,17 +297,13 @@ public class WheelchairFinale : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = elapsed / redFlashDuration;
 
-            // Lunge monster toward the camera's face
             monster.transform.position = Vector3.Lerp(monsterStart, cameraPos, t);
             monster.transform.LookAt(playerCamera.position);
-
-            // Transition red → black over the duration
             fadeImage.color = Color.Lerp(red, black, t);
 
             yield return null;
         }
 
-        // Cut to full black
         fadeImage.color = black;
     }
 
@@ -288,7 +332,5 @@ public class WheelchairFinale : MonoBehaviour
     private void OnFinaleComplete()
     {
         Debug.LogError("[WheelchairFinale] finale complete");
-        // Hook up whatever comes next:
-        // UnityEngine.SceneManagement.SceneManager.LoadScene("Credits");
     }
 }

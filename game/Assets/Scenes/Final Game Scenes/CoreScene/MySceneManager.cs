@@ -2,8 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-
 public class MySceneManager : MonoBehaviour
 {
     public static MySceneManager Instance { get; private set; }
@@ -16,25 +14,28 @@ public class MySceneManager : MonoBehaviour
 
     void Start()
     {
-        LoadNewScene("First Area");
-        LoadNewScene("Lift");
+        
+         LoadNewScene("First Area");
+         LoadNewScene("Lift");
+
+         
+         LoadNewScene("final_jumpscare");
     }
 
     public void LoadNewScene(string sceneName)
     {
-        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive); // adds scene stuff without deleting rest
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
     }
 
     public void UnloadOldScene(string sceneName)
     {
         Debug.Log("Scene Unloading");
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("CoreSceneMain")); 
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("CoreSceneMain"));
         SceneManager.UnloadSceneAsync(sceneName);
     }
 
     public void TransitionToFinalScene(string sceneToUnload)
     {
-        // We ignore sceneToUnload - keep Second Area loaded so the map stays
         StartCoroutine(LoadFinalSceneAdditive());
     }
 
@@ -51,6 +52,4 @@ public class MySceneManager : MonoBehaviour
 
         Debug.Log("final_jumpscare loaded successfully!");
     }
-
-
 }
