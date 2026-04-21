@@ -12,6 +12,7 @@ TagManager:
   - Left Hand Box
   - Right Hand Box
   - Lift
+  - StorageTank
   layers:
   - Default
   - TransparentFX
