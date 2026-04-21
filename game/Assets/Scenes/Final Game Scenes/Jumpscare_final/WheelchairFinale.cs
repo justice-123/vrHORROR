@@ -10,7 +10,6 @@ using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 public class WheelchairFinale : MonoBehaviour
 {
     [Header("Monster")]
-    [Tooltip("Leave ENABLED in hierarchy. Script disables it in Awake.")]
     [SerializeField] private GameObject monster;
     [SerializeField] private Animator monsterAnimator;
 
@@ -19,27 +18,28 @@ public class WheelchairFinale : MonoBehaviour
     [SerializeField] private string attackStateName = "Attack";
 
     [Header("Cross-scene references - auto-found by name")]
-    [Tooltip("Name of the empty/cube you placed where the monster should spawn from.")]
     [SerializeField] private string doorMarkerName = "DoorMarker";
-    [Tooltip("Tag of your player rig.")]
     [SerializeField] private string playerTag = "Player";
 
     [Header("Audio")]
     [SerializeField] private AudioSource crashOrCrySound;
     [SerializeField] private AudioSource revealStinger;
     [SerializeField] private AudioSource attackScreech;
+    [Tooltip("Optional: low rumble/drone that plays during the chase.")]
+    [SerializeField] private AudioSource chaseLowRumble;
+    [Tooltip("Optional: heartbeat audio that plays during freeze phase.")]
+    [SerializeField] private AudioSource heartbeatAudio;
 
     [Header("Sequence Timing")]
     [SerializeField] private float freezeDuration = 2f;
-    [SerializeField] private float fadeOutDuration = 1f;
-    [SerializeField] private float blackHoldDuration = 0.8f;
-    [SerializeField] private float fadeInDuration = 0.4f;
-    [SerializeField] private float startChaseSpeed = 6f;
-    [SerializeField] private float maxChaseSpeed = 10f;
-    [SerializeField] private float chaseAcceleration = 5f;
-    [SerializeField] private float attackDistance = 1.5f;
+    [SerializeField] private float fadeOutDuration = 1.2f;
+    [SerializeField] private float blackHoldDuration = 1.5f;
+    [SerializeField] private float fadeInDuration = 0.5f;
+    [SerializeField] private float startChaseSpeed = 5f;
+    [SerializeField] private float maxChaseSpeed = 9f;
+    [SerializeField] private float chaseAcceleration = 4f;
+    [SerializeField] private float attackDistance = 1.8f;
     [SerializeField] private float maxChaseTime = 4f;
-    [SerializeField] private float attackHoldDuration = 0.6f;
 
     [Header("Ground Snapping (chase only)")]
     [SerializeField] private LayerMask groundMask = ~0;
@@ -47,23 +47,33 @@ public class WheelchairFinale : MonoBehaviour
     [SerializeField] private float groundRayDistance = 10f;
 
     [Header("SEATED PLAYER - Attack Position")]
-    [Tooltip("How far in front of the player the monster stops to attack.")]
-    [SerializeField] private float attackStopDistance = 1.0f;
-    [Tooltip("FINE-TUNE: Negative = monster lower, positive = higher. For seated VR try between -0.5 and -0.2.")]
-    [SerializeField] private float seatedHeightOffset = -0.3f;
-    [Tooltip("Estimated monster height. Only used if auto-detection fails.")]
+    [SerializeField] private float attackStopDistance = 0.9f;
+    [Tooltip("Tweak while testing: negative lowers the monster. For seated VR try -0.2 to -0.6.")]
+    [SerializeField] private float seatedHeightOffset = -0.4f;
     [SerializeField] private float fallbackMonsterHeight = 2f;
 
     [Header("Horror Atmosphere")]
-    [Tooltip("Scenes whose lights get turned off during the scare.")]
     [SerializeField] private string[] scenesToDarken = { "final_jumpscare", "Second Area" };
-    [Tooltip("Keep this spotlight enabled during the scare (lights the monster).")]
+    [Tooltip("Optional spotlight on the monster (stays enabled during scare).")]
     [SerializeField] private Light monsterSpotlight;
 
+    [Header("Red Horror Lighting")]
+    [Tooltip("How red/dark the scene gets during the chase.")]
+    [SerializeField] private Color chaseAmbientColor = new Color(0.15f, 0.02f, 0.02f);
+    [SerializeField] private float chaseAmbientIntensity = 0.3f;
+    [Tooltip("How fast the red lighting ramps up during chase.")]
+    [SerializeField] private float redLightingRampDuration = 0.8f;
+
     [Header("Impact Effects")]
-    [SerializeField] private float redFlashDuration = 0.3f;
+    [Tooltip("Red vignette that pulses during chase (separate from fade).")]
+    [SerializeField] private Image redVignetteImage;
+    [SerializeField] private float redFlashDuration = 0.25f;
     [SerializeField] private float holdOnBlackDuration = 3f;
     [SerializeField] private Image fadeImage;
+
+    [Header("Camera Shake")]
+    [SerializeField] private float cameraShakeIntensity = 0.05f;
+    [SerializeField] private float cameraShakeChaseIntensity = 0.02f;
 
     // Runtime references
     private Transform playerCamera;
@@ -81,6 +91,7 @@ public class WheelchairFinale : MonoBehaviour
     private float cachedAmbientIntensity;
     private float cachedReflectionIntensity;
     private float monsterHeight = 2f;
+    private bool isShakingCamera = false;
 
     private void Awake()
     {
@@ -88,21 +99,19 @@ public class WheelchairFinale : MonoBehaviour
 
         if (monster != null)
         {
-            monster.SetActive(false);
-
-            // Measure monster height while it's active (do this before disabling)
             MeasureMonsterHeight();
+            monster.SetActive(false);
         }
 
-        // Make sure the monster spotlight is off until needed
         if (monsterSpotlight != null) monsterSpotlight.enabled = false;
+
+        // Ensure red vignette starts invisible
+        if (redVignetteImage != null)
+            redVignetteImage.color = new Color(0.8f, 0f, 0f, 0f);
     }
 
     private void MeasureMonsterHeight()
     {
-        if (monster == null) return;
-
-        // Get the tallest renderer bounds
         Renderer[] renderers = monster.GetComponentsInChildren<Renderer>();
         if (renderers.Length > 0)
         {
@@ -111,10 +120,7 @@ public class WheelchairFinale : MonoBehaviour
             monsterHeight = combined.size.y;
             Debug.LogError("[WheelchairFinale] Measured monster height: " + monsterHeight);
         }
-        else
-        {
-            monsterHeight = fallbackMonsterHeight;
-        }
+        else monsterHeight = fallbackMonsterHeight;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -129,11 +135,8 @@ public class WheelchairFinale : MonoBehaviour
 
     private void FindRuntimeReferences()
     {
-        // Camera
-        if (Camera.main != null)
-            playerCamera = Camera.main.transform;
+        if (Camera.main != null) playerCamera = Camera.main.transform;
 
-        // Player rig + locomotion
         GameObject playerObj = GameObject.FindGameObjectWithTag(playerTag);
         if (playerObj != null)
         {
@@ -143,12 +146,8 @@ public class WheelchairFinale : MonoBehaviour
             snapTurnProvider = playerObj.GetComponentInChildren<SnapTurnProvider>();
         }
 
-        // Door marker
         GameObject markerObj = GameObject.Find(doorMarkerName);
         if (markerObj != null) doorMarker = markerObj.transform;
-
-        Debug.LogError("[WheelchairFinale] refs: cam=" + (playerCamera != null) +
-                       " rig=" + (playerRig != null) + " marker=" + (doorMarker != null));
     }
 
     private IEnumerator PlayScare()
@@ -162,48 +161,61 @@ public class WheelchairFinale : MonoBehaviour
             yield break;
         }
 
-        // === PHASE 1: FREEZE PLAYER ===
+        EnsureFadeImageExists();
+
+        // === PHASE 1: FREEZE + HEARTBEAT ===
         Debug.LogError("[Phase 1] Freeze");
         DisableControllers();
         if (crashOrCrySound != null) crashOrCrySound.Play();
+        if (heartbeatAudio != null) heartbeatAudio.Play();
 
-        // === PHASE 2: FROZEN SILENCE ===
         yield return new WaitForSeconds(freezeDuration);
 
-        // === PHASE 3: FADE TO BLACK ===
-        Debug.LogError("[Phase 3] Fade out");
-        EnsureFadeImageExists();
+        // === PHASE 2: FADE TO BLACK ===
+        Debug.LogError("[Phase 2] Fade to black BEFORE rotating");
         yield return StartCoroutine(FadeColor(new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), fadeOutDuration));
 
-        // === PHASE 4: REORIENT IN DARKNESS ===
-        Debug.LogError("[Phase 4] Rotate player, darken world, position monster");
+        // Stop heartbeat as we go into darkness
+        if (heartbeatAudio != null && heartbeatAudio.isPlaying) heartbeatAudio.Stop();
+
+        // === PHASE 3: WHILE BLACK - rotate, darken world, set up monster ===
+        Debug.LogError("[Phase 3] In darkness: rotate + setup");
         RotatePlayerToFaceMarker();
         DarkenWorld();
 
-        // Position monster EXACTLY at the DoorMarker
+        // Place monster EXACTLY at DoorMarker
         monster.transform.position = doorMarker.position;
-        Debug.LogError("[WheelchairFinale] Monster placed at DoorMarker: " + doorMarker.position);
         FacePlayerHorizontal();
         monster.SetActive(true);
-
-        // Enable monster spotlight if set
         if (monsterSpotlight != null) monsterSpotlight.enabled = true;
 
-        // Force the Animator to NOT use root motion so our transform.position wins
+        // Kill root motion so our script controls movement
         monsterAnimator.applyRootMotion = false;
         monsterAnimator.Play(chaseStateName, 0, 0f);
 
         if (revealStinger != null) revealStinger.Play();
 
-        // === PHASE 5: BRIEF HOLD ===
+        // Hold in darkness with the stinger
         yield return new WaitForSeconds(blackHoldDuration);
 
-        // === PHASE 6: FADE IN - monster is visible charging ===
-        Debug.LogError("[Phase 6] Fade in");
+        // === PHASE 4: FADE IN - monster visible already charging ===
+        Debug.LogError("[Phase 4] Fade back in - monster is there");
         yield return StartCoroutine(FadeColor(new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), fadeInDuration));
 
-        // === PHASE 7: CHASE ===
-        Debug.LogError("[Phase 7] Chase");
+        // === PHASE 5: RED HORROR LIGHTING RAMPS UP ===
+        Debug.LogError("[Phase 5] Ramping red lighting");
+        StartCoroutine(RampRedLighting());
+        StartCoroutine(PulseRedVignette());
+
+        // Start chase rumble
+        if (chaseLowRumble != null) chaseLowRumble.Play();
+
+        // Start subtle camera shake
+        isShakingCamera = true;
+        StartCoroutine(CameraShakeLoop(cameraShakeChaseIntensity));
+
+        // === PHASE 6: THE CHASE ===
+        Debug.LogError("[Phase 6] Chase");
         float currentSpeed = startChaseSpeed;
         float timer = 0f;
 
@@ -224,7 +236,6 @@ public class WheelchairFinale : MonoBehaviour
             Vector3 nextPos = Vector3.MoveTowards(monster.transform.position, target,
                                                    currentSpeed * Time.deltaTime);
 
-            // Ground snap (only during chase, not spawn)
             if (Physics.Raycast(nextPos + Vector3.up * groundRayStartHeight,
                                 Vector3.down, out RaycastHit hit,
                                 groundRayDistance, groundMask,
@@ -240,40 +251,156 @@ public class WheelchairFinale : MonoBehaviour
             yield return null;
         }
 
-        // === PHASE 8: POSITION FOR SEATED ATTACK ===
-        Debug.LogError("[Phase 8] Position for seated attack");
+        // === PHASE 7: POSITION FOR SEATED ATTACK (in your face!) ===
+        Debug.LogError("[Phase 7] Positioning for seated attack");
 
-        // Direction from monster to player (horizontal only)
         Vector3 dirToPlayer = (playerCamera.position - monster.transform.position);
         dirToPlayer.y = 0;
         dirToPlayer.Normalize();
 
-        // Place monster in front of player at attackStopDistance
         Vector3 attackPos = playerCamera.position - dirToPlayer * attackStopDistance;
 
-        // CRITICAL for seated VR: position monster so its HEAD is at camera height
-        // Monster pivot is at its feet, so lower it by 70% of its height + offset
+        // SEATED VR FIX: head should be at camera level
         attackPos.y = playerCamera.position.y - (monsterHeight * 0.7f) + seatedHeightOffset;
 
         monster.transform.position = attackPos;
         FacePlayerHorizontal();
 
-        Debug.LogError("[WheelchairFinale] Attack position: " + attackPos +
-                       " | Camera at: " + playerCamera.position +
-                       " | Monster height: " + monsterHeight);
+        Debug.LogError("[WheelchairFinale] Attack Pos: " + attackPos +
+                       " | Cam: " + playerCamera.position + " | MHeight: " + monsterHeight);
 
-        // === PHASE 9: ATTACK + RED FLASH + LUNGE ===
-        Debug.LogError("[Phase 9] ATTACK");
+        // Stop rumble, brief gasp of silence right before the scream
+        if (chaseLowRumble != null && chaseLowRumble.isPlaying) chaseLowRumble.Stop();
+        yield return new WaitForSeconds(0.08f);
+
+        // === PHASE 8: ATTACK + BIG CAMERA SHAKE + SCREECH ===
+        Debug.LogError("[Phase 8] ATTACK");
         monsterAnimator.Play(attackStateName, 0, 0f);
         if (attackScreech != null) attackScreech.Play();
 
+        // Bigger shake during attack
+        StartCoroutine(CameraShakeBurst(cameraShakeIntensity, redFlashDuration));
+
         yield return StartCoroutine(RedFlashAndFillVision());
 
-        // === PHASE 10: HOLD ON BLACK ===
+        // === PHASE 9: HOLD ON BLACK ===
+        isShakingCamera = false;
         yield return new WaitForSeconds(holdOnBlackDuration);
 
         OnFinaleComplete();
     }
+
+    // ============================================================
+    // HORROR LIGHTING
+    // ============================================================
+
+    private void DarkenWorld()
+    {
+        disabledLights.Clear();
+
+        foreach (string sceneName in scenesToDarken)
+        {
+            Scene scene = SceneManager.GetSceneByName(sceneName);
+            if (!scene.IsValid() || !scene.isLoaded) continue;
+
+            foreach (GameObject root in scene.GetRootGameObjects())
+            {
+                Light[] lights = root.GetComponentsInChildren<Light>(true);
+                foreach (Light l in lights)
+                {
+                    if (l == monsterSpotlight) continue;
+                    if (!l.enabled) continue;
+                    l.enabled = false;
+                    disabledLights.Add(l);
+                }
+            }
+        }
+
+        cachedAmbientMode = RenderSettings.ambientMode;
+        cachedAmbientLight = RenderSettings.ambientLight;
+        cachedAmbientIntensity = RenderSettings.ambientIntensity;
+        cachedReflectionIntensity = RenderSettings.reflectionIntensity;
+
+        // Start very dark - red lighting ramps in during chase
+        RenderSettings.ambientMode = AmbientMode.Flat;
+        RenderSettings.ambientLight = new Color(0.02f, 0.01f, 0.01f);
+        RenderSettings.ambientIntensity = 0.05f;
+        RenderSettings.reflectionIntensity = 0.1f;
+
+        Debug.LogError("[WheelchairFinale] Darkened world - " + disabledLights.Count + " lights off");
+    }
+
+    private IEnumerator RampRedLighting()
+    {
+        Color startColor = RenderSettings.ambientLight;
+        float startIntensity = RenderSettings.ambientIntensity;
+        float elapsed = 0f;
+
+        while (elapsed < redLightingRampDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / redLightingRampDuration;
+            RenderSettings.ambientLight = Color.Lerp(startColor, chaseAmbientColor, t);
+            RenderSettings.ambientIntensity = Mathf.Lerp(startIntensity, chaseAmbientIntensity, t);
+            yield return null;
+        }
+    }
+
+    private IEnumerator PulseRedVignette()
+    {
+        if (redVignetteImage == null) yield break;
+
+        Color off = new Color(0.9f, 0f, 0f, 0f);
+        Color on = new Color(0.9f, 0f, 0f, 0.45f);
+
+        float t = 0f;
+        while (isShakingCamera || t < 4f)
+        {
+            t += Time.deltaTime;
+            // Pulse at ~2 Hz, slightly irregular feels more alive
+            float pulse = (Mathf.Sin(t * 6f) + 1f) * 0.5f;
+            redVignetteImage.color = Color.Lerp(off, on, pulse * 0.7f);
+            yield return null;
+        }
+
+        redVignetteImage.color = off;
+    }
+
+    // ============================================================
+    // CAMERA SHAKE (via rig offset - doesn't fight VR head tracking)
+    // ============================================================
+
+    private IEnumerator CameraShakeLoop(float intensity)
+    {
+        Vector3 basePos = playerRig.localPosition;
+        while (isShakingCamera)
+        {
+            Vector3 shake = Random.insideUnitSphere * intensity;
+            shake.y *= 0.3f; // less vertical shake (nausea)
+            playerRig.localPosition = basePos + shake;
+            yield return new WaitForSeconds(0.03f);
+        }
+        playerRig.localPosition = basePos;
+    }
+
+    private IEnumerator CameraShakeBurst(float intensity, float duration)
+    {
+        Vector3 basePos = playerRig.localPosition;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            Vector3 shake = Random.insideUnitSphere * intensity;
+            shake.y *= 0.3f;
+            playerRig.localPosition = basePos + shake;
+            yield return null;
+        }
+        playerRig.localPosition = basePos;
+    }
+
+    // ============================================================
+    // HELPERS
+    // ============================================================
 
     private void DisableControllers()
     {
@@ -300,44 +427,6 @@ public class WheelchairFinale : MonoBehaviour
         monster.transform.LookAt(lookTarget);
     }
 
-    private void DarkenWorld()
-    {
-        disabledLights.Clear();
-
-        foreach (string sceneName in scenesToDarken)
-        {
-            Scene scene = SceneManager.GetSceneByName(sceneName);
-            if (!scene.IsValid() || !scene.isLoaded) continue;
-
-            foreach (GameObject root in scene.GetRootGameObjects())
-            {
-                Light[] lights = root.GetComponentsInChildren<Light>(true);
-                foreach (Light l in lights)
-                {
-                    if (l == monsterSpotlight) continue; // keep spotlight on
-                    if (!l.enabled) continue;
-
-                    l.enabled = false;
-                    disabledLights.Add(l);
-                }
-            }
-        }
-
-        // Cache current ambient
-        cachedAmbientMode = RenderSettings.ambientMode;
-        cachedAmbientLight = RenderSettings.ambientLight;
-        cachedAmbientIntensity = RenderSettings.ambientIntensity;
-        cachedReflectionIntensity = RenderSettings.reflectionIntensity;
-
-        // Drop to near-black
-        RenderSettings.ambientMode = AmbientMode.Flat;
-        RenderSettings.ambientLight = new Color(0.05f, 0.02f, 0.05f);
-        RenderSettings.ambientIntensity = 0.1f;
-        RenderSettings.reflectionIntensity = 0.1f;
-
-        Debug.LogError("[WheelchairFinale] Darkened world - disabled " + disabledLights.Count + " lights");
-    }
-
     private IEnumerator FadeColor(Color startColor, Color endColor, float duration)
     {
         float elapsed = 0f;
@@ -352,13 +441,10 @@ public class WheelchairFinale : MonoBehaviour
 
     private IEnumerator RedFlashAndFillVision()
     {
-        EnsureFadeImageExists();
-
         Color red = new Color(0.8f, 0f, 0f, 0.7f);
         Color black = new Color(0f, 0f, 0f, 1f);
         fadeImage.color = red;
 
-        // Lunge monster toward camera while flash fades to black
         Vector3 monsterStart = monster.transform.position;
         Vector3 cameraPos = playerCamera.position;
         float elapsed = 0f;
@@ -367,11 +453,9 @@ public class WheelchairFinale : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = elapsed / redFlashDuration;
-
             monster.transform.position = Vector3.Lerp(monsterStart, cameraPos, t);
             monster.transform.LookAt(playerCamera.position);
             fadeImage.color = Color.Lerp(red, black, t);
-
             yield return null;
         }
 
