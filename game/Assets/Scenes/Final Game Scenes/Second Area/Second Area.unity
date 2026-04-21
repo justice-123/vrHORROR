@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 841311}
   - component: {fileID: 841310}
   - component: {fileID: 841309}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: big bottom panel.001_cell.004
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -2496,7 +2496,7 @@ GameObject:
   - component: {fileID: 17178275}
   - component: {fileID: 17178274}
   - component: {fileID: 17178273}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel.001_cell.002
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -5342,7 +5342,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 38510728}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11488,7 +11488,7 @@ GameObject:
   - component: {fileID: 94689382}
   - component: {fileID: 94689381}
   - component: {fileID: 94689380}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: bottom panel.001
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -11638,7 +11638,7 @@ GameObject:
   - component: {fileID: 95253575}
   - component: {fileID: 95253574}
   - component: {fileID: 95253573}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: big bottom panel
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -13814,7 +13814,7 @@ GameObject:
   - component: {fileID: 120931694}
   - component: {fileID: 120931693}
   - component: {fileID: 120931692}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: top panel
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -14349,7 +14349,7 @@ GameObject:
   - component: {fileID: 123347272}
   - component: {fileID: 123347271}
   - component: {fileID: 123347270}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.013
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -20600,7 +20600,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 178276913}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: broken left door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20645,7 +20645,7 @@ GameObject:
   - component: {fileID: 178568249}
   - component: {fileID: 178568248}
   - component: {fileID: 178568247}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.013
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -21254,7 +21254,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 180675253}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: big bottom panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24321,7 +24321,7 @@ GameObject:
   - component: {fileID: 202569102}
   - component: {fileID: 202569104}
   - component: {fileID: 202569103}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28946,7 +28946,7 @@ GameObject:
   - component: {fileID: 235470649}
   - component: {fileID: 235470648}
   - component: {fileID: 235470647}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: top panel.001
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -30251,7 +30251,7 @@ GameObject:
   - component: {fileID: 248127207}
   - component: {fileID: 248127206}
   - component: {fileID: 248127205}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel.001_cell
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -31068,7 +31068,7 @@ GameObject:
   - component: {fileID: 254190686}
   - component: {fileID: 254190685}
   - component: {fileID: 254190684}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -35113,7 +35113,7 @@ GameObject:
   - component: {fileID: 287831765}
   - component: {fileID: 287831764}
   - component: {fileID: 287831768}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel.001_cell
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -35477,7 +35477,7 @@ GameObject:
   - component: {fileID: 288579803}
   - component: {fileID: 288579802}
   - component: {fileID: 288579801}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: bottom panel.003
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -36745,7 +36745,7 @@ GameObject:
   - component: {fileID: 300534682}
   - component: {fileID: 300534681}
   - component: {fileID: 300534680}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.007
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -38515,7 +38515,7 @@ GameObject:
   - component: {fileID: 317431192}
   - component: {fileID: 317431191}
   - component: {fileID: 317431190}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.026
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -45153,7 +45153,7 @@ GameObject:
   - component: {fileID: 375676169}
   - component: {fileID: 375676168}
   - component: {fileID: 375676167}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.028
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -49162,7 +49162,7 @@ GameObject:
   - component: {fileID: 408963197}
   - component: {fileID: 408963196}
   - component: {fileID: 408963200}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel.001_cell.003
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -56423,7 +56423,7 @@ GameObject:
   - component: {fileID: 473459030}
   - component: {fileID: 473459029}
   - component: {fileID: 473459028}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.031
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -62254,7 +62254,7 @@ GameObject:
   - component: {fileID: 523281655}
   - component: {fileID: 523281654}
   - component: {fileID: 523281653}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -62704,7 +62704,7 @@ GameObject:
   - component: {fileID: 524515592}
   - component: {fileID: 524515591}
   - component: {fileID: 524515590}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.002
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -70226,7 +70226,7 @@ GameObject:
   - component: {fileID: 595274609}
   - component: {fileID: 595274608}
   - component: {fileID: 595274607}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.003
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -75089,7 +75089,7 @@ GameObject:
   - component: {fileID: 635126920}
   - component: {fileID: 635126919}
   - component: {fileID: 635126918}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.001
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -80316,7 +80316,7 @@ GameObject:
   - component: {fileID: 675512288}
   - component: {fileID: 675512287}
   - component: {fileID: 675512286}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: bottom panel.001
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -83164,7 +83164,7 @@ GameObject:
   - component: {fileID: 691724896}
   - component: {fileID: 691724895}
   - component: {fileID: 691724894}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel.001_cell.001
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -87774,7 +87774,7 @@ GameObject:
   - component: {fileID: 725748023}
   - component: {fileID: 725748022}
   - component: {fileID: 725748021}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel.001_cell.002
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -88312,7 +88312,7 @@ GameObject:
   - component: {fileID: 729538596}
   - component: {fileID: 729538595}
   - component: {fileID: 729538594}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: big bottom panel.001_cell.004
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -88867,7 +88867,7 @@ GameObject:
   - component: {fileID: 731046599}
   - component: {fileID: 731046598}
   - component: {fileID: 731046597}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.004
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -92192,7 +92192,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 757639969}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: broken left door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95168,7 +95168,7 @@ GameObject:
   - component: {fileID: 780337077}
   - component: {fileID: 780337076}
   - component: {fileID: 780337075}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: bottom panel.003
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -97468,7 +97468,7 @@ GameObject:
   - component: {fileID: 794409286}
   - component: {fileID: 794409285}
   - component: {fileID: 794409284}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.001
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -101248,7 +101248,7 @@ GameObject:
   - component: {fileID: 825712350}
   - component: {fileID: 825712349}
   - component: {fileID: 825712348}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.028
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -104751,7 +104751,7 @@ GameObject:
   - component: {fileID: 859295737}
   - component: {fileID: 859295736}
   - component: {fileID: 859295735}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel.001_cell.002
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -107133,7 +107133,7 @@ GameObject:
   - component: {fileID: 877416912}
   - component: {fileID: 877416911}
   - component: {fileID: 877416910}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: top panel
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -109943,7 +109943,7 @@ GameObject:
   - component: {fileID: 903242280}
   - component: {fileID: 903242279}
   - component: {fileID: 903242278}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel.001_cell
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -111552,7 +111552,7 @@ GameObject:
   - component: {fileID: 920631576}
   - component: {fileID: 920631575}
   - component: {fileID: 920631574}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel.001_cell.002
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -112467,7 +112467,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 928622182}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: unbreakables
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113682,7 +113682,7 @@ GameObject:
   - component: {fileID: 935443576}
   - component: {fileID: 935443575}
   - component: {fileID: 935443574}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.007
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -115936,7 +115936,7 @@ GameObject:
   - component: {fileID: 953398863}
   - component: {fileID: 953398862}
   - component: {fileID: 953398861}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.020
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -117465,7 +117465,7 @@ GameObject:
   - component: {fileID: 961204659}
   - component: {fileID: 961204658}
   - component: {fileID: 961204657}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: big bottom panel.001_cell.005
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -119256,7 +119256,7 @@ GameObject:
   - component: {fileID: 973681358}
   - component: {fileID: 973681357}
   - component: {fileID: 973681361}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel.001_cell.001
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -123704,7 +123704,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1014897244}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129176,7 +129176,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1043408277}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130074,7 +130074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1049605854}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132839,7 +132839,7 @@ GameObject:
   - component: {fileID: 1070814909}
   - component: {fileID: 1070814908}
   - component: {fileID: 1070814907}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel.001_cell.004
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -133149,7 +133149,7 @@ GameObject:
   - component: {fileID: 1071332119}
   - component: {fileID: 1071332118}
   - component: {fileID: 1071332117}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -135663,7 +135663,7 @@ GameObject:
   - component: {fileID: 1091534377}
   - component: {fileID: 1091534376}
   - component: {fileID: 1091534375}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel.001_cell.005
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -136206,6 +136206,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1814112014}
     m_Modifications:
+    - target: {fileID: 3782224713904746515, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782862551739813601, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4709475171769680370, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -136214,6 +136222,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
       objectReference: {fileID: 2100000, guid: 3e7ed23e8d5819643ba786f4aff976f5, type: 2}
+    - target: {fileID: 4726361947713978059, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5951875646402302491, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6917133213671452396, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_Size.x
       value: 7.149614
@@ -136233,6 +136249,14 @@ PrefabInstance:
     - target: {fileID: 8174524819860399446, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_Name
       value: Electric Chair Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 8174524819860399446, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8352935702636782309, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8807474822005456876, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_RootOrder
@@ -136485,7 +136509,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1097018460}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139558,7 +139582,7 @@ GameObject:
   - component: {fileID: 1120097726}
   - component: {fileID: 1120097725}
   - component: {fileID: 1120097724}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.018
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -140470,7 +140494,7 @@ GameObject:
   - component: {fileID: 1126100353}
   - component: {fileID: 1126100352}
   - component: {fileID: 1126100351}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -143217,7 +143241,7 @@ GameObject:
   - component: {fileID: 1148030485}
   - component: {fileID: 1148030484}
   - component: {fileID: 1148030483}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.017
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -145510,7 +145534,7 @@ GameObject:
   - component: {fileID: 1167756224}
   - component: {fileID: 1167756223}
   - component: {fileID: 1167756222}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: big bottom panel.001_cell
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -147111,10 +147135,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Corridor Door
       objectReference: {fileID: 0}
+    - target: {fileID: 2177338399421708870, guid: 71e57a255521ebe43bd9f1223b75ed24, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2400984125113610029, guid: 71e57a255521ebe43bd9f1223b75ed24, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3861900305253603444, guid: 71e57a255521ebe43bd9f1223b75ed24, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5271208497301235992, guid: 71e57a255521ebe43bd9f1223b75ed24, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b9d5b5bd65729b54ea1bdd5d8bbb2d24, type: 2}
+    - target: {fileID: 5579128362568451110, guid: 71e57a255521ebe43bd9f1223b75ed24, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5616115761682881645, guid: 71e57a255521ebe43bd9f1223b75ed24, type: 3}
       propertyPath: m_Size.y
       value: 2.0704222
@@ -147139,6 +147179,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b9d5b5bd65729b54ea1bdd5d8bbb2d24, type: 2}
+    - target: {fileID: 6442630084661472908, guid: 71e57a255521ebe43bd9f1223b75ed24, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547184268109066155, guid: 71e57a255521ebe43bd9f1223b75ed24, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6778902996359796215, guid: 71e57a255521ebe43bd9f1223b75ed24, type: 3}
       propertyPath: m_Size.x
       value: 5.697881
@@ -149604,7 +149652,7 @@ GameObject:
   - component: {fileID: 1202916828}
   - component: {fileID: 1202916827}
   - component: {fileID: 1202916831}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel.001_cell.001
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -153061,7 +153109,7 @@ GameObject:
   - component: {fileID: 1223991923}
   - component: {fileID: 1223991922}
   - component: {fileID: 1223991921}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: big bottom panel.001_cell
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -154498,7 +154546,7 @@ GameObject:
   - component: {fileID: 1233719994}
   - component: {fileID: 1233719993}
   - component: {fileID: 1233719992}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.017
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -156322,7 +156370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1246966213}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: intact left door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161575,7 +161623,7 @@ GameObject:
   - component: {fileID: 1286276149}
   - component: {fileID: 1286276148}
   - component: {fileID: 1286276147}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: bottom panel.002
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -163216,7 +163264,7 @@ GameObject:
   - component: {fileID: 1300775209}
   - component: {fileID: 1300775208}
   - component: {fileID: 1300775207}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel.001_cell.004
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -163999,7 +164047,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1306696927}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165635,7 +165683,7 @@ GameObject:
   - component: {fileID: 1326117458}
   - component: {fileID: 1326117457}
   - component: {fileID: 1326117456}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.006
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -166563,7 +166611,7 @@ GameObject:
   - component: {fileID: 1336219445}
   - component: {fileID: 1336219444}
   - component: {fileID: 1336219443}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: big bottom panel.001_cell.005
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -171687,7 +171735,7 @@ GameObject:
   - component: {fileID: 1381668438}
   - component: {fileID: 1381668437}
   - component: {fileID: 1381668436}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.003
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -177816,7 +177864,7 @@ GameObject:
   - component: {fileID: 1437193797}
   - component: {fileID: 1437193796}
   - component: {fileID: 1437193798}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: EnteredTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178486,7 +178534,7 @@ GameObject:
   - component: {fileID: 1444143506}
   - component: {fileID: 1444143505}
   - component: {fileID: 1444143504}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel.001_cell.001
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -179456,7 +179504,7 @@ GameObject:
   - component: {fileID: 1452625747}
   - component: {fileID: 1452625746}
   - component: {fileID: 1452625745}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: bottom panel.004
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -182733,7 +182781,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1478445712}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183216,7 +183264,7 @@ GameObject:
   - component: {fileID: 1480547985}
   - component: {fileID: 1480547984}
   - component: {fileID: 1480547983}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.004
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -189379,7 +189427,7 @@ GameObject:
   - component: {fileID: 1520605176}
   - component: {fileID: 1520605175}
   - component: {fileID: 1520605174}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.026
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -190521,7 +190569,7 @@ GameObject:
   - component: {fileID: 1531997100}
   - component: {fileID: 1531997099}
   - component: {fileID: 1531997098}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: bottom panel.002
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -196783,7 +196831,7 @@ GameObject:
   - component: {fileID: 1579442456}
   - component: {fileID: 1579442455}
   - component: {fileID: 1579442454}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -197483,7 +197531,7 @@ GameObject:
   - component: {fileID: 1583887897}
   - component: {fileID: 1583887896}
   - component: {fileID: 1583887895}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel.001_cell.003
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -202910,7 +202958,7 @@ GameObject:
   - component: {fileID: 1623428546}
   - component: {fileID: 1623428545}
   - component: {fileID: 1623428544}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel.001_cell.005
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -207329,7 +207377,7 @@ GameObject:
   - component: {fileID: 1661982801}
   - component: {fileID: 1661982800}
   - component: {fileID: 1661982799}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.031
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -207715,7 +207763,7 @@ GameObject:
   - component: {fileID: 1665227912}
   - component: {fileID: 1665227911}
   - component: {fileID: 1665227910}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: bottom panel.004
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -210405,7 +210453,7 @@ GameObject:
   - component: {fileID: 1688081337}
   - component: {fileID: 1688081336}
   - component: {fileID: 1688081335}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -212921,7 +212969,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1703422088}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: intact left door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221468,7 +221516,7 @@ GameObject:
   - component: {fileID: 1776139318}
   - component: {fileID: 1776139317}
   - component: {fileID: 1776139315}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel.001_cell.003
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -222953,7 +223001,7 @@ GameObject:
   - component: {fileID: 1785816431}
   - component: {fileID: 1785816430}
   - component: {fileID: 1785816429}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -227166,7 +227214,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1814112014}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Doors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227436,7 +227484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1816011693}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: unbreakables
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227556,7 +227604,7 @@ GameObject:
   - component: {fileID: 1817198348}
   - component: {fileID: 1817198347}
   - component: {fileID: 1817198346}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel.001_cell.003
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -228885,7 +228933,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1826731272}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: big bottom panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229823,7 +229871,7 @@ GameObject:
   - component: {fileID: 1835734061}
   - component: {fileID: 1835734060}
   - component: {fileID: 1835734059}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.020
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -235515,7 +235563,7 @@ GameObject:
   - component: {fileID: 1876197645}
   - component: {fileID: 1876197644}
   - component: {fileID: 1876197643}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -236596,7 +236644,7 @@ GameObject:
   - component: {fileID: 1884645743}
   - component: {fileID: 1884645742}
   - component: {fileID: 1884645741}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.018
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -237883,7 +237931,7 @@ GameObject:
   - component: {fileID: 1890810301}
   - component: {fileID: 1890810300}
   - component: {fileID: 1890810299}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.002
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -239610,7 +239658,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1901962667}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243652,10 +243700,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1814112014}
     m_Modifications:
+    - target: {fileID: 3782224713904746515, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782862551739813601, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4709475171769680370, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b9d5b5bd65729b54ea1bdd5d8bbb2d24, type: 2}
+    - target: {fileID: 4726361947713978059, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5951875646402302491, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6267874579622320389, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -243695,6 +243759,14 @@ PrefabInstance:
     - target: {fileID: 8174524819860399446, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_Name
       value: Toilet Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 8174524819860399446, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8352935702636782309, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8807474822005456876, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_RootOrder
@@ -247484,7 +247556,7 @@ GameObject:
   - component: {fileID: 1978475610}
   - component: {fileID: 1978475609}
   - component: {fileID: 1978475607}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: right panel.001_cell
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -248637,7 +248709,7 @@ GameObject:
   - component: {fileID: 1985469669}
   - component: {fileID: 1985469668}
   - component: {fileID: 1985469667}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: big bottom panel
   m_TagString: DoorPiece
   m_Icon: {fileID: 0}
@@ -251217,7 +251289,7 @@ GameObject:
   - component: {fileID: 2008426684}
   - component: {fileID: 2008426683}
   - component: {fileID: 2008426682}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: window panel.001_cell.003
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -261237,7 +261309,7 @@ GameObject:
   - component: {fileID: 2078770770}
   - component: {fileID: 2078770769}
   - component: {fileID: 2078770768}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: top panel.001
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -262197,7 +262269,7 @@ GameObject:
   - component: {fileID: 2086059856}
   - component: {fileID: 2086059855}
   - component: {fileID: 2086059854}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left_Door.006
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -264726,7 +264798,7 @@ GameObject:
   - component: {fileID: 2106752837}
   - component: {fileID: 2106752836}
   - component: {fileID: 2106752835}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: left panel.001_cell.003
   m_TagString: DoorFragment
   m_Icon: {fileID: 0}
@@ -271575,10 +271647,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3782224713904746515, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782862551739813601, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4709475171769680370, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b9d5b5bd65729b54ea1bdd5d8bbb2d24, type: 2}
+    - target: {fileID: 4726361947713978059, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5951875646402302491, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6917133213671452396, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_Size.x
       value: 5.425916
@@ -271602,6 +271690,14 @@ PrefabInstance:
     - target: {fileID: 8174524819860399446, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_Name
       value: Children's Ward Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 8174524819860399446, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8352935702636782309, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8807474822005456876, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_RootOrder
@@ -273269,14 +273365,30 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: b9d5b5bd65729b54ea1bdd5d8bbb2d24, type: 2}
+    - target: {fileID: 1975171551013815113, guid: 81c02f43ddbd74f40815dfe3fc208c0d, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448601985510937020, guid: 81c02f43ddbd74f40815dfe3fc208c0d, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4642316125748375132, guid: 81c02f43ddbd74f40815dfe3fc208c0d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.869
+      objectReference: {fileID: 0}
+    - target: {fileID: 4884602751703018157, guid: 81c02f43ddbd74f40815dfe3fc208c0d, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5007909316094796782, guid: 81c02f43ddbd74f40815dfe3fc208c0d, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: b9d5b5bd65729b54ea1bdd5d8bbb2d24, type: 2}
+    - target: {fileID: 5418735657959284459, guid: 81c02f43ddbd74f40815dfe3fc208c0d, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6842576679783993469, guid: 81c02f43ddbd74f40815dfe3fc208c0d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.106
@@ -273332,6 +273444,10 @@ PrefabInstance:
     - target: {fileID: 8842732823864722106, guid: 81c02f43ddbd74f40815dfe3fc208c0d, type: 3}
       propertyPath: m_Name
       value: Front Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842732823864722106, guid: 81c02f43ddbd74f40815dfe3fc208c0d, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9194554413741744658, guid: 81c02f43ddbd74f40815dfe3fc208c0d, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
