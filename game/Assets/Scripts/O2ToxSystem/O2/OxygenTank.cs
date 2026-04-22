@@ -1,20 +1,19 @@
 using UnityEngine;
-
 public class OxygenTank : MonoBehaviour
 {
     public static OxygenTank Instance { get; private set; }
-
     void Awake()
     {
         Instance = this;
     }
-
     [Range(0f, 100f)]
     public float oxygenLevel = 100f;
-
     public BreathInputML breathInput;
     public float drainRate = 5f;   // when breathing
     public float refillRate = 25f; // while touching refill cube
+
+    [Header("Audio")]
+    public AudioSource audioSource;
 
     [HideInInspector]
     public bool isRefilling = false;
@@ -24,20 +23,39 @@ public class OxygenTank : MonoBehaviour
         if (isRefilling)
         {
             oxygenLevel = Mathf.Clamp(oxygenLevel + refillRate * Time.deltaTime, 0f, 100f);
+            StopBreathingAudio();
             return; // ignore breathing while refilling
         }
-
         if (breathInput != null && breathInput.isBreathing)
         {
             oxygenLevel = Mathf.Clamp(oxygenLevel - drainRate * Time.deltaTime, 0f, 100f);
+            PlayBreathingAudio();
         }
+        else
+        {
+            StopBreathingAudio();
+        }
+    }
+    void PlayBreathingAudio()
+    {
+        if (audioSource == null) return;
+        if (!audioSource.isPlaying)
+        {
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+    }
+
+    void StopBreathingAudio()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+            audioSource.Stop();
     }
 
     public void RefillOxygen(float amount)
     {
         oxygenLevel = Mathf.Clamp(oxygenLevel + amount, 0f, 100f);
     }
-
     public void UseOxygen(float amount)
     {
         oxygenLevel = Mathf.Clamp(oxygenLevel - amount, 0f, 100f);

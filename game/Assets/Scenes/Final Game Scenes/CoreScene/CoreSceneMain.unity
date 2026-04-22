@@ -261,7 +261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7400020956573625834, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_Radius
-      value: 0.56
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1054,7 +1054,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 7c27b286c9334714b933da6c4bcef92e, type: 3}
+  m_Resource: {fileID: 8300000, guid: 6c90762db45c79d4ba545306e4811c7b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1430,7 +1430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 37261c856557fc94e9806f021d493704, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 0.067506224, g: 0.3490566, b: 0.34611812, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -3631,7 +3631,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986266914}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0099}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0062}
   m_LocalScale: {x: -0.00018871638, y: -0.00015973474, z: 0.0096464}
   m_ConstrainProportionsScale: 0
   m_Children:
