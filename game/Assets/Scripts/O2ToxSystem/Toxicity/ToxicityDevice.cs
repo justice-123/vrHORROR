@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ToxicityDevice : MonoBehaviour
 {
@@ -12,8 +13,7 @@ public class ToxicityDevice : MonoBehaviour
     public BreathInputML breathInput;
 
     [Header("Visuals")]
-    public RectTransform barFill;
-    public float barMaxHeight = 100f; // set this to the full height of the bar in pixels
+    public Image barFill;
 
     void Update()
     {
@@ -32,7 +32,6 @@ public class ToxicityDevice : MonoBehaviour
     void UpdateVisuals()
     {
         if (barFill == null) return;
-        float t = toxicityLevel / 100f;
-        barFill.sizeDelta = new Vector2(barFill.sizeDelta.x, barMaxHeight * t);
+        barFill.fillAmount = toxicityLevel / 100f;
     }
 }
