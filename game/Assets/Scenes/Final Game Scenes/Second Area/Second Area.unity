@@ -28377,8 +28377,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -0.016}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 252109480}
+  m_Children: []
   m_Father: {fileID: 462193285}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -34455,7 +34454,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 202569102}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8768133303093192197, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -34463,7 +34462,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 216892814c5f0f84e9d1991a2a9842cb, type: 2}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.85858
+      value: 0.8585806
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalScale.y
@@ -34471,23 +34470,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.85858
+      value: 0.8585806
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.272
+      value: -7.444462
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.902
+      value: 1.0550001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.45854
+      value: -15.7439995
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.0049698637
+      value: 0.70358384
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalRotation.x
@@ -34495,7 +34494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9999877
+      value: 0.7106123
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d48ec6841a7184041ba47b0f6a7e3cac, type: 3}
       propertyPath: m_LocalRotation.z
@@ -34848,7 +34847,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 252109479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c846d0f3d557f14ab04796560ed6a5b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d361fdeec51eda4fa3a831cdbfe6a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &252109485
@@ -69869,7 +69868,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 0355612f458e4d944b1cdbab37d9ef54, type: 3}
+  m_Resource: {fileID: 8300000, guid: 22145c4b4f9701e43ae3bfae21339a5e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -193384,7 +193383,7 @@ PrefabInstance:
     - target: {fileID: 7271206952054502145, guid: 9a3196992f050004a826df3a57670fc4, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 28c8c664a4a5dab44ac7336e90b15a45, type: 2}
+      objectReference: {fileID: 2100000, guid: 32f24be23d7e7a144a5ea612fcdc6d19, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -221830,9 +221829,9 @@ MonoBehaviour:
   - m_EditModeType: 1
     m_Knots:
     - Position:
-        x: -0.49918747
-        y: 0.49175346
-        z: -0.117338195
+        x: -0.4991852
+        y: 0.49175352
+        z: -0.11733813
       TangentIn:
         x: 0
         y: 0
@@ -221848,9 +221847,9 @@ MonoBehaviour:
           z: 0
           w: 1
     - Position:
-        x: -0.7630033
-        y: 0.27193058
-        z: -0.12072166
+        x: -0.7630007
+        y: 0.27193063
+        z: -0.120721616
       TangentIn:
         x: 0
         y: 0
@@ -277829,6 +277828,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 369818377}
   - {fileID: 206192613}
+  - {fileID: 252109478}
   - {fileID: 159265550}
   - {fileID: 1553235373}
   - {fileID: 1814112014}
