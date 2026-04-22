@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Scenes/Final Game Scenes/CoreScene/CoreSceneMain/Toxic_fog Profile.asset.meta
 guid: a8ebabe2ad0d39f4db9b199081aed0ac
+========
+guid: 876fb8d2b7b1d79459a25005b6ce408c
+>>>>>>>> dev:game/Assets/Animations/Monster/MonsterWalk.controller.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 11400000
+  mainObjectFileID: 9100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

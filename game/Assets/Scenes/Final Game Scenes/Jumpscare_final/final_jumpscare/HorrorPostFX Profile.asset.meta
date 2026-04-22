@@ -1,8 +1,13 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Scenes/Final Game Scenes/Jumpscare_final/final_jumpscare/HorrorPostFX Profile.asset.meta
 guid: 18218136825a08549a2a921fef69dc74
 NativeFormatImporter:
+========
+guid: d0bea46308600ba47b1b27ae991a22fb
+folderAsset: yes
+DefaultImporter:
+>>>>>>>> dev:game/Assets/Horror Creatures.meta
   externalObjects: {}
-  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
