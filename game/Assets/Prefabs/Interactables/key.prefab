@@ -77,6 +77,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 67aceb45ac03ecf4a95f1d8548fb151a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8616450120701614993}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 67aceb45ac03ecf4a95f1d8548fb151a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6897541352916644811}
   m_SourcePrefab: {fileID: 100100000, guid: 67aceb45ac03ecf4a95f1d8548fb151a, type: 3}
 --- !u!1 &1274736826426947344 stripped
 GameObject:
@@ -106,7 +109,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -260,6 +263,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.023425007, y: 0.01, z: 0.01}
   m_Center: {x: 0.003853941, y: 0, z: 0}
+--- !u!114 &-6897541352916644811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274736826426947344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b0a08a3a24e1a549ba52aa2a5753ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: TutorialKey
+  holdOffset: {x: 0, y: 0, z: 0}
+  holdRotation: {x: 0, y: 0, z: 0}
+  itemId: TutorialKey
 --- !u!4 &8699233614539510456 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7334197015968454905, guid: 67aceb45ac03ecf4a95f1d8548fb151a, type: 3}
