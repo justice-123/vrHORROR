@@ -12,6 +12,8 @@ public class OxygenManager : MonoBehaviour
     [Header("Audio")]
     public AudioSource audioSource;
 
+    private bool canPlayBreathAudio = false;
+
     void Update()
     {
         if (OxygenTank.Instance == null) return;
@@ -20,7 +22,7 @@ public class OxygenManager : MonoBehaviour
         {
             OxygenTank.Instance.oxygenLevel = Mathf.Clamp(
                 OxygenTank.Instance.oxygenLevel + refillRate * Time.deltaTime, 0f, 100f);
-            StopBreathingAudio();
+            canPlayBreathAudio = true; // prime for next breath
             return;
         }
 
@@ -28,27 +30,22 @@ public class OxygenManager : MonoBehaviour
         {
             OxygenTank.Instance.oxygenLevel = Mathf.Clamp(
                 OxygenTank.Instance.oxygenLevel - drainRate * Time.deltaTime, 0f, 100f);
-            PlayBreathingAudio();
+
+            if (canPlayBreathAudio)
+            {
+                if (audioSource != null)
+                {
+                    audioSource.loop = false;
+                    audioSource.Play();
+                }
+                canPlayBreathAudio = false;
+            }
         }
         else
         {
-            StopBreathingAudio();
+            // stop audio if it somehow keeps playing
+            if (audioSource != null && audioSource.isPlaying)
+                audioSource.Stop();
         }
-    }
-
-    void PlayBreathingAudio()
-    {
-        if (audioSource == null) return;
-        if (!audioSource.isPlaying)
-        {
-            audioSource.loop = true;
-            audioSource.Play();
-        }
-    }
-
-    void StopBreathingAudio()
-    {
-        if (audioSource != null && audioSource.isPlaying)
-            audioSource.Stop();
     }
 }
