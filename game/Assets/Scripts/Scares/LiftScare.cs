@@ -172,16 +172,6 @@ public class LiftScare : MonoBehaviour
                 t
             );
 
-            if (playerHead != null)
-            {
-                Vector3 toPlayer = playerHead.position - monster.transform.position;
-                toPlayer.y = 0f;
-                if (toPlayer.sqrMagnitude > 0.001f)
-                {
-                    Quaternion lookAtPlayer = Quaternion.LookRotation(toPlayer);
-                    monster.transform.rotation = Quaternion.Slerp(startRot, lookAtPlayer, t);
-                }
-            }
 
             if (hissLoop != null)
             {
