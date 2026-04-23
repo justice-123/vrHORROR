@@ -3,7 +3,22 @@ guid: 05cd474909c1b984d8b6930e95892e85
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: batteryIndicator_mat
+    second: {fileID: 2100000, guid: a0ce8f9b166ac0c409ebc7b77beb4b14, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: controllerMATphongRT
+    second: {fileID: 2100000, guid: 8935ed953ed0eca479bb88417430d738, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: controllerMATstingrayRT
+    second: {fileID: 2100000, guid: d1667d08adc1edd43a28d477386d2fc4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
