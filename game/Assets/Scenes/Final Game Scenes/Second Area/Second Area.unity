@@ -3333,13 +3333,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23556315}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.687, y: 0.772, z: 0.03}
-  m_LocalScale: {x: 0.07730716, y: 0.16275191, z: 0.12613273}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.68699986, y: 0.963, z: 0.01}
+  m_LocalScale: {x: 0.13675636, y: 0.28790814, z: 0.2231288}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 252109480}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!199 &23556317
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -151527,6 +151527,14 @@ PrefabInstance:
     - target: {fileID: 2873910343803344798, guid: 4d06dc466d7a0ab45bc5568c71bdafb4, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5522525176105720921, guid: 4d06dc466d7a0ab45bc5568c71bdafb4, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5522525176105720921, guid: 4d06dc466d7a0ab45bc5568c71bdafb4, type: 3}
+      propertyPath: m_LODs.Array.data[1].renderers.Array.data[0].renderer
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7277293655811172179, guid: 4d06dc466d7a0ab45bc5568c71bdafb4, type: 3}
       propertyPath: m_StaticEditorFlags
