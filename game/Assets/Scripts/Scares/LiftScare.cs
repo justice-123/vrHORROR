@@ -137,7 +137,10 @@ public class LiftScare : MonoBehaviour
         if (silhouetteLight != null) silhouetteLight.enabled = true;
 
         Debug.LogWarning("[LiftScare] doors reopening into darkness");
-        yield return StartCoroutine(doors.openDoorsRoutine());
+        //yield return StartCoroutine(doors.openDoorsRoutine());
+
+        doors.crackDoorsOpen();
+        yield return new WaitForSeconds(1.5f);
 
         Debug.LogWarning("[LiftScare] all is well pause");
         yield return new WaitForSeconds(allIsWellDuration);
