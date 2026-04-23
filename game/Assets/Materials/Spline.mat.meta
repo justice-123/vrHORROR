@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Materials/Spline.mat.meta
 guid: f874a9fb315e07341a02b427abc3654f
+========
+guid: a8806503a9dfb614f812f8daefd7d2b3
+>>>>>>>> dev:game/Assets/Materials/Glass_01_Fade_.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

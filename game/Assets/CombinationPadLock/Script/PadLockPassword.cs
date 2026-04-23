@@ -9,7 +9,7 @@ public class PadLockPassword : MonoBehaviour
 
     public int[] _numberPassword = {0,0,0,0};
     Rigidbody rb;
-    public FrontDoor frontDoor;
+    public ToiletDoor toiletDoor;
     public Collider mainCollider;
 
     private void Awake()
@@ -27,7 +27,7 @@ public class PadLockPassword : MonoBehaviour
             // Here enter the event for the correct combination
             Debug.Log("Password correct");
             
-            frontDoor.breakKeypad();
+            toiletDoor.PadlockOpen();
             mainCollider.enabled = true;
             if (rb != null)
             {
