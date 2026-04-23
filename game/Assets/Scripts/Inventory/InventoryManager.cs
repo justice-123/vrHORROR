@@ -1,3 +1,4 @@
+using System; // Added for Action event
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -32,6 +33,12 @@ public class InventoryManager : MonoBehaviour
     private int currentIndex = -1;
     private GameObject activeInstance = null;
 
+    // Added for tutorial: fired when an item is stored
+    public event Action OnItemStored;
+
+    // Added for tutorial: fired when an item is taken out via CycleItem
+    public event Action OnItemCycledOut;
+
     void OnEnable()
     {
         cycleAction.action.Enable();
@@ -64,6 +71,8 @@ public class InventoryManager : MonoBehaviour
         items.Add(item);
         item.gameObject.SetActive(false);
         Debug.Log($"[Inventory] Stored: {item.itemName} ({items.Count} items)");
+
+        OnItemStored?.Invoke(); // Added for tutorial
     }
 
     public void CycleItem()
@@ -107,6 +116,8 @@ public class InventoryManager : MonoBehaviour
 
         activeInstance = obj;
         Debug.Log($"[Inventory] Equipped: {items[currentIndex].itemName}");
+
+        OnItemCycledOut?.Invoke(); // Added for tutorial
     }
 
     public void DropCurrentItem()
