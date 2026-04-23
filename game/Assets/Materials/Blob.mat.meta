@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Materials/Blob.mat.meta
 guid: 3a40d1f12bedbf547871c124376db3fd
+========
+guid: b2796d6cee7ad1946a4c3e2dcf084746
+>>>>>>>> dev:game/Assets/Materials/CombinationLock.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

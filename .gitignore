@@ -105,7 +105,11 @@ game/Assets/Abandoned_Asylum
 game/Assets/Abandoned_Asylum.meta
 
 mlModels
-audio
+audio/newMLmodel
+audio/giggles/giggleProject.aup3
+
+game/Assets/Abandoned_Asylum
+game/Assets/Horror Creatures
 
 
 /mlModel2
