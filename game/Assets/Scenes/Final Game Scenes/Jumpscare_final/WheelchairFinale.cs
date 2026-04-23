@@ -46,16 +46,16 @@ public class WheelchairFinale : MonoBehaviour
     [SerializeField] private AudioSource attackScreech;
 
     [Header("=== SEQUENCE TIMING ===")]
-    [SerializeField] private float preTrapDelay = 0.3f;
-    [SerializeField] private float gnarlySoundHoldDuration = 1.5f;
-    [SerializeField] private float heartbeatOnlyDuration = 2f;
+    [SerializeField] private float preTrapDelay = 0.2f;
+    [SerializeField] private float gnarlySoundHoldDuration = 1.2f;
+    [SerializeField] private float heartbeatOnlyDuration = 1f;
     [SerializeField] private float fadeOutDuration = 1.2f;
     [SerializeField] private float blackHoldDuration = 1.5f;
     [SerializeField] private float fadeInDuration = 0.6f;
     [SerializeField] private float shadowRevealDuration = 2f;
-    [SerializeField] private float startChaseSpeed = 6f;
-    [SerializeField] private float maxChaseSpeed = 11f;
-    [SerializeField] private float chaseAcceleration = 5f;
+    [SerializeField] private float startChaseSpeed = 9f;
+    [SerializeField] private float maxChaseSpeed = 16f;
+    [SerializeField] private float chaseAcceleration = 8f;
     [Tooltip("Monster stops chasing at this distance - bigger value = stops further away.")]
     [SerializeField] private float attackDistance = 2.8f;
     [SerializeField] private float maxChaseTime = 3.5f;
@@ -213,10 +213,14 @@ public class WheelchairFinale : MonoBehaviour
         Debug.LogError("[Act 1] Pre-trap");
         yield return new WaitForSeconds(preTrapDelay);
 
-        // === ACT 2: TRAP + GNARLY SOUND FROM BEHIND ===
-        Debug.LogError("[Act 2] Disable controls + gnarly sound behind");
+        // === ACT 2: TRAP + ROTATE + GNARLY SOUND FROM THE RIGHT ===
+        Debug.LogError("[Act 2] Disable controls, rotate player, gnarly sound to the right");
         DisableControllers();
-        PlayGnarlySoundBehindPlayer();
+
+        // Rotate NOW so the sound comes from the correct direction
+        RotatePlayerToFaceMarker();
+
+        PlayGnarlySoundFromMonsterDirection();
         StartCoroutine(DuckAudioSource(outdoorAmbient, 0.15f, 1.5f));
 
         yield return new WaitForSeconds(gnarlySoundHoldDuration);
@@ -243,10 +247,6 @@ public class WheelchairFinale : MonoBehaviour
         StartCoroutine(RampPostFX(1f, 1f));
         yield return StartCoroutine(FadeColor(new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), fadeOutDuration));
 
-        // === ACT 5: IN DARKNESS - darken world + position shadow monster ===
-        Debug.LogError("[Act 5] In darkness - setup");
-        RotatePlayerToFaceMarker();
-        DarkenWorldAndGoRed();
 
         if (useFogDuringChase) ApplyHorrorFog();
 
@@ -371,16 +371,17 @@ public class WheelchairFinale : MonoBehaviour
     // ============================================================
     // GNARLY SOUND POSITIONING (behind player)
     // ============================================================
-    private void PlayGnarlySoundBehindPlayer()
+    private void PlayGnarlySoundFromMonsterDirection()
     {
         if (gnarlyBehindSound == null) return;
 
-        Vector3 behindDir = -playerCamera.forward;
-        behindDir.y = 0;
-        behindDir.Normalize();
-        gnarlyBehindSound.transform.position = playerCamera.position + behindDir * 4f;
+        // Sound comes from the DoorMarker position (where monster will spawn)
+        // After rotation, this is to the player's RIGHT
+        gnarlyBehindSound.transform.position = doorMarker.position;
         gnarlyBehindSound.spatialBlend = 1f;
         gnarlyBehindSound.Play();
+
+        Debug.LogError("[WheelchairFinale] Gnarly sound playing from monster direction");
     }
 
     // ============================================================
@@ -610,11 +611,23 @@ public class WheelchairFinale : MonoBehaviour
 
     private void RotatePlayerToFaceMarker()
     {
+        // Direction from player to the marker
         Vector3 dir = doorMarker.position - playerRig.position;
         dir.y = 0;
         dir.Normalize();
+
         if (dir.sqrMagnitude > 0.001f)
-            playerRig.rotation = Quaternion.LookRotation(dir);
+        {
+            // Get the rotation that would face the marker
+            Quaternion faceMarker = Quaternion.LookRotation(dir);
+
+            // Rotate 90 degrees LEFT so the marker is to the player's RIGHT
+            // (player has to turn right to see the monster)
+            Quaternion offset = Quaternion.Euler(0, -90f, 0);
+            playerRig.rotation = faceMarker * offset;
+
+            Debug.LogError("[WheelchairFinale] Player rotated so monster is 90° to the right");
+        }
     }
 
     private void FacePlayerHorizontal()
