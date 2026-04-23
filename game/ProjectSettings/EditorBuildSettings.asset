@@ -23,6 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Final Game Scenes/Main Menu/MainMenu.unity
     guid: 49dcd4b263526ff47b28795028e407ad
+  - enabled: 1
+    path: Assets/Scenes/Final Game Scenes/Tutorial/Tutorial.unity
+    guid: da09e01b910f6c94eb814cf7a9988b27
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4bf9bb893ef547a42b4d44c58dbad263, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: c718e26290ccc1a47ac495a6415f9523, type: 2}

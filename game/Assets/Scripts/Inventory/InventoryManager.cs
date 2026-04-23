@@ -151,4 +151,9 @@ public class InventoryManager : MonoBehaviour
     {
         return currentIndex != -1 ? items[currentIndex].itemId : "-1";
     }
+
+    public bool itemInInventory()
+    {
+        return items.Count > 0;
+    }
 }
