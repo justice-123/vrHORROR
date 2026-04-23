@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class VRRecenter : MonoBehaviour
+public class VRRecenter2 : MonoBehaviour
 {
-    public Transform head;         
-    public Transform spawnPoint;    
+    public Transform head;
+    public Transform spawnPoint;
 
     IEnumerator Start()
     {
@@ -14,7 +14,7 @@ public class VRRecenter : MonoBehaviour
         yield return null;
 
         Vector3 offset = spawnPoint.position - head.position;
-        offset.y = 0f; 
+        offset.y = 0f;
         transform.position += offset;
     }
 }
