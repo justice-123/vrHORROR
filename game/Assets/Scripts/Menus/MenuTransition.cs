@@ -30,6 +30,7 @@ public class MenuTransition : MonoBehaviour
         fadeScreen.alpha = 1;
 
         player.transform.position = new Vector3(-11, 5, -12);
+        MySceneManager.Instance.LoadNewScene("Tutorial");
         yield return new WaitForSeconds(2f);
 
         elapsed = 0;
