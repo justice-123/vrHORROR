@@ -12,12 +12,13 @@ TagManager:
   - Left Hand Box
   - Right Hand Box
   - Lift
-  - StorageTank
+  - DoorFragment
+  - DoorPiece
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - ShadowOnlys
   - Water
   - UI
   - 
