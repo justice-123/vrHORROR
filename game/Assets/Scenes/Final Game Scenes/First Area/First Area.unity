@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000002, guid: baa053711e4378d4fbd6c8f67c3ba2ac, type: 2}
+  m_LightingDataAsset: {fileID: 112000002, guid: c406c6a6a0a4c8345a0ab6e403fc6bfe, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: a107207066adc2b4f9b864717ff64f0e, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -234083,6 +234083,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7602131445077605270, guid: 17f106f715198df41a2e5f3457c7c683, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3eddcafcded58bd479488c96a9830805, type: 2}
     - target: {fileID: 8100143818039727509, guid: 17f106f715198df41a2e5f3457c7c683, type: 3}
       propertyPath: m_Name
       value: Hallucinations
