@@ -44,6 +44,6 @@ public class Wheelchair_Vignette : MonoBehaviour
 
         currentIntensity = Mathf.Lerp(currentIntensity, targetIntensity, Time.deltaTime * smoothing);
 
-        vignette.intensity.value = currentIntensity;
+        vignette.intensity.value = PlayerSettings.Instance.vignetteIntensityMultiplier * currentIntensity;
     }
 }
