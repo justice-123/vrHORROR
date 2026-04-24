@@ -205,6 +205,7 @@ public class MonsterAI : MonoBehaviour
         {
 
             // Randomly wander 
+            agent.speed = 1f;
             movementTimer = 0f;
             //BhapticsLibrary.StopAll();
             if (!agent.pathPending && agent.remainingDistance < 0.75f) Wander();
@@ -403,10 +404,10 @@ public class MonsterAI : MonoBehaviour
             if (Physics.Raycast(rayOrigin, directionToPlayer, out RaycastHit hit, viewRange))
             {
                 if (hit.transform != null)
-                    //Debug.Log("Monster ray hit: " + hit.transform.name + " with tag: " + hit.transform.tag);
+                    Debug.Log("Monster ray hit: " + hit.transform.name + " with tag: " + hit.transform.tag);
 
 
-                return hit.transform.CompareTag("Player") || hit.transform.CompareTag("MainCamera") || hit.transform == player;
+                return (hit.transform.root == player.root || hit.transform.CompareTag("Player") || hit.transform.CompareTag("MainCamera") || hit.transform == player);
             }
         }
         return false;
