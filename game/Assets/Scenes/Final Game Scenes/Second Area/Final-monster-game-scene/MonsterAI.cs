@@ -18,6 +18,7 @@ public class MonsterAI : MonoBehaviour
     public float moveThreshold = 0.15f; // For player
     public float eyeHeight = 0.5f;
     private float deadzone = 0.001f;
+    private float personalSpace = 2.0f;
 
 
     [Header("BHaptics")]
@@ -28,6 +29,10 @@ public class MonsterAI : MonoBehaviour
     public float chaseDelay = 1.0f;
     private float movementTimer = 0f;
 
+    [Header("Wander Settings")]
+    public float pauseDuration = 1.5f; // stare lenght
+    private float pauseTimer = 0f;
+    private bool isPausing = false;
 
     private NavMeshAgent agent;
     private Animator anim;
@@ -90,7 +95,9 @@ public class MonsterAI : MonoBehaviour
             // If player moves while in view, move closer
             if (totalMotion > moveThreshold)
             {
-                Debug.Log("Can See Player and hunting");
+                Debug.Log("Hunting");
+                isPausing = false;
+                agent.isStopped = false;
 
                 movementTimer += Time.deltaTime;
                 if (movementTimer >= chaseDelay)
@@ -107,15 +114,73 @@ public class MonsterAI : MonoBehaviour
             else
             {
                 //movementTimer = 0f;
-                Debug.Log("Can See Player");
+                Debug.Log("Can See Player, but theyre still");
                 HandleHaptics(distance, false);
 
-                agent.speed = 1.5f;  // keep moving closer to player, but go elsewhere once near player 
-                if (!agent.pathPending && agent.remainingDistance < 0.75f) Wander();
+                agent.speed = 1.0f;  // keep moving closer to player, 
 
-                if (distance < 1) { 
-                    Wander(); 
+                //if (distance < personalSpace)
+                //{
+                //    if (!isPausing && Vector3.Distance(agent.destination, player.position) < personalSpace)
+                //    {
+                //        WanderAwayFromPlayer();
+                //    }
+                //    else if (!agent.pathPending && agent.remainingDistance < 0.75f)
+                //    {
+                //        WanderAwayFromPlayer();
+                //    }
+                //}
+
+                if (distance < personalSpace)
+                {
+                    if (!isPausing && Vector3.Distance(agent.destination, player.position) < personalSpace)
+                    {
+                        isPausing = true;
+                        pauseTimer = 0f;
+
+                        agent.isStopped = true;
+                        agent.ResetPath();
+                        agent.velocity = Vector3.zero;
+                    }
+
+                    if (isPausing)
+                    {
+                        pauseTimer += Time.deltaTime;
+
+
+                        if (pauseTimer >= pauseDuration)
+                        {
+                            isPausing = false;
+                            agent.isStopped = false;
+                            WanderAwayFromPlayer();
+                        }
+                    }
+                    else if (!agent.pathPending && agent.remainingDistance < 0.75f)
+                    {
+                        WanderAwayFromPlayer();
+                    }
                 }
+
+
+                else
+                {
+                    // wander normally
+                    isPausing = false;
+                    agent.isStopped = false;
+                    agent.speed = 1.0f;
+
+                    if (!agent.pathPending && agent.remainingDistance < 0.75f)
+                    {
+                        Wander();
+                    }
+                }
+
+
+                //if (!agent.pathPending && agent.remainingDistance < 0.75f) Wander();
+
+                //if (distance < 1) { 
+                //    Wander(); 
+                //}
 
 
             }
@@ -130,10 +195,15 @@ public class MonsterAI : MonoBehaviour
         }
 
         // Check for Fail State
-        if (distance < 0.5f) {
+        if (distance < 1.5f) {
             Debug.Log("Game Over!");
             isGameOver = true;
+            agent.speed = 0f;
             agent.isStopped = true;
+            agent.ResetPath();
+            agent.velocity = Vector3.zero;
+            anim.SetFloat("Speed", 0f);
+            return;
         }
 
         //lastPlayerPos = player.position;
@@ -148,6 +218,28 @@ public class MonsterAI : MonoBehaviour
     {
         UpdateLastPositions();
 
+    }
+
+    void WanderAwayFromPlayer()
+    {
+        agent.isStopped = false;
+        agent.speed = 1.0f;
+
+        Vector3 directionAway = (transform.position - player.position).normalized;
+
+        Vector3 targetPosition = transform.position + (directionAway * 8f);
+
+        targetPosition += Random.insideUnitSphere * 3f; // bit of randomness, so not walking directly away from player
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(targetPosition, out hit, 10f, NavMesh.AllAreas))
+        {
+            agent.SetDestination(hit.position);
+        }
+        else
+        { // Fallback
+            Wander();
+        }
     }
 
     float CalculateCombinedMotion()
