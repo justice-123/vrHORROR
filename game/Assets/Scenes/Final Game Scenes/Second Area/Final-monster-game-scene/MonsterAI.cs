@@ -41,6 +41,7 @@ public class MonsterAI : MonoBehaviour
     private Vector3 lastPlayerPos, lastLeftPos, lastRightPos;
     private float hapticTimer;
     private bool isGameOver = false;
+    private bool isAttacking = false;
 
     private bool initialized = false;
 
@@ -93,7 +94,7 @@ public class MonsterAI : MonoBehaviour
 
     void Update()
     {
-        if (isGameOver) return;
+        if (isGameOver || isAttacking) return;
 
 
         float distance = Vector3.Distance(transform.position, player.position); //checks current monster distance to player
@@ -210,39 +211,8 @@ public class MonsterAI : MonoBehaviour
         }
 
         // Check for Fail State
-        if (distance < 1.5f) {
-            Debug.Log("Game Over!");
-            isGameOver = true;
-
-
-
-            agent.speed = 0f;
-            agent.isStopped = true;
-            agent.ResetPath();
-            agent.velocity = Vector3.zero;
-
-            Vector3 lookPos = player.position;
-            lookPos.y = transform.position.y; // Keep the monster upright
-            transform.LookAt(lookPos);
-
-            anim.SetFloat("Speed", 0f);
-            anim.SetTrigger("Attack");
-
-            BhapticsLibrary.StopAll();
-
-            StartCoroutine(PlayHapticForDuration(huntClip, 2.0f, 0.1f));
-
-            leftHandHap.SendHapticImpulse(0, 1.0f, 2f);
-            rightHandHap.SendHapticImpulse(0, 1.0f, 2f);
-            //BhapticsLibrary.Play(monster_slash);
-
-            if (playerOxygen != null)
-            {
-                playerOxygen.UseOxygen(30f);
-                Debug.Log($"Oxygen remaining: {playerOxygen.oxygenLevel}%");
-            }
-
-            return;
+        if (distance < 1.5f && !isAttacking) {
+            StartCoroutine(AttackAndFlee());
         }
 
         //lastPlayerPos = player.position;
@@ -252,6 +222,52 @@ public class MonsterAI : MonoBehaviour
 
 
     }
+
+    private IEnumerator AttackAndFlee()
+    {
+        isAttacking = true;
+
+        Debug.Log("Attacking Player");
+        //isGameOver = true;
+
+
+
+        agent.speed = 0f;
+        agent.isStopped = true;
+        agent.ResetPath();
+        agent.velocity = Vector3.zero;
+        anim.SetFloat("Speed", 0f);
+
+        Vector3 lookPos = player.position;
+        lookPos.y = transform.position.y; 
+        transform.LookAt(lookPos);
+        anim.SetTrigger("Attack");
+
+        BhapticsLibrary.StopAll();
+        StartCoroutine(PlayHapticForDuration(huntClip, 2.0f, 0.1f));
+        leftHandHap.SendHapticImpulse(0, 1.0f, 2f);
+        rightHandHap.SendHapticImpulse(0, 1.0f, 2f);
+        //BhapticsLibrary.Play(monster_slash);
+
+        if (playerOxygen != null)
+        {
+            playerOxygen.UseOxygen(30f);
+            Debug.Log($"Oxygen remaining: {playerOxygen.oxygenLevel}%");
+        }
+
+        yield return new WaitForSeconds(2.0f);
+
+        // monster runs away
+        agent.isStopped = false;
+        agent.speed = 3.0f;
+        WanderAwayFromPlayer();
+
+        yield return new WaitForSeconds(5.0f);
+        isAttacking = false;
+
+
+    }
+
     private System.Collections.IEnumerator PlayHapticForDuration(string clipName, float totalDuration, float clipLength)
     {
         float elapsed = 0f;
@@ -277,7 +293,7 @@ public class MonsterAI : MonoBehaviour
     void WanderAwayFromPlayer()
     {
         agent.isStopped = false;
-        agent.speed = 1.0f;
+        //agent.speed = 1.0f;
 
         Vector3 directionAway = (transform.position - player.position).normalized;
 
@@ -401,7 +417,7 @@ public class MonsterAI : MonoBehaviour
     { 
         
 
-        agent.speed = 1.0f;
+        //agent.speed = 1.0f;
 
         for (int i = 0; i < 5; i++)
         {
