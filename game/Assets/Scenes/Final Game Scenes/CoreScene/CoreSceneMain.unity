@@ -8582,13 +8582,33 @@ PrefabInstance:
       propertyPath: breathInput
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5118816884201628953, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118816884201628953, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b3bcd1833a406f478e125db01fc0b6d, type: 2}
+    - target: {fileID: 5118816884201628953, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118816884201628953, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5608202080528317625, guid: 8b3bcd1833a406f478e125db01fc0b6d, type: 2}
+    - target: {fileID: 5118816884201628953, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6316888862233404128, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.77
       objectReference: {fileID: 0}
     - target: {fileID: 6316888862233404128, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.684
+      value: 5.6516
       objectReference: {fileID: 0}
     - target: {fileID: 6316888862233404128, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8631,12 +8651,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 427577600}
     - target: {fileID: 7902821567335160169, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
+      propertyPath: drainRate
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7902821567335160169, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: breathInput
       value: 
       objectReference: {fileID: 1292080283}
     - target: {fileID: 7902821567335160169, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: toxicityLevel
-      value: 80
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2646078432856813370, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
