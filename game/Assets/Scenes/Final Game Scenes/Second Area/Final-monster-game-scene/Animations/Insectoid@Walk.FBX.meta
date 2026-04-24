@@ -1,332 +1,278 @@
 fileFormatVersion: 2
-guid: 5530108d38174954d8ac2f82dcbb7dbe
+guid: ff675fe5a913b6146b0460e8e84ad448
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
   - first:
       1: 100000
-    second: //RootNode
+    second: BackSpiderLLeg1
   - first:
       1: 100002
-    second: CATRigLArm1
+    second: BackSpiderLLeg2
   - first:
       1: 100004
-    second: CATRigLArm2
+    second: BackSpiderLLeg3
   - first:
       1: 100006
-    second: CATRigLArmCollarbone
+    second: BackSpiderLLegPlatform1
   - first:
       1: 100008
-    second: CATRigLArmDigit11
+    second: BackSpiderRLeg1
   - first:
       1: 100010
-    second: CATRigLArmDigit12
+    second: BackSpiderRLeg2
   - first:
       1: 100012
-    second: CATRigLArmDigit21
+    second: BackSpiderRLeg3
   - first:
       1: 100014
-    second: CATRigLArmDigit22
+    second: BackSpiderRLegPlatform1
   - first:
       1: 100016
-    second: CATRigLArmDigit31
+    second: FrontSpiderLLeg1
   - first:
       1: 100018
-    second: CATRigLArmDigit32
+    second: FrontSpiderLLeg2
   - first:
       1: 100020
-    second: CATRigLArmDigit41
+    second: FrontSpiderLLeg3
   - first:
       1: 100022
-    second: CATRigLArmDigit42
+    second: FrontSpiderLLegPlatform
   - first:
       1: 100024
-    second: CATRigLArmDigit51
+    second: FrontSpiderRLeg1
   - first:
       1: 100026
-    second: CATRigLArmDigit52
+    second: FrontSpiderRLeg2
   - first:
       1: 100028
-    second: CATRigLArmPalm
+    second: FrontSpiderRLeg3
   - first:
       1: 100030
-    second: CATRigLLeg1
+    second: FrontSpiderRLegPlatform
   - first:
       1: 100032
-    second: CATRigLLeg2
+    second: insectoid
   - first:
       1: 100034
-    second: CATRigLLeg3
-  - first:
-      1: 100036
-    second: CATRigLLegAnkle
-  - first:
-      1: 100038
-    second: CATRigLLegDigit11
-  - first:
-      1: 100040
-    second: CATRigLLegPlatform
-  - first:
-      1: 100042
-    second: CATRigRArm1
-  - first:
-      1: 100044
-    second: CATRigRArm2
-  - first:
-      1: 100046
-    second: CATRigRArmCollarbone
-  - first:
-      1: 100048
-    second: CATRigRArmDigit11
-  - first:
-      1: 100050
-    second: CATRigRArmDigit12
-  - first:
-      1: 100052
-    second: CATRigRArmDigit21
-  - first:
-      1: 100054
-    second: CATRigRArmDigit22
-  - first:
-      1: 100056
-    second: CATRigRArmDigit31
-  - first:
-      1: 100058
-    second: CATRigRArmDigit32
-  - first:
-      1: 100060
-    second: CATRigRArmDigit41
-  - first:
-      1: 100062
-    second: CATRigRArmDigit42
-  - first:
-      1: 100064
-    second: CATRigRArmDigit51
-  - first:
-      1: 100066
-    second: CATRigRArmDigit52
-  - first:
-      1: 100068
-    second: CATRigRArmPalm
-  - first:
-      1: 100070
-    second: CATRigRibcage001
-  - first:
-      1: 100072
-    second: CATRigRibcage001Bone001
-  - first:
-      1: 100074
-    second: CATRigRibcage002
-  - first:
-      1: 100076
-    second: CATRigRibcage003
-  - first:
-      1: 100078
-    second: CATRigRibcage003Bone001
-  - first:
-      1: 100080
-    second: CATRigRibcage003Bone002
-  - first:
-      1: 100082
-    second: CATRigRibcage003Bone003
-  - first:
-      1: 100084
-    second: CATRigRLeg1
-  - first:
-      1: 100086
-    second: CATRigRLeg2
-  - first:
-      1: 100088
-    second: CATRigRLeg3
-  - first:
-      1: 100090
-    second: CATRigRLegAnkle
-  - first:
-      1: 100092
-    second: CATRigRLegDigit11
-  - first:
-      1: 100094
-    second: CATRigRLegPlatform
-  - first:
-      1: 100096
-    second: CATRigSpine
-  - first:
-      1: 100098
-    second: CATRigSpine1
-  - first:
-      1: 100100
-    second: CATRigSpine2
-  - first:
-      1: 100102
-    second: Plane001
-  - first:
-      4: 400000
     second: //RootNode
   - first:
+      1: 100036
+    second: Spider1Bone001
+  - first:
+      1: 100038
+    second: Spider1Bone002
+  - first:
+      1: 100040
+    second: Spider2Bone001
+  - first:
+      1: 100042
+    second: Spider2Bone002
+  - first:
+      1: 100044
+    second: SpiderHub003
+  - first:
+      1: 100046
+    second: SpiderHub005
+  - first:
+      1: 100048
+    second: SpiderHub005Bone001
+  - first:
+      1: 100050
+    second: SpiderHub005Bone002
+  - first:
+      1: 100052
+    second: SpiderHub005Bone004
+  - first:
+      1: 100054
+    second: SpiderHub005Bone004 1
+  - first:
+      1: 100056
+    second: SpiderHub005Bone005
+  - first:
+      1: 100058
+    second: SpiderHub005Bone006
+  - first:
+      1: 100060
+    second: SpiderLArm1
+  - first:
+      1: 100062
+    second: SpiderLArm2
+  - first:
+      1: 100064
+    second: SpiderLArmCollarbone
+  - first:
+      1: 100066
+    second: SpiderLArmPalm
+  - first:
+      1: 100068
+    second: SpiderRArm1
+  - first:
+      1: 100070
+    second: SpiderRArm2
+  - first:
+      1: 100072
+    second: SpiderRArmCollarbone
+  - first:
+      1: 100074
+    second: SpiderRArmPalm
+  - first:
+      1: 100076
+    second: SpiderSpine1
+  - first:
+      1: 100078
+    second: SpiderSpine2
+  - first:
+      1: 100080
+    second: SpiderTail1
+  - first:
+      1: 100082
+    second: SpiderTail2
+  - first:
+      1: 100084
+    second: SpiderTail3
+  - first:
+      4: 400000
+    second: BackSpiderLLeg1
+  - first:
       4: 400002
-    second: CATRigLArm1
+    second: BackSpiderLLeg2
   - first:
       4: 400004
-    second: CATRigLArm2
+    second: BackSpiderLLeg3
   - first:
       4: 400006
-    second: CATRigLArmCollarbone
+    second: BackSpiderLLegPlatform1
   - first:
       4: 400008
-    second: CATRigLArmDigit11
+    second: BackSpiderRLeg1
   - first:
       4: 400010
-    second: CATRigLArmDigit12
+    second: BackSpiderRLeg2
   - first:
       4: 400012
-    second: CATRigLArmDigit21
+    second: BackSpiderRLeg3
   - first:
       4: 400014
-    second: CATRigLArmDigit22
+    second: BackSpiderRLegPlatform1
   - first:
       4: 400016
-    second: CATRigLArmDigit31
+    second: FrontSpiderLLeg1
   - first:
       4: 400018
-    second: CATRigLArmDigit32
+    second: FrontSpiderLLeg2
   - first:
       4: 400020
-    second: CATRigLArmDigit41
+    second: FrontSpiderLLeg3
   - first:
       4: 400022
-    second: CATRigLArmDigit42
+    second: FrontSpiderLLegPlatform
   - first:
       4: 400024
-    second: CATRigLArmDigit51
+    second: FrontSpiderRLeg1
   - first:
       4: 400026
-    second: CATRigLArmDigit52
+    second: FrontSpiderRLeg2
   - first:
       4: 400028
-    second: CATRigLArmPalm
+    second: FrontSpiderRLeg3
   - first:
       4: 400030
-    second: CATRigLLeg1
+    second: FrontSpiderRLegPlatform
   - first:
       4: 400032
-    second: CATRigLLeg2
+    second: insectoid
   - first:
       4: 400034
-    second: CATRigLLeg3
+    second: //RootNode
   - first:
       4: 400036
-    second: CATRigLLegAnkle
+    second: Spider1Bone001
   - first:
       4: 400038
-    second: CATRigLLegDigit11
+    second: Spider1Bone002
   - first:
       4: 400040
-    second: CATRigLLegPlatform
+    second: Spider2Bone001
   - first:
       4: 400042
-    second: CATRigRArm1
+    second: Spider2Bone002
   - first:
       4: 400044
-    second: CATRigRArm2
+    second: SpiderHub003
   - first:
       4: 400046
-    second: CATRigRArmCollarbone
+    second: SpiderHub005
   - first:
       4: 400048
-    second: CATRigRArmDigit11
+    second: SpiderHub005Bone001
   - first:
       4: 400050
-    second: CATRigRArmDigit12
+    second: SpiderHub005Bone002
   - first:
       4: 400052
-    second: CATRigRArmDigit21
+    second: SpiderHub005Bone004
   - first:
       4: 400054
-    second: CATRigRArmDigit22
+    second: SpiderHub005Bone004 1
   - first:
       4: 400056
-    second: CATRigRArmDigit31
+    second: SpiderHub005Bone005
   - first:
       4: 400058
-    second: CATRigRArmDigit32
+    second: SpiderHub005Bone006
   - first:
       4: 400060
-    second: CATRigRArmDigit41
+    second: SpiderLArm1
   - first:
       4: 400062
-    second: CATRigRArmDigit42
+    second: SpiderLArm2
   - first:
       4: 400064
-    second: CATRigRArmDigit51
+    second: SpiderLArmCollarbone
   - first:
       4: 400066
-    second: CATRigRArmDigit52
+    second: SpiderLArmPalm
   - first:
       4: 400068
-    second: CATRigRArmPalm
+    second: SpiderRArm1
   - first:
       4: 400070
-    second: CATRigRibcage001
+    second: SpiderRArm2
   - first:
       4: 400072
-    second: CATRigRibcage001Bone001
+    second: SpiderRArmCollarbone
   - first:
       4: 400074
-    second: CATRigRibcage002
+    second: SpiderRArmPalm
   - first:
       4: 400076
-    second: CATRigRibcage003
+    second: SpiderSpine1
   - first:
       4: 400078
-    second: CATRigRibcage003Bone001
+    second: SpiderSpine2
   - first:
       4: 400080
-    second: CATRigRibcage003Bone002
+    second: SpiderTail1
   - first:
       4: 400082
-    second: CATRigRibcage003Bone003
+    second: SpiderTail2
   - first:
       4: 400084
-    second: CATRigRLeg1
-  - first:
-      4: 400086
-    second: CATRigRLeg2
-  - first:
-      4: 400088
-    second: CATRigRLeg3
-  - first:
-      4: 400090
-    second: CATRigRLegAnkle
-  - first:
-      4: 400092
-    second: CATRigRLegDigit11
-  - first:
-      4: 400094
-    second: CATRigRLegPlatform
-  - first:
-      4: 400096
-    second: CATRigSpine
-  - first:
-      4: 400098
-    second: CATRigSpine1
-  - first:
-      4: 400100
-    second: CATRigSpine2
-  - first:
-      4: 400102
-    second: Plane001
+    second: SpiderTail3
   - first:
       43: 4300000
-    second: Plane001
+    second: insectoid
   - first:
       74: 7400000
-    second: Chase
+    second: Walk
   - first:
       95: 9500000
     second: //RootNode
   - first:
       137: 13700000
-    second: Plane001
+    second: insectoid
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -355,11 +301,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Chase
+      name: Walk
       takeName: Take 001
       internalID: 7400000
-      firstFrame: 430
-      lastFrame: 460
+      firstFrame: 70
+      lastFrame: 120
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -382,7 +328,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 430
+      additiveReferencePoseFrame: 70
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -392,10 +338,10 @@ ModelImporter:
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 0
-    importVisibility: 0
+    importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     nodeNameCollisionStrategy: 0
     fileIdsGeneration: 1
     swapUVChannels: 0
@@ -424,7 +370,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-    normalCalculationMode: 0
+    normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
@@ -445,7 +391,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
-    skeletonHasParents: 0
+    skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
