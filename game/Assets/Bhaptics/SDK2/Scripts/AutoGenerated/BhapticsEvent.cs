@@ -30,5 +30,7 @@ namespace Bhaptics.SDK2
         public const string HEARTBEAT_BUZZ = "heartbeat_buzz";
         
         public const string HUNT_VIBRATION = "hunt_vibration";
+        
+        public const string MONSTER_SLASH = "monster-slash";
     }
 }
