@@ -44,7 +44,7 @@ public class MonsterAI : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         //meshRenderer = GetComponent<MeshRenderer>();
 
 
@@ -111,7 +111,7 @@ public class MonsterAI : MonoBehaviour
                 HandleHaptics(distance, false);
 
                 agent.speed = 1.5f;  // keep moving closer to player, but go elsewhere once near player 
-                if (!agent.hasPath || agent.remainingDistance < 0.6f) Wander();
+                if (!agent.pathPending && agent.remainingDistance < 0.6f) Wander();
 
 
             }
@@ -122,7 +122,7 @@ public class MonsterAI : MonoBehaviour
             // Randomly wander 
             movementTimer = 0f;
             //BhapticsLibrary.StopAll();
-            if (!agent.hasPath || agent.remainingDistance < 0.75f) Wander();
+            if (!agent.pathPending && agent.remainingDistance < 0.75f) Wander();
         }
 
         // Check for Fail State
@@ -133,6 +133,8 @@ public class MonsterAI : MonoBehaviour
         }
 
         //lastPlayerPos = player.position;
+
+        anim.SetFloat("Speed", agent.velocity.magnitude);
         UpdateLastPositions();
 
 
@@ -253,12 +255,18 @@ public class MonsterAI : MonoBehaviour
 
     void Wander() 
     { 
-  
-        agent.speed = 1.5f;
-        Vector3 randomPoint = transform.position + Random.insideUnitSphere * 10f;
-        if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 10f, NavMesh.AllAreas))
+        
+
+        agent.speed = 1.0f;
+
+        for (int i = 0; i < 5; i++)
         {
-            agent.SetDestination(hit.position);
+            Vector3 randomPoint = transform.position + Random.insideUnitSphere * 10f;
+            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 10f, NavMesh.AllAreas))
+            {
+                agent.SetDestination(hit.position);
+                return;
+            }
         }
     }
 

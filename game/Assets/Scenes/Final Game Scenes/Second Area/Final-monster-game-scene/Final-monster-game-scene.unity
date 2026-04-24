@@ -267,7 +267,6 @@ MonoBehaviour:
   viewRange: 25
   moveThreshold: 0.1
   eyeHeight: 1.6
-  deadzone: 0.01
   heartbeatClip: Heartbeat
   huntClip: Hunt_Vibration
   chaseDelay: 1
@@ -626,7 +625,6 @@ MonoBehaviour:
   viewRange: 25
   moveThreshold: 0.15
   eyeHeight: 0.5
-  deadzone: 0.01
   heartbeatClip: hearthump
   huntClip: Hunt_Vibration
   chaseDelay: 1
@@ -825,6 +823,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1815568899}
   - component: {fileID: 1815568900}
+  - component: {fileID: 1815568901}
   m_Layer: 2
   m_Name: Monster
   m_TagString: Untagged
@@ -864,10 +863,31 @@ MonoBehaviour:
   viewRange: 25
   moveThreshold: 0.15
   eyeHeight: 0.5
-  deadzone: 0.00000001
   heartbeatClip: heartbeat_buzz
   huntClip: hunt_vibration
   chaseDelay: 1
+--- !u!195 &1815568901
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815568898}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0.72
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &2051274585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -939,43 +959,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1000014015421864, guid: f87fd0f8e98b61d44b8f05a4998b4fa0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2051274588}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f87fd0f8e98b61d44b8f05a4998b4fa0, type: 3}
 --- !u!4 &2051274586 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000013173443706, guid: f87fd0f8e98b61d44b8f05a4998b4fa0, type: 3}
   m_PrefabInstance: {fileID: 2051274585}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2051274587 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1000014015421864, guid: f87fd0f8e98b61d44b8f05a4998b4fa0, type: 3}
-  m_PrefabInstance: {fileID: 2051274585}
-  m_PrefabAsset: {fileID: 0}
---- !u!195 &2051274588
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2051274587}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
