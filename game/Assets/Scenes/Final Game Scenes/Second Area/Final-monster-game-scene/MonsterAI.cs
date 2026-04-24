@@ -2,13 +2,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using Bhaptics.SDK2;
 using UnityEngine.XR;
-//using System.Collections.Generic;
+
+
 
 public class MonsterAI : MonoBehaviour
 {
-    public Transform player;
-    public Transform leftHand;
-    public Transform rightHand;
+    private Transform player;
+    private Transform leftHand;
+    private Transform rightHand;
 
 
     [Header("Sensitivity")]
@@ -16,6 +17,8 @@ public class MonsterAI : MonoBehaviour
     public float viewRange = 25f;
     public float moveThreshold = 0.15f; // For player
     public float eyeHeight = 0.5f;
+    private float deadzone = 0.001f;
+
 
     [Header("BHaptics")]
     public string heartbeatClip = "heartbeat_buzz";
@@ -25,12 +28,6 @@ public class MonsterAI : MonoBehaviour
     public float chaseDelay = 1.0f;
     private float movementTimer = 0f;
 
-    //[Header("Colors")]
-    //public Color wanderingColor = Color.green;
-    //public Color canSeeColor = Color.white;
-    //public Color huntingColor = Color.red;
-
-    //private MeshRenderer meshRenderer;
 
     private NavMeshAgent agent;
     private Animator anim;
@@ -39,6 +36,9 @@ public class MonsterAI : MonoBehaviour
     private bool isGameOver = false;
 
     private bool initialized = false;
+
+    private UnityEngine.XR.InputDevice leftHandHap;
+    private UnityEngine.XR.InputDevice rightHandHap;
 
 
     void Start()
@@ -66,13 +66,16 @@ public class MonsterAI : MonoBehaviour
         }
 
         //lastPlayerPos = player.position;
+
+        leftHandHap = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+        rightHandHap = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+
         Wander();
     }
 
     void Update()
     {
         if (isGameOver) return;
-        UpdateLastPositions();
 
 
         float distance = Vector3.Distance(transform.position, player.position); //checks current monster distance to player
@@ -92,33 +95,34 @@ public class MonsterAI : MonoBehaviour
                 movementTimer += Time.deltaTime;
                 if (movementTimer >= chaseDelay)
                 {
+                    HandleHaptics(distance, true);
+
                     agent.SetDestination(player.position);
                     agent.speed = 3.5f;
 
                     //ChangeColor(huntingColor);
-                    HandleHaptics(distance, true);
                 }
 
             }
             else
             {
-                movementTimer = 0f;
+                //movementTimer = 0f;
                 Debug.Log("Can See Player");
                 HandleHaptics(distance, false);
 
                 agent.speed = 1.5f;  // keep moving closer to player, but go elsewhere once near player 
-                if (!agent.hasPath || agent.remainingDistance < 2f) Wander();
+                if (!agent.hasPath || agent.remainingDistance < 0.6f) Wander();
 
 
             }
         }
         else
         {
+
             // Randomly wander 
-            //ChangeColor(wanderingColor);
             movementTimer = 0f;
             //BhapticsLibrary.StopAll();
-            if (!agent.hasPath || agent.remainingDistance < 1f) Wander();
+            if (!agent.hasPath || agent.remainingDistance < 0.75f) Wander();
         }
 
         // Check for Fail State
@@ -129,17 +133,44 @@ public class MonsterAI : MonoBehaviour
         }
 
         //lastPlayerPos = player.position;
+        UpdateLastPositions();
+
+
+    }
+
+    private void LateUpdate()
+    {
+        UpdateLastPositions();
 
     }
 
     float CalculateCombinedMotion()
     {
+        if (player == null || leftHand == null || rightHand == null) return 0;
+
+
         float headM = (player.position - lastPlayerPos).magnitude;
         float leftM = (leftHand.position - lastLeftPos).magnitude;
         float rightM = (rightHand.position - lastRightPos).magnitude;
 
+
+        //float headM = ((player.position - lastPlayerPos) / Time.deltaTime).magnitude;
+        //float leftM = ((leftHand.position - lastLeftPos) / Time.deltaTime).magnitude;
+        //float rightM = ((rightHand.position - lastRightPos) / Time.deltaTime).magnitude;
+
+        if (headM < deadzone) headM = 0;
+        if (leftM < deadzone) leftM = 0;
+        if (rightM < deadzone) rightM = 0;
+
+        float totalMovement = (headM + leftM + rightM) / Time.deltaTime;
+        //float totalMovement = ((headM + leftM + rightM) / Time.deltaTime).magnitude;
+        //float totalMovement = (headM + leftM + rightM);
+        //float totalMovement = Mathf.Max(headM, leftM, rightM);
+        Debug.Log(totalMovement);
+        Debug.Log($"Total: {totalMovement:F2} | Head: {headM:F2} | L: {leftM:F2} | R: {rightM:F2}");
+
         // Sum of all movement 
-        return (headM + leftM + rightM) / Time.deltaTime;
+        return totalMovement;
     }
 
     void UpdateLastPositions()
@@ -147,6 +178,10 @@ public class MonsterAI : MonoBehaviour
         lastPlayerPos = player.position;
         lastLeftPos = leftHand.position;
         lastRightPos = rightHand.position;
+
+        //Debug.Log(lastLeftPos);
+        //Debug.Log(lastRightPos);
+        //Debug.Log(lastPlayerPos);
     }
 
     void HandleHaptics(float distance, bool isHunting)
@@ -155,28 +190,25 @@ public class MonsterAI : MonoBehaviour
 
         // Heartbeat  gets faster as monster gets closer
         float interval = Mathf.Clamp(distance / 10f, 0.4f, 1.0f);
-        Debug.Log(interval);
-        Debug.Log("Distance: " + distance);
+        //Debug.Log(interval);
+        //Debug.Log("Distance: " + distance);
 
         if (isHunting)
         {
             // Full Vest Rumble
-            if (!BhapticsLibrary.IsPlayingByEventId(huntClip)) BhapticsLibrary.Play(huntClip);
+            if (!BhapticsLibrary.IsPlayingByEventId(huntClip))
+            {
+                BhapticsLibrary.Play(huntClip);
+                //BhapticsLibrary.Play(huntClip);
+                Debug.Log("Playing Hunting clip");
+            }
             //if (!BhapticsLibrary.IsPlaying()) BhapticsLibrary.Play(huntClip);
 
             // Controller 
-            var leftHand = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
-            var rightHand = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
 
-            leftHand.SendHapticImpulse(0, 0.8f, 0.1f);
-            rightHand.SendHapticImpulse(0, 0.8f, 0.1f);
+            leftHandHap.SendHapticImpulse(0, 0.8f, 0.1f);
+            rightHandHap.SendHapticImpulse(0, 0.8f, 0.1f);
 
-            // Heartbeat all directions
-            //if (hapticTimer >= 0.25f)
-            //{
-                //BhapticsLibrary.Play(heartbeatClip);
-                //hapticTimer = 0;
-            //}
         }
 
         else  // player still
@@ -199,14 +231,6 @@ public class MonsterAI : MonoBehaviour
 
 
     }
-
-    //float CalculatePlayerAngle()
-    //{
-    //    Vector3 dirToMonster = (transform.position - player.position).normalized;
-    //    float angle = Vector3.SignedAngle(player.forward, dirToMonster, Vector3.up);
-    //    if (angle < 0) angle += 360f;
-    //    return angle;
-    //}
 
     bool CanSeePlayer()
     {
@@ -238,13 +262,7 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    //void ChangeColor(Color newColor)
-    //{
-    //    if (meshRenderer != null)
-    //    {
-    //        meshRenderer.material.color = newColor;
-    //    }
-    //}
+
 
     // REMOVE THIS I BEG
     void OnDrawGizmos()
