@@ -47,6 +47,8 @@ public class MonsterAI : MonoBehaviour
     private UnityEngine.XR.InputDevice leftHandHap;
     private UnityEngine.XR.InputDevice rightHandHap;
 
+    private OxygenTank playerOxygen;
+
 
     void Start()
     {
@@ -77,6 +79,15 @@ public class MonsterAI : MonoBehaviour
         leftHandHap = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
         rightHandHap = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
 
+
+        playerOxygen = player.root.GetComponentInChildren<OxygenTank>();
+
+        if (playerOxygen == null)
+        {
+            Debug.LogError("ox_tank not found");
+        }
+
+        UpdateLastPositions();
         Wander();
     }
 
@@ -203,6 +214,8 @@ public class MonsterAI : MonoBehaviour
             Debug.Log("Game Over!");
             isGameOver = true;
 
+
+
             agent.speed = 0f;
             agent.isStopped = true;
             agent.ResetPath();
@@ -222,6 +235,12 @@ public class MonsterAI : MonoBehaviour
             leftHandHap.SendHapticImpulse(0, 1.0f, 2f);
             rightHandHap.SendHapticImpulse(0, 1.0f, 2f);
             //BhapticsLibrary.Play(monster_slash);
+
+            if (playerOxygen != null)
+            {
+                playerOxygen.UseOxygen(30f);
+                Debug.Log($"Oxygen remaining: {playerOxygen.oxygenLevel}%");
+            }
 
             return;
         }
