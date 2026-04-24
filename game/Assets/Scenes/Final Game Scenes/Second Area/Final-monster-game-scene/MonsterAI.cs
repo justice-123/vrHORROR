@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Bhaptics.SDK2;
 using UnityEngine.XR;
+using System.Collections;
 
 
 
@@ -13,24 +14,25 @@ public class MonsterAI : MonoBehaviour
 
 
     [Header("Sensitivity")]
-    public float viewAngle = 20f;
-    public float viewRange = 25f;
-    public float moveThreshold = 0.15f; // For player
+    private float viewAngle = 30f;
+    private float viewRange = 25f;
+    private float moveThreshold = 0.25f; // For player
     public float eyeHeight = 0.5f;
     private float deadzone = 0.001f;
     private float personalSpace = 2.0f;
 
 
     [Header("BHaptics")]
-    public string heartbeatClip = "heartbeat_buzz";
-    public string huntClip = "hunt_vibration";
+    private string heartbeatClip = "heartbeat_buzz";
+    private string huntClip = "hunt_vibration";
+    private string monster_slash = "monster-slash";
 
     [Header("Chase Settings")]
-    public float chaseDelay = 1.0f;
+    public float chaseDelay = 0.5f;
     private float movementTimer = 0f;
 
     [Header("Wander Settings")]
-    public float pauseDuration = 1.5f; // stare lenght
+    private float pauseDuration = 1.7f; // stare lenght
     private float pauseTimer = 0f;
     private bool isPausing = false;
 
@@ -141,6 +143,8 @@ public class MonsterAI : MonoBehaviour
                         agent.isStopped = true;
                         agent.ResetPath();
                         agent.velocity = Vector3.zero;
+
+                        anim.SetTrigger("Aggro");
                     }
 
                     if (isPausing)
@@ -198,11 +202,27 @@ public class MonsterAI : MonoBehaviour
         if (distance < 1.5f) {
             Debug.Log("Game Over!");
             isGameOver = true;
+
             agent.speed = 0f;
             agent.isStopped = true;
             agent.ResetPath();
             agent.velocity = Vector3.zero;
+
+            Vector3 lookPos = player.position;
+            lookPos.y = transform.position.y; // Keep the monster upright
+            transform.LookAt(lookPos);
+
             anim.SetFloat("Speed", 0f);
+            anim.SetTrigger("Attack");
+
+            BhapticsLibrary.StopAll();
+
+            StartCoroutine(PlayHapticForDuration(huntClip, 2.0f, 0.1f));
+
+            leftHandHap.SendHapticImpulse(0, 1.0f, 2f);
+            rightHandHap.SendHapticImpulse(0, 1.0f, 2f);
+            //BhapticsLibrary.Play(monster_slash);
+
             return;
         }
 
@@ -212,6 +232,21 @@ public class MonsterAI : MonoBehaviour
         UpdateLastPositions();
 
 
+    }
+    private System.Collections.IEnumerator PlayHapticForDuration(string clipName, float totalDuration, float clipLength)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < totalDuration)
+        {
+            BhapticsLibrary.Play(clipName);
+
+            yield return new WaitForSeconds(clipLength);
+
+            elapsed += clipLength;
+        }
+
+        BhapticsLibrary.StopByEventId(clipName);
     }
 
     private void LateUpdate()
