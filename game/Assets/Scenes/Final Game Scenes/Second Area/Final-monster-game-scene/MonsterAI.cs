@@ -98,7 +98,7 @@ public class MonsterAI : MonoBehaviour
                     HandleHaptics(distance, true);
 
                     agent.SetDestination(player.position);
-                    agent.speed = 3.5f;
+                    agent.speed = 3.0f;
 
                     //ChangeColor(huntingColor);
                 }
@@ -111,7 +111,11 @@ public class MonsterAI : MonoBehaviour
                 HandleHaptics(distance, false);
 
                 agent.speed = 1.5f;  // keep moving closer to player, but go elsewhere once near player 
-                if (!agent.pathPending && agent.remainingDistance < 0.6f) Wander();
+                if (!agent.pathPending && agent.remainingDistance < 0.75f) Wander();
+
+                if (distance < 1) { 
+                    Wander(); 
+                }
 
 
             }
@@ -156,20 +160,14 @@ public class MonsterAI : MonoBehaviour
         float rightM = (rightHand.position - lastRightPos).magnitude;
 
 
-        //float headM = ((player.position - lastPlayerPos) / Time.deltaTime).magnitude;
-        //float leftM = ((leftHand.position - lastLeftPos) / Time.deltaTime).magnitude;
-        //float rightM = ((rightHand.position - lastRightPos) / Time.deltaTime).magnitude;
 
         if (headM < deadzone) headM = 0;
         if (leftM < deadzone) leftM = 0;
         if (rightM < deadzone) rightM = 0;
 
         float totalMovement = (headM + leftM + rightM) / Time.deltaTime;
-        //float totalMovement = ((headM + leftM + rightM) / Time.deltaTime).magnitude;
-        //float totalMovement = (headM + leftM + rightM);
-        //float totalMovement = Mathf.Max(headM, leftM, rightM);
-        Debug.Log(totalMovement);
-        Debug.Log($"Total: {totalMovement:F2} | Head: {headM:F2} | L: {leftM:F2} | R: {rightM:F2}");
+        //Debug.Log(totalMovement);
+        //Debug.Log($"Total: {totalMovement:F2} | Head: {headM:F2} | L: {leftM:F2} | R: {rightM:F2}");
 
         // Sum of all movement 
         return totalMovement;
@@ -202,7 +200,7 @@ public class MonsterAI : MonoBehaviour
             {
                 BhapticsLibrary.Play(huntClip);
                 //BhapticsLibrary.Play(huntClip);
-                Debug.Log("Playing Hunting clip");
+                //Debug.Log("Playing Hunting clip");
             }
             //if (!BhapticsLibrary.IsPlaying()) BhapticsLibrary.Play(huntClip);
 
@@ -243,7 +241,7 @@ public class MonsterAI : MonoBehaviour
             if (Physics.Raycast(rayOrigin, directionToPlayer, out RaycastHit hit, viewRange))
             {
                 if (hit.transform != null)
-                    Debug.Log("Monster ray hit: " + hit.transform.name + " with tag: " + hit.transform.tag);
+                    //Debug.Log("Monster ray hit: " + hit.transform.name + " with tag: " + hit.transform.tag);
 
 
                 return hit.transform.CompareTag("Player") || hit.transform.CompareTag("MainCamera") || hit.transform == player;
