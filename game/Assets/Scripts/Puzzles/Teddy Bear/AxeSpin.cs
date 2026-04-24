@@ -21,25 +21,25 @@ public class AxeSpin : MonoBehaviour
         float easedProgress = 1f - Mathf.Pow(1f - progress, 2f);
 
         Vector3 currentPos = Vector3.Lerp(startPos, targetPos, easedProgress);
-
         float arc = arcHeight * 4f * progress * (1f - progress);
         currentPos.y += arc;
 
         transform.position = currentPos;
-
         transform.Rotate(spinSpeed * Time.deltaTime, 0f, 0f);
 
         if (progress >= 1f)
         {
             arrived = true;
-            transform.position = targetPos;
+
+            Collider col = GetComponent<Collider>();
+            if (col != null)
+                col.enabled = true;
 
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.isKinematic = true;
-                rb.linearVelocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
+                rb.isKinematic = false;
+                rb.useGravity = true;
             }
         }
     }
