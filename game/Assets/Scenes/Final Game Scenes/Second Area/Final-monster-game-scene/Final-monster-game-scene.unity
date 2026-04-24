@@ -263,13 +263,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4167d4c3ce36d48a8aa062e699009a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  leftHand: {fileID: 0}
-  rightHand: {fileID: 0}
   viewAngle: 20
   viewRange: 25
   moveThreshold: 0.1
   eyeHeight: 1.6
+  deadzone: 0.01
   heartbeatClip: Heartbeat
   huntClip: Hunt_Vibration
   chaseDelay: 1
@@ -624,13 +622,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4167d4c3ce36d48a8aa062e699009a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  leftHand: {fileID: 0}
-  rightHand: {fileID: 0}
   viewAngle: 20
   viewRange: 25
   moveThreshold: 0.15
   eyeHeight: 0.5
+  deadzone: 0.01
   heartbeatClip: hearthump
   huntClip: Hunt_Vibration
   chaseDelay: 1
@@ -864,13 +860,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4167d4c3ce36d48a8aa062e699009a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  leftHand: {fileID: 0}
-  rightHand: {fileID: 0}
   viewAngle: 20
   viewRange: 25
-  moveThreshold: 0.12
+  moveThreshold: 0.15
   eyeHeight: 0.5
+  deadzone: 0.00000001
   heartbeatClip: heartbeat_buzz
   huntClip: hunt_vibration
   chaseDelay: 1
