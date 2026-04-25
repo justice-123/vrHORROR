@@ -12,86 +12,77 @@ public class WheelchairFinale : MonoBehaviour
     [Header("=== MONSTER ===")]
     [SerializeField] private GameObject monster;
     [SerializeField] private Animator monsterAnimator;
-    [SerializeField] private Transform monsterHeadBone;
 
     [Header("=== ANIMATOR STATE NAMES ===")]
-    [SerializeField] private string chaseStateName = "Chase";
-    [SerializeField] private string attackStateName = "Attack";
     [SerializeField] private string idleStateName = "Idle";
+    [SerializeField] private string attackStateName = "Attack";
 
-    [Header("=== CROSS-SCENE REFERENCES (names only) ===")]
+    [Header("=== CROSS-SCENE REFERENCES ===")]
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private string postFXGameObjectName = "HorrorPostFX";
     [SerializeField] private string redVignetteName = "RedVignette";
     [SerializeField] private string fadeImageName = "FadeImage";
 
     [Header("=== AUDIO ===")]
-    [SerializeField] private AudioSource gnarlyBehindSound;
-    [SerializeField] private AudioSource heartbeatAudio;
+    [Tooltip("Calm outdoor ambient (birds, wind) - present from the start.")]
     [SerializeField] private AudioSource outdoorAmbient;
-    [SerializeField] private AudioSource lowRumble;
-    [SerializeField] private AudioSource shadowReveal;
-    [SerializeField] private AudioSource chaseAudio;
+    [Tooltip("Tiny audio glitch during 'wrongness' phase - one wet click or distant whisper.")]
+    [SerializeField] private AudioSource wrongnessGlitch;
+    [Tooltip("Sub-bass that starts during wrongness, builds during void.")]
+    [SerializeField] private AudioSource subBassRumble;
+    [Tooltip("Breathing/wet sounds that play in 3D around player during the void.")]
+    [SerializeField] private AudioSource voidBreathing;
+    [Tooltip("Heartbeat that pulses during void.")]
+    [SerializeField] private AudioSource heartbeatAudio;
+    [Tooltip("THE BIG attack hit - low boom + impact transient.")]
     [SerializeField] private AudioSource attackBoom;
+    [Tooltip("Attack screech - high frequency.")]
     [SerializeField] private AudioSource attackScreech;
 
-    [Header("=== SEQUENCE TIMING ===")]
-    [SerializeField] private float preTrapDelay = 0.2f;
-    [SerializeField] private float gnarlySoundHoldDuration = 1.2f;
-    [SerializeField] private float heartbeatOnlyDuration = 0.8f;
-    [SerializeField] private float fadeOutDuration = 0.5f;
-    [SerializeField] private float blackHoldDuration = 0.4f;
-    [SerializeField] private float fadeInDuration = 0.25f;
-    [Tooltip("How long the shadow appears on the floor before monster reveals.")]
-    [SerializeField] private float shadowOnFloorDuration = 1.2f;
-    [SerializeField] private float startChaseSpeed = 9f;
-    [SerializeField] private float maxChaseSpeed = 16f;
-    [SerializeField] private float chaseAcceleration = 8f;
-    [SerializeField] private float attackDistance = 2.8f;
-    [SerializeField] private float maxChaseTime = 3.5f;
-    [SerializeField] private float silenceBeforeAttack = 0.15f;
+    [Header("=== ACT 0: FALSE SAFETY ===")]
+    [SerializeField] private float falseSafetyDuration = 4f;
 
-    [Header("=== MONSTER SPAWN POSITIONING ===")]
-    [Tooltip("How far from the player to spawn the monster (in the direction they're looking).")]
-    [SerializeField] private float spawnDistanceFromPlayer = 8f;
+    [Header("=== ACT 1: WRONGNESS ===")]
+    [SerializeField] private float wrongnessDuration = 2f;
+    [Tooltip("Lights to flicker during wrongness phase.")]
+    [SerializeField] private Light[] flickerLights;
 
-    [Header("=== SHADOW ON FLOOR ===")]
-    [Tooltip("Light placed above the monster to cast its shadow on the floor.")]
-    [SerializeField] private Light shadowCastingLight;
-    [Tooltip("Height of the shadow casting light above the monster.")]
-    [SerializeField] private float shadowLightHeight = 6f;
+    [Header("=== ACT 2: SOFT TRAP ===")]
+    [SerializeField] private float softTrapDuration = 1.5f;
+    [SerializeField] private float fadeOutDuration = 0.6f;
 
-    [Header("=== GROUND SNAPPING ===")]
-    [SerializeField] private LayerMask groundMask = ~0;
-    [SerializeField] private float groundRayStartHeight = 2f;
-    [SerializeField] private float groundRayDistance = 10f;
+    [Header("=== ACT 3: VOID ===")]
+    [SerializeField] private float voidDuration = 2.5f;
+    [Tooltip("How fast the breathing audio circles around the player.")]
+    [SerializeField] private float breathingCircleSpeed = 1.5f;
+    [Tooltip("Distance the breathing audio orbits around player.")]
+    [SerializeField] private float breathingOrbitRadius = 2f;
 
-    [Header("=== ATTACK POSITION (seated player) ===")]
-    [SerializeField] private float attackStopDistance = 1.8f;
-    [SerializeField] private float finalHeightOffset = 0f;
+    [Header("=== ACT 4: REVEAL + ATTACK ===")]
+    [Tooltip("How CLOSE the monster spawns - keep this small (1.5-2m).")]
+    [SerializeField] private float monsterRevealDistance = 1.7f;
+    [SerializeField] private float fadeInDuration = 0.3f;
+
+    [Header("=== ACT 5: MICRO-STAGGER (the magic beat) ===")]
+    [Tooltip("Frozen silent moment before attack. 0.15-0.3s sweet spot.")]
+    [SerializeField] private float microStaggerDuration = 0.2f;
+
+    [Header("=== ACT 6: IMPACT ===")]
+    [SerializeField] private float impactDuration = 0.3f;
+    [SerializeField] private float lungeDistance = 1.4f;
+
+    [Header("=== ACT 7: HOLD ON BLACK ===")]
+    [SerializeField] private float holdOnBlackDuration = 4f;
+
+    [Header("=== ATTACK POSITION (seated) ===")]
     [SerializeField] private bool useManualHeight = true;
     [SerializeField] private float manualHeightOverride = -0.4f;
 
     [Header("=== LIGHTING ===")]
     [SerializeField] private string[] scenesToDarken = { "final_jumpscare", "Second Area" };
-    [SerializeField] private Light monsterSpotlight;
-    [SerializeField] private Color chaseAmbientColor = new Color(0.2f, 0.02f, 0.02f);
-    [SerializeField] private float chaseAmbientIntensity = 0.3f;
-    [SerializeField] private float redRampDuration = 0.6f;
 
-    [Header("=== FOG ===")]
-    [SerializeField] private bool useFogDuringChase = true;
-    [SerializeField] private Color chaseFogColor = new Color(0.15f, 0.02f, 0.02f);
-    [SerializeField] private float chaseFogDensity = 0.25f;
-    [SerializeField] private FogMode chaseFogMode = FogMode.Exponential;
-
-    [Header("=== IMPACT EFFECTS ===")]
-    [SerializeField] private float redFlashDuration = 0.3f;
-    [SerializeField] private float holdOnBlackDuration = 3f;
-
-    [Header("=== CAMERA SHAKE ===")]
-    [SerializeField] private float cameraShakeChaseIntensity = 0.015f;
-    [SerializeField] private float cameraShakeAttackIntensity = 0.08f;
+    [Header("=== CAMERA SHAKE (short, not floaty) ===")]
+    [SerializeField] private float impactShakeIntensity = 0.06f;
 
     [Header("=== CALIBRATION ===")]
     [SerializeField] private bool enableCalibrationMode = true;
@@ -107,24 +98,15 @@ public class WheelchairFinale : MonoBehaviour
 
     // State
     private bool hasTriggered = false;
-    private bool isShakingCamera = false;
     private Vector3 rigShakeBasePos;
-    private Vector3 plannedSpawnPosition; // where the monster will appear
 
-    // Cached lighting
+    // Cached
     private List<Light> disabledLights = new List<Light>();
-    private AmbientMode cachedAmbientMode;
-    private Color cachedAmbientLight;
-    private float cachedAmbientIntensity, cachedReflectionIntensity;
-    private bool cachedFogEnabled;
-    private Color cachedFogColor;
-    private float cachedFogDensity;
+    private float originalMoveSpeed;
 
     private void Awake()
     {
         if (monster != null) monster.SetActive(false);
-        if (monsterSpotlight != null) monsterSpotlight.enabled = false;
-        if (shadowCastingLight != null) shadowCastingLight.enabled = false;
     }
 
     private void Update()
@@ -138,7 +120,7 @@ public class WheelchairFinale : MonoBehaviour
         if (hasTriggered) return;
         if (!other.CompareTag(playerTag)) return;
         hasTriggered = true;
-        StartCoroutine(PlayScare());
+        StartCoroutine(PlayCinematicScare());
     }
 
     private void FindRuntimeReferences()
@@ -152,6 +134,8 @@ public class WheelchairFinale : MonoBehaviour
             moveProvider = p.GetComponentInChildren<ContinuousMoveProvider>();
             turnProvider = p.GetComponentInChildren<ContinuousTurnProvider>();
             snapTurnProvider = p.GetComponentInChildren<SnapTurnProvider>();
+
+            if (moveProvider != null) originalMoveSpeed = moveProvider.moveSpeed;
         }
 
         GameObject postFX = GameObject.Find(postFXGameObjectName);
@@ -164,7 +148,10 @@ public class WheelchairFinale : MonoBehaviour
         if (fade != null) fadeImage = fade.GetComponent<Image>();
     }
 
-    private IEnumerator PlayScare()
+    // ============================================================
+    // THE CINEMATIC SEQUENCE
+    // ============================================================
+    private IEnumerator PlayCinematicScare()
     {
         FindRuntimeReferences();
         EnsureFadeImageExists();
@@ -178,293 +165,403 @@ public class WheelchairFinale : MonoBehaviour
             yield break;
         }
 
-        CacheLightingState();
+        // ============================================================
+        // ACT 0: FALSE SAFETY (player thinks they escaped)
+        // ============================================================
+        Debug.Log("[Act 0] False safety - player feels safe");
+        // Don't disable controls. Don't change anything. Let them BREATHE.
+        // outdoorAmbient should already be playing (birds, wind, calm)
+        if (outdoorAmbient != null && !outdoorAmbient.isPlaying) outdoorAmbient.Play();
 
-        // === ACT 1: PRE-TRAP DELAY ===
-        yield return new WaitForSeconds(preTrapDelay);
+        yield return new WaitForSeconds(falseSafetyDuration);
 
-        // === ACT 2: TRAP - lock controls + gnarly sound ===
-        Debug.LogError("[Act 2] Disable controls + gnarly sound");
-        DisableControllers();
+        // ============================================================
+        // ACT 1: SUBTLE WRONGNESS (something feels off)
+        // ============================================================
+        Debug.Log("[Act 1] Wrongness - reality breaks slightly");
 
-        // Gnarly sound plays from in front of where player is looking
-        // (so they know something's there but can't tell exactly where)
-        PlayGnarlyInFrontOfPlayer();
-        StartCoroutine(DuckAudioSource(outdoorAmbient, 0.15f, 1.5f));
-
-        yield return new WaitForSeconds(gnarlySoundHoldDuration);
-
-        // === ACT 3: HEARTBEAT BUILDS ===
-        Debug.LogError("[Act 3] Heartbeat + dread");
-        if (heartbeatAudio != null)
+        // Audio glitch - ambient cuts out for half a second
+        if (outdoorAmbient != null)
         {
-            heartbeatAudio.pitch = 0.9f;
-            heartbeatAudio.Play();
+            float originalVol = outdoorAmbient.volume;
+            outdoorAmbient.volume = 0f;
+            yield return new WaitForSeconds(0.5f);
+            outdoorAmbient.volume = originalVol;
         }
-        if (lowRumble != null)
+
+        // Tiny weird sound from a random direction
+        if (wrongnessGlitch != null)
         {
-            lowRumble.volume = 0.3f;
-            lowRumble.Play();
-            StartCoroutine(RampAudioVolume(lowRumble, 0.8f, heartbeatOnlyDuration));
+            PositionAudioRandomlyAroundPlayer(wrongnessGlitch, 6f);
+            wrongnessGlitch.Play();
         }
-        if (outdoorAmbient != null) outdoorAmbient.Stop();
 
-        yield return new WaitForSeconds(heartbeatOnlyDuration);
+        // Light flicker
+        StartCoroutine(FlickerLights(wrongnessDuration));
 
-        // === ACT 4: FADE TO BLACK ===
-        Debug.LogError("[Act 4] Fade to black");
-        StartCoroutine(RampPostFX(1f, 1f));
+        // Sub-bass starts very quietly
+        if (subBassRumble != null)
+        {
+            subBassRumble.volume = 0.1f;
+            subBassRumble.Play();
+            StartCoroutine(RampVolume(subBassRumble, 0.4f, wrongnessDuration));
+        }
+
+        yield return new WaitForSeconds(wrongnessDuration - 0.5f);
+
+        // ============================================================
+        // ACT 2: SOFT TRAP (something takes over - not "controls disabled")
+        // ============================================================
+        Debug.Log("[Act 2] Soft trap - movement slows, control fades");
+
+        // Gradually slow down movement instead of hard cut
+        StartCoroutine(GraduallyDisableMovement(softTrapDuration));
+
+        // Audio dampens - everything gets muffled
+        if (outdoorAmbient != null) StartCoroutine(RampVolume(outdoorAmbient, 0.05f, softTrapDuration));
+
+        // Sub bass swells
+        if (subBassRumble != null) StartCoroutine(RampVolume(subBassRumble, 0.9f, softTrapDuration));
+
+        yield return new WaitForSeconds(softTrapDuration);
+
+        // Now fade to black (quickly but not instant)
+        if (horrorPostFX != null) StartCoroutine(RampPostFX(1f, fadeOutDuration));
         yield return StartCoroutine(FadeColor(new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), fadeOutDuration));
 
-        // === ACT 5: IN DARKNESS - position monster wherever the player is looking ===
-        Debug.LogError("[Act 5] In darkness - place monster where player is looking");
-        DarkenWorldAndGoRed();
-        if (useFogDuringChase) ApplyHorrorFog();
+        // ============================================================
+        // ACT 3: THE VOID (player is blind, fear builds in audio)
+        // ============================================================
+        Debug.Log("[Act 3] Void - audio circles, breathing, dread");
 
-        // Place monster in the direction the player is currently looking
-        SpawnMonsterInPlayersView();
+        // Stop normal world audio
+        if (outdoorAmbient != null) outdoorAmbient.Stop();
 
+        // Heartbeat starts
+        if (heartbeatAudio != null)
+        {
+            heartbeatAudio.pitch = 1f;
+            heartbeatAudio.Play();
+            StartCoroutine(RampPitch(heartbeatAudio, 1.4f, voidDuration));
+        }
+
+        // Breathing audio orbits around the player - VERY important for fear
+        if (voidBreathing != null)
+        {
+            voidBreathing.spatialBlend = 1f;
+            voidBreathing.Play();
+            StartCoroutine(OrbitAudioAroundPlayer(voidBreathing, voidDuration));
+        }
+
+        // Darken world while screen is black (player won't see the change)
+        DarkenWorldForReveal();
+
+        // Position monster CLOSE - 1.5-2m, not 8m away
+        SpawnMonsterCloseToPlayer();
         monster.SetActive(true);
         monsterAnimator.applyRootMotion = false;
         monsterAnimator.Play(idleStateName, 0, 0f);
 
-        // Set up the shadow-casting light ABOVE the monster
-        SetupShadowCastingLight();
+        yield return new WaitForSeconds(voidDuration);
 
-        if (shadowReveal != null) shadowReveal.Play();
-        if (heartbeatAudio != null) StartCoroutine(RampPitch(heartbeatAudio, 1.3f, blackHoldDuration));
+        // ============================================================
+        // ACT 4: REVEAL + ATTACK START (combined - no separation)
+        // ============================================================
+        Debug.Log("[Act 4] Reveal - monster ALREADY here");
 
-        yield return new WaitForSeconds(blackHoldDuration);
+        // Stop the void breathing
+        if (voidBreathing != null) voidBreathing.Stop();
+        if (heartbeatAudio != null) heartbeatAudio.Stop();
 
-        // === ACT 6: FADE IN - shadow visible on floor first ===
-        Debug.LogError("[Act 6] Fade in - shadow appears on floor");
-        yield return StartCoroutine(FadeColor(new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), fadeInDuration));
-
-        StartCoroutine(PulseRedVignette());
-
-        // Player sees the shadow on the floor — but the monster is far away
-        // The shadow grows as the monster gets closer (light is high above casting it)
-        Debug.LogError("[Act 6.5] Shadow on floor - building dread");
-        yield return new WaitForSeconds(shadowOnFloorDuration);
-
-        // === ACT 7: CHASE BEGINS ===
-        Debug.LogError("[Act 7] Charge");
-        if (monsterSpotlight != null) monsterSpotlight.enabled = true;
-        monsterAnimator.Play(chaseStateName, 0, 0f);
-        if (shadowReveal != null && shadowReveal.isPlaying) shadowReveal.Stop();
-        if (chaseAudio != null) chaseAudio.Play();
-        if (heartbeatAudio != null) heartbeatAudio.pitch = 1.5f;
-
-        isShakingCamera = true;
-        rigShakeBasePos = playerRig.localPosition;
-        StartCoroutine(CameraShakeLoop(cameraShakeChaseIntensity));
-
-        float currentSpeed = startChaseSpeed;
-        float timer = 0f;
-
-        while (timer < maxChaseTime)
-        {
-            currentSpeed = Mathf.Min(currentSpeed + chaseAcceleration * Time.deltaTime, maxChaseSpeed);
-
-            Vector3 target = new Vector3(playerCamera.position.x,
-                                         monster.transform.position.y,
-                                         playerCamera.position.z);
-
-            float horizontalDist = Vector2.Distance(
-                new Vector2(monster.transform.position.x, monster.transform.position.z),
-                new Vector2(playerCamera.position.x, playerCamera.position.z));
-
-            if (horizontalDist <= attackDistance) break;
-
-            Vector3 nextPos = Vector3.MoveTowards(monster.transform.position, target,
-                                                   currentSpeed * Time.deltaTime);
-
-            if (Physics.Raycast(nextPos + Vector3.up * groundRayStartHeight,
-                                Vector3.down, out RaycastHit hit,
-                                groundRayDistance, groundMask,
-                                QueryTriggerInteraction.Ignore))
-            {
-                nextPos.y = hit.point.y;
-            }
-
-            monster.transform.position = nextPos;
-            FacePlayerHorizontal();
-
-            // Keep shadow light above the monster as it moves
-            if (shadowCastingLight != null)
-            {
-                shadowCastingLight.transform.position = monster.transform.position + Vector3.up * shadowLightHeight;
-            }
-
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        // === ACT 8: ATTACK POSITION ===
+        // Position monster correctly for seated player BEFORE fade
         PositionMonsterForAttack();
 
-        if (chaseAudio != null && chaseAudio.isPlaying) chaseAudio.Stop();
-        if (heartbeatAudio != null && heartbeatAudio.isPlaying) heartbeatAudio.Stop();
-        if (lowRumble != null && lowRumble.isPlaying) lowRumble.Stop();
+        // Quick fade in - monster is right there
+        yield return StartCoroutine(FadeColor(new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), fadeInDuration));
 
-        // === ACT 9: SILENCE ===
-        yield return new WaitForSeconds(silenceBeforeAttack);
+        // Trigger red vignette pulse
+        if (redVignetteImage != null) StartCoroutine(SingleVignettePulse(microStaggerDuration));
 
-        // === ACT 10: ATTACK ===
-        Debug.LogError("[Act 10] ATTACK");
+        // ============================================================
+        // ACT 5: MICRO-STAGGER (the magic beat - dead silence)
+        // ============================================================
+        Debug.Log("[Act 5] Micro-stagger - frozen silence");
+
+        // Kill ALL audio for the dead beat
+        if (subBassRumble != null) subBassRumble.Stop();
+
+        // Eye contact moment - monster is frozen, staring
+        // (Animator already in Idle which is good - no movement)
+        yield return new WaitForSeconds(microStaggerDuration);
+
+        // ============================================================
+        // ACT 6: VIOLENT IMPACT (everything at once)
+        // ============================================================
+        Debug.Log("[Act 6] IMPACT");
+
+        // Trigger attack animation
         monsterAnimator.Play(attackStateName, 0, 0f);
+
+        // ALL audio hits at the same frame
         if (attackBoom != null) attackBoom.Play();
         if (attackScreech != null) attackScreech.Play();
 
-        StartCoroutine(CameraShakeBurst(cameraShakeAttackIntensity, redFlashDuration));
-        yield return StartCoroutine(RedFlashAndFillVision());
+        // Short sharp camera shake
+        rigShakeBasePos = playerRig.localPosition;
+        StartCoroutine(ImpactShake(impactShakeIntensity, impactDuration));
 
-        // === ACT 11: HOLD ===
-        isShakingCamera = false;
+        // Monster lunges into camera + red flash → black
+        yield return StartCoroutine(LungeAndImpact());
+
+        // ============================================================
+        // ACT 7: HOLD ON BLACK (let it linger)
+        // ============================================================
+        Debug.Log("[Act 7] Hold on black");
+
+        // No UI, no sound, just black
         yield return new WaitForSeconds(holdOnBlackDuration);
 
         OnFinaleComplete();
     }
 
     // ============================================================
-    // SPAWN MONSTER IN PLAYER'S VIEW
+    // ACT 1: FLICKER LIGHTS
     // ============================================================
-    private void SpawnMonsterInPlayersView()
+    private IEnumerator FlickerLights(float duration)
     {
-        // Get the direction the player is currently looking (horizontal only)
+        if (flickerLights == null || flickerLights.Length == 0) yield break;
+
+        bool[] originalStates = new bool[flickerLights.Length];
+        for (int i = 0; i < flickerLights.Length; i++)
+            if (flickerLights[i] != null) originalStates[i] = flickerLights[i].enabled;
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+
+            // Random flicker - rare but jarring
+            if (Random.value < 0.08f)
+            {
+                foreach (Light l in flickerLights)
+                    if (l != null) l.enabled = !l.enabled;
+
+                yield return new WaitForSeconds(Random.Range(0.05f, 0.15f));
+
+                // Restore
+                for (int i = 0; i < flickerLights.Length; i++)
+                    if (flickerLights[i] != null) flickerLights[i].enabled = originalStates[i];
+            }
+
+            yield return null;
+        }
+    }
+
+    // ============================================================
+    // ACT 2: GRADUAL MOVEMENT DISABLE (not hard cut)
+    // ============================================================
+    private IEnumerator GraduallyDisableMovement(float duration)
+    {
+        if (moveProvider == null)
+        {
+            DisableControllersHard();
+            yield break;
+        }
+
+        float startSpeed = moveProvider.moveSpeed;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            moveProvider.moveSpeed = Mathf.Lerp(startSpeed, 0f, elapsed / duration);
+            yield return null;
+        }
+
+        // Now hard disable for safety
+        DisableControllersHard();
+    }
+
+    private void DisableControllersHard()
+    {
+        if (moveProvider != null) moveProvider.enabled = false;
+        if (turnProvider != null) turnProvider.enabled = false;
+        if (snapTurnProvider != null) snapTurnProvider.enabled = false;
+    }
+
+    // ============================================================
+    // ACT 3: ORBIT AUDIO AROUND PLAYER (creates "something is circling me" fear)
+    // ============================================================
+    private IEnumerator OrbitAudioAroundPlayer(AudioSource source, float duration)
+    {
+        if (source == null || playerCamera == null) yield break;
+
+        float elapsed = 0f;
+        float angle = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            angle += breathingCircleSpeed * Time.deltaTime;
+
+            Vector3 offset = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle)) * breathingOrbitRadius;
+            source.transform.position = playerCamera.position + offset;
+
+            yield return null;
+        }
+    }
+
+    // ============================================================
+    // RANDOM AUDIO POSITIONING
+    // ============================================================
+    private void PositionAudioRandomlyAroundPlayer(AudioSource source, float distance)
+    {
+        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+        Vector3 offset = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle)) * distance;
+        source.transform.position = playerCamera.position + offset;
+        source.spatialBlend = 1f;
+    }
+
+    // ============================================================
+    // SPAWN MONSTER CLOSE (1.5-2m) IN PLAYER'S VIEW
+    // ============================================================
+    private void SpawnMonsterCloseToPlayer()
+    {
         Vector3 lookDir = playerCamera.forward;
         lookDir.y = 0;
         lookDir.Normalize();
 
-        // Place monster in front of the player at spawn distance
-        Vector3 spawnPos = playerCamera.position + lookDir * spawnDistanceFromPlayer;
-
-        // Snap to ground
-        if (Physics.Raycast(spawnPos + Vector3.up * groundRayStartHeight,
-                            Vector3.down, out RaycastHit hit,
-                            groundRayDistance * 2f, groundMask,
-                            QueryTriggerInteraction.Ignore))
-        {
-            spawnPos.y = hit.point.y;
-        }
-        else
-        {
-            spawnPos.y = playerCamera.position.y - 1.5f;
-        }
+        Vector3 spawnPos = playerCamera.position + lookDir * monsterRevealDistance;
+        spawnPos.y = playerCamera.position.y - 1.5f;
 
         monster.transform.position = spawnPos;
-        plannedSpawnPosition = spawnPos;
-        FacePlayerHorizontal();
-
-        Debug.LogError("[SPAWN] Monster placed at: " + spawnPos +
-                       " | " + spawnDistanceFromPlayer + "m in front of player");
+        FaceMonsterAtPlayer();
     }
 
-    // ============================================================
-    // SHADOW CASTING LIGHT
-    // ============================================================
-    private void SetupShadowCastingLight()
-    {
-        if (shadowCastingLight == null) return;
-
-        // Position the light directly above the monster
-        shadowCastingLight.transform.position = monster.transform.position + Vector3.up * shadowLightHeight;
-        shadowCastingLight.transform.rotation = Quaternion.Euler(90f, 0f, 0f); // Point straight down
-
-        // Configure for shadow casting
-        shadowCastingLight.type = LightType.Spot;
-        shadowCastingLight.spotAngle = 60f;
-        shadowCastingLight.range = shadowLightHeight + 5f;
-        shadowCastingLight.shadows = LightShadows.Hard;
-        shadowCastingLight.intensity = 4f;
-        shadowCastingLight.color = new Color(1f, 0.3f, 0.3f); // tint red
-        shadowCastingLight.enabled = true;
-
-        Debug.LogError("[SHADOW] Light positioned " + shadowLightHeight + "m above monster");
-    }
-
-    // ============================================================
-    // GNARLY SOUND - in front of player
-    // ============================================================
-    private void PlayGnarlyInFrontOfPlayer()
-    {
-        if (gnarlyBehindSound == null) return;
-
-        // Play sound in front of where player is looking
-        Vector3 forwardDir = playerCamera.forward;
-        forwardDir.y = 0;
-        forwardDir.Normalize();
-
-        gnarlyBehindSound.transform.position = playerCamera.position + forwardDir * 5f;
-        gnarlyBehindSound.spatialBlend = 1f;
-        gnarlyBehindSound.Play();
-    }
-
-    // ============================================================
-    // ATTACK POSITIONING
-    // ============================================================
     private void PositionMonsterForAttack()
     {
         Vector3 dirToPlayer = (playerCamera.position - monster.transform.position);
         dirToPlayer.y = 0;
         dirToPlayer.Normalize();
 
-        Vector3 targetPos = playerCamera.position - dirToPlayer * attackStopDistance;
+        Vector3 targetPos = playerCamera.position - dirToPlayer * monsterRevealDistance;
         monster.transform.position = targetPos;
-        FacePlayerHorizontal();
+        FaceMonsterAtPlayer();
 
         if (useManualHeight)
         {
             Vector3 adjusted = monster.transform.position;
             adjusted.y = playerCamera.position.y + manualHeightOverride;
             monster.transform.position = adjusted;
-            return;
         }
+    }
 
-        if (monsterHeadBone != null)
-        {
-            monsterAnimator.Update(0f);
-            float headYDelta = monsterHeadBone.position.y - monster.transform.position.y;
-            float correctY = playerCamera.position.y - headYDelta + finalHeightOffset;
-
-            Vector3 adjusted = monster.transform.position;
-            adjusted.y = correctY;
-            monster.transform.position = adjusted;
-        }
+    private void FaceMonsterAtPlayer()
+    {
+        Vector3 lookTarget = new Vector3(playerCamera.position.x,
+                                         monster.transform.position.y,
+                                         playerCamera.position.z);
+        monster.transform.LookAt(lookTarget);
     }
 
     private void TestAttackPosition()
     {
         FindRuntimeReferences();
-
         if (monster == null || playerCamera == null) return;
 
         monster.SetActive(true);
         monsterAnimator.applyRootMotion = false;
         monsterAnimator.Play(idleStateName, 0, 0f);
-
-        SpawnMonsterInPlayersView();
+        SpawnMonsterCloseToPlayer();
         PositionMonsterForAttack();
 
-        Debug.LogError("[CALIBRATE] Cam Y: " + playerCamera.position.y +
-                       " | Monster Y: " + monster.transform.position.y);
+        Debug.Log("[CALIBRATE] Cam Y: " + playerCamera.position.y +
+                  " | Monster Y: " + monster.transform.position.y);
     }
 
     // ============================================================
-    // LIGHTING
+    // ACT 6: LUNGE + IMPACT
     // ============================================================
-    private void CacheLightingState()
+    private IEnumerator LungeAndImpact()
     {
-        cachedAmbientMode = RenderSettings.ambientMode;
-        cachedAmbientLight = RenderSettings.ambientLight;
-        cachedAmbientIntensity = RenderSettings.ambientIntensity;
-        cachedReflectionIntensity = RenderSettings.reflectionIntensity;
-        cachedFogEnabled = RenderSettings.fog;
-        cachedFogColor = RenderSettings.fogColor;
-        cachedFogDensity = RenderSettings.fogDensity;
+        Vector3 monsterStart = monster.transform.position;
+        Vector3 dirToPlayer = (playerCamera.position - monsterStart);
+        dirToPlayer.y = 0;
+        dirToPlayer.Normalize();
+
+        // Lunge target - very close to camera
+        Vector3 lungeTarget = playerCamera.position - dirToPlayer * 0.3f;
+        if (useManualHeight) lungeTarget.y = playerCamera.position.y + manualHeightOverride;
+
+        Color red = new Color(0.9f, 0f, 0f, 0.7f);
+        Color black = new Color(0, 0, 0, 1);
+
+        if (fadeImage != null) fadeImage.color = new Color(0, 0, 0, 0);
+
+        float elapsed = 0f;
+        while (elapsed < impactDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / impactDuration;
+
+            monster.transform.position = Vector3.Lerp(monsterStart, lungeTarget, t);
+            FaceMonsterAtPlayer();
+
+            // Red flash → black
+            if (fadeImage != null)
+            {
+                if (t < 0.5f) fadeImage.color = Color.Lerp(new Color(0, 0, 0, 0), red, t * 2f);
+                else fadeImage.color = Color.Lerp(red, black, (t - 0.5f) * 2f);
+            }
+
+            yield return null;
+        }
+
+        if (fadeImage != null) fadeImage.color = black;
     }
 
-    private void DarkenWorldAndGoRed()
+    // ============================================================
+    // CAMERA SHAKE (short, sharp, not floaty)
+    // ============================================================
+    private IEnumerator ImpactShake(float intensity, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float remaining = 1f - (elapsed / duration); // shake fades out
+            Vector3 shake = Random.insideUnitSphere * intensity * remaining;
+            shake.y *= 0.3f; // less vertical (nausea)
+            playerRig.localPosition = rigShakeBasePos + shake;
+            yield return null;
+        }
+        playerRig.localPosition = rigShakeBasePos;
+    }
+
+    // ============================================================
+    // VIGNETTE
+    // ============================================================
+    private IEnumerator SingleVignettePulse(float duration)
+    {
+        if (redVignetteImage == null) yield break;
+
+        Color off = new Color(0.9f, 0f, 0f, 0f);
+        Color on = new Color(0.9f, 0f, 0f, 0.6f);
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            float pulse = Mathf.Sin(t * Mathf.PI); // single sine pulse
+            redVignetteImage.color = Color.Lerp(off, on, pulse);
+            yield return null;
+        }
+        redVignetteImage.color = off;
+    }
+
+    // ============================================================
+    // LIGHTING (just darken - no red ramp during void)
+    // ============================================================
+    private void DarkenWorldForReveal()
     {
         disabledLights.Clear();
 
@@ -478,8 +575,6 @@ public class WheelchairFinale : MonoBehaviour
                 Light[] lights = root.GetComponentsInChildren<Light>(true);
                 foreach (Light l in lights)
                 {
-                    if (l == monsterSpotlight) continue;
-                    if (l == shadowCastingLight) continue;
                     if (!l.enabled) continue;
                     l.enabled = false;
                     disabledLights.Add(l);
@@ -488,41 +583,12 @@ public class WheelchairFinale : MonoBehaviour
         }
 
         RenderSettings.ambientMode = AmbientMode.Flat;
-        RenderSettings.ambientLight = new Color(0.02f, 0.01f, 0.01f);
-        RenderSettings.ambientIntensity = 0.08f;
-        RenderSettings.reflectionIntensity = 0.1f;
-
-        StartCoroutine(RampToRedAmbient());
-    }
-
-    private IEnumerator RampToRedAmbient()
-    {
-        yield return new WaitForSeconds(shadowOnFloorDuration + fadeInDuration);
-
-        Color startColor = RenderSettings.ambientLight;
-        float startIntensity = RenderSettings.ambientIntensity;
-        float elapsed = 0f;
-
-        while (elapsed < redRampDuration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / redRampDuration;
-            RenderSettings.ambientLight = Color.Lerp(startColor, chaseAmbientColor, t);
-            RenderSettings.ambientIntensity = Mathf.Lerp(startIntensity, chaseAmbientIntensity, t);
-            yield return null;
-        }
-    }
-
-    private void ApplyHorrorFog()
-    {
-        RenderSettings.fog = true;
-        RenderSettings.fogColor = chaseFogColor;
-        RenderSettings.fogMode = chaseFogMode;
-        RenderSettings.fogDensity = chaseFogDensity;
+        RenderSettings.ambientLight = new Color(0.1f, 0.02f, 0.02f);
+        RenderSettings.ambientIntensity = 0.15f;
     }
 
     // ============================================================
-    // POST PROCESSING
+    // POST PROCESSING + AUDIO HELPERS
     // ============================================================
     private IEnumerator RampPostFX(float targetWeight, float duration)
     {
@@ -538,23 +604,7 @@ public class WheelchairFinale : MonoBehaviour
         horrorPostFX.weight = targetWeight;
     }
 
-    // ============================================================
-    // AUDIO HELPERS
-    // ============================================================
-    private IEnumerator DuckAudioSource(AudioSource src, float targetVolume, float duration)
-    {
-        if (src == null) yield break;
-        float startVol = src.volume;
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            src.volume = Mathf.Lerp(startVol, targetVolume, elapsed / duration);
-            yield return null;
-        }
-    }
-
-    private IEnumerator RampAudioVolume(AudioSource src, float targetVolume, float duration)
+    private IEnumerator RampVolume(AudioSource src, float targetVolume, float duration)
     {
         if (src == null) yield break;
         float startVol = src.volume;
@@ -580,72 +630,6 @@ public class WheelchairFinale : MonoBehaviour
         }
     }
 
-    // ============================================================
-    // VISUAL EFFECTS
-    // ============================================================
-    private IEnumerator PulseRedVignette()
-    {
-        if (redVignetteImage == null) yield break;
-        Color off = new Color(0.9f, 0f, 0f, 0f);
-        Color on = new Color(0.9f, 0f, 0f, 0.5f);
-        float t = 0f;
-        while (isShakingCamera || t < 2f)
-        {
-            t += Time.deltaTime;
-            float pulse = (Mathf.Sin(t * 6f) + 1f) * 0.5f;
-            redVignetteImage.color = Color.Lerp(off, on, pulse);
-            yield return null;
-        }
-        redVignetteImage.color = off;
-    }
-
-    // ============================================================
-    // CAMERA SHAKE
-    // ============================================================
-    private IEnumerator CameraShakeLoop(float intensity)
-    {
-        while (isShakingCamera)
-        {
-            Vector3 shake = Random.insideUnitSphere * intensity;
-            shake.y *= 0.3f;
-            playerRig.localPosition = rigShakeBasePos + shake;
-            yield return new WaitForSeconds(0.03f);
-        }
-        playerRig.localPosition = rigShakeBasePos;
-    }
-
-    private IEnumerator CameraShakeBurst(float intensity, float duration)
-    {
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            Vector3 shake = Random.insideUnitSphere * intensity;
-            shake.y *= 0.3f;
-            playerRig.localPosition = rigShakeBasePos + shake;
-            yield return null;
-        }
-        playerRig.localPosition = rigShakeBasePos;
-    }
-
-    // ============================================================
-    // GENERAL HELPERS
-    // ============================================================
-    private void DisableControllers()
-    {
-        if (moveProvider != null) moveProvider.enabled = false;
-        if (turnProvider != null) turnProvider.enabled = false;
-        if (snapTurnProvider != null) snapTurnProvider.enabled = false;
-    }
-
-    private void FacePlayerHorizontal()
-    {
-        Vector3 lookTarget = new Vector3(playerCamera.position.x,
-                                         monster.transform.position.y,
-                                         playerCamera.position.z);
-        monster.transform.LookAt(lookTarget);
-    }
-
     private IEnumerator FadeColor(Color startColor, Color endColor, float duration)
     {
         if (fadeImage == null) yield break;
@@ -657,30 +641,6 @@ public class WheelchairFinale : MonoBehaviour
             yield return null;
         }
         fadeImage.color = endColor;
-    }
-
-    private IEnumerator RedFlashAndFillVision()
-    {
-        if (fadeImage == null) yield break;
-
-        Color red = new Color(0.9f, 0f, 0f, 0.8f);
-        Color black = new Color(0, 0, 0, 1);
-        fadeImage.color = red;
-
-        Vector3 monsterStart = monster.transform.position;
-        Vector3 cameraPos = playerCamera.position;
-        float elapsed = 0f;
-
-        while (elapsed < redFlashDuration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / redFlashDuration;
-            monster.transform.position = Vector3.Lerp(monsterStart, cameraPos, t);
-            monster.transform.LookAt(playerCamera.position);
-            fadeImage.color = Color.Lerp(red, black, t);
-            yield return null;
-        }
-        fadeImage.color = black;
     }
 
     private void EnsureFadeImageExists()
@@ -707,6 +667,6 @@ public class WheelchairFinale : MonoBehaviour
 
     private void OnFinaleComplete()
     {
-        Debug.LogError("[WheelchairFinale] finale complete");
+        Debug.Log("[WheelchairFinale] cinematic complete");
     }
 }
