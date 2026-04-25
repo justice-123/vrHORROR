@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class PlayButton : MonoBehaviour
 {
-    
-    public void PressButton()
+    public GameObject mainPage;
+    public GameObject lorePage;
+
+    public void OnPlayButton()
     {
-        StartCoroutine(MenuTransition.Instance.StartGame());
+        mainPage.SetActive(false);
+        lorePage.SetActive(true);
     }
-
-
 }

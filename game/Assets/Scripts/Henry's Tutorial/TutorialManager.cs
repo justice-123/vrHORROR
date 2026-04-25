@@ -25,6 +25,15 @@ public class TutorialManager : MonoBehaviour
 
     public AudioSource successSound;
 
+    public GameObject leftControllerModel;
+    public GameObject rightControllerModel;
+    public GameObject leftGripArrow;
+    public GameObject rightGripArrow;
+    public GameObject leftTriggerArrow;
+    public GameObject rightTriggerArrow;
+    public GameObject leftMenuArrow;
+    public GameObject rightAArrow;
+
 
     public static TutorialManager Instance { get; private set; }
 
@@ -48,6 +57,10 @@ public class TutorialManager : MonoBehaviour
     void Start()
     {
         okButtonObject.SetActive(false);
+        leftTriggerArrow.SetActive(false);
+        rightTriggerArrow.SetActive(false);
+        leftMenuArrow.SetActive(false);
+        rightAArrow.SetActive(false);
         okButton.onClick.AddListener(() => { okButtonPressed = true; });
         StartCoroutine(Tutorial());
     }
@@ -141,6 +154,12 @@ public class TutorialManager : MonoBehaviour
         leftHandAnimator.SetInteger("LeftTutorialStage", 2);
         rightHandAnimator.SetInteger("RightTutorialStage", 2);
 
+        leftControllerModel.transform.eulerAngles = new Vector3(-90, 0, 0);
+
+        leftMenuArrow.SetActive(true);
+        leftGripArrow.SetActive(false);
+        rightGripArrow.SetActive(false);
+
         tutorialText.text = "press the menu button on your left controller to open the pause menu.";
         
         leftHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out bool menuButtonPressed);
@@ -151,6 +170,8 @@ public class TutorialManager : MonoBehaviour
         }
 
         successSound.Play();
+
+        leftMenuArrow.SetActive(false);
 
     }
 
@@ -182,6 +203,11 @@ public class TutorialManager : MonoBehaviour
         rightHandAnimator.SetInteger("RightTutorialStage", 3);
         leftHandAnimator.SetInteger("LeftTutorialStage", 3);
 
+        leftTriggerArrow.SetActive(true);
+        rightTriggerArrow.SetActive(true);
+        leftControllerModel.transform.eulerAngles = new Vector3(0, 180, 0);
+        rightControllerModel.transform.eulerAngles = new Vector3(0, 180, 0);
+
         tutorialText.text = "Point your controller at the key and press the trigger to pick it up.";
         while (!InventoryManager.Instance.itemInInventory()) yield return null;
 
@@ -192,11 +218,21 @@ public class TutorialManager : MonoBehaviour
         leftHandAnimator.SetInteger("LeftTutorialStage", 4);
         tutorialText.text = "Press the A button on the right controllerto cycle through your inventory items";
 
+        leftTriggerArrow.SetActive(false);
+        rightTriggerArrow.SetActive(false);
+        rightAArrow.SetActive(true);
+
+        rightControllerModel.transform.eulerAngles = new Vector3(-90, 0, 0);
+
         while (InventoryManager.Instance.getActiveItemID() != "doorkey") yield return null;
 
         successSound.Play();
         yield return new WaitForSeconds(2f);
         tutorialText.text = "You have completed the tutorial. Hold the key to the lock to unlock the door, and continue to escape the hospital!";
+
+        rightAArrow.SetActive(false);
+        leftControllerModel.SetActive(false);
+        rightControllerModel.SetActive(false);
     }
 
 }
