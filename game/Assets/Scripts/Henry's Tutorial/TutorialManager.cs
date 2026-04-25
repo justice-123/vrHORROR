@@ -85,6 +85,9 @@ public class TutorialManager : MonoBehaviour
 
         // Tutorial Step 6: Item interaction
         yield return StartCoroutine(ItemInteraction());
+
+        tutorialCompleted = true;
+        HintButton.Instance.changeHintState(HintButton.HintState.ExploreFirstArea);
     }
 
     public IEnumerator GripTutorial()

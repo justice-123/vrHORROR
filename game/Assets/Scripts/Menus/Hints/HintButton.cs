@@ -111,7 +111,7 @@ public class HintButton : MonoBehaviour
             break;
 
             case HintState.ElectricChair:
-            hintText.text = "I feel like that date is significant, I should remember it.";
+            hintText.text = "That date seems important, I should remember it.";
             break;
 
             case HintState.GhostGirl:
@@ -136,7 +136,7 @@ public class HintButton : MonoBehaviour
             break;
 
             case HintState.Axe:
-            hintText.text = "Time to go... I might be abler to break something wooden with that axe.";
+            hintText.text = "Time to go... I might be able to break something wooden with that axe.";
             break;
 
             case HintState.Monster:
