@@ -100960,7 +100960,7 @@ GameObject:
   - component: {fileID: 823758262}
   - component: {fileID: 823758261}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: ramp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101010,7 +101010,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8551d3b5f73566c488d8254420280ba0, type: 2}
+  - {fileID: 2100000, guid: e5f9f1a71e7662a438c95adc8897c05d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -12,7 +12,6 @@ public class WheelchairFinale : MonoBehaviour
     [Header("=== MONSTER ===")]
     [SerializeField] private GameObject monster;
     [SerializeField] private Animator monsterAnimator;
-    [Tooltip("Optional: drag head bone for attack height alignment. Not required if using manual stop distance.")]
     [SerializeField] private Transform monsterHeadBone;
 
     [Header("=== ANIMATOR STATE NAMES ===")]
@@ -20,46 +19,47 @@ public class WheelchairFinale : MonoBehaviour
     [SerializeField] private string attackStateName = "Attack";
     [SerializeField] private string idleStateName = "Idle";
 
-    [Header("=== CROSS-SCENE REFERENCES (names only, auto-found) ===")]
-    [SerializeField] private string doorMarkerName = "DoorMarker";
+    [Header("=== CROSS-SCENE REFERENCES (names only) ===")]
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private string postFXGameObjectName = "HorrorPostFX";
     [SerializeField] private string redVignetteName = "RedVignette";
     [SerializeField] private string fadeImageName = "FadeImage";
 
     [Header("=== AUDIO ===")]
-    [Tooltip("Gnarly sound that plays BEHIND the player when trapped. 3D spatial.")]
     [SerializeField] private AudioSource gnarlyBehindSound;
-    [Tooltip("Slow heartbeat that starts after gnarly sound.")]
     [SerializeField] private AudioSource heartbeatAudio;
-    [Tooltip("Ambient outdoor sound - gets ducked/stopped.")]
     [SerializeField] private AudioSource outdoorAmbient;
-    [Tooltip("Low rumble that builds as dread grows.")]
     [SerializeField] private AudioSource lowRumble;
-    [Tooltip("Monster growl/breath during shadow reveal.")]
     [SerializeField] private AudioSource shadowReveal;
-    [Tooltip("Chase audio - skittering/footsteps.")]
     [SerializeField] private AudioSource chaseAudio;
-    [Tooltip("Big attack boom.")]
     [SerializeField] private AudioSource attackBoom;
-    [Tooltip("Attack screech.")]
     [SerializeField] private AudioSource attackScreech;
 
     [Header("=== SEQUENCE TIMING ===")]
     [SerializeField] private float preTrapDelay = 0.2f;
     [SerializeField] private float gnarlySoundHoldDuration = 1.2f;
-    [SerializeField] private float heartbeatOnlyDuration = 1f;
-    [SerializeField] private float fadeOutDuration = 1.2f;
-    [SerializeField] private float blackHoldDuration = 1.5f;
-    [SerializeField] private float fadeInDuration = 0.6f;
-    [SerializeField] private float shadowRevealDuration = 2f;
+    [SerializeField] private float heartbeatOnlyDuration = 0.8f;
+    [SerializeField] private float fadeOutDuration = 0.5f;
+    [SerializeField] private float blackHoldDuration = 0.4f;
+    [SerializeField] private float fadeInDuration = 0.25f;
+    [Tooltip("How long the shadow appears on the floor before monster reveals.")]
+    [SerializeField] private float shadowOnFloorDuration = 1.2f;
     [SerializeField] private float startChaseSpeed = 9f;
     [SerializeField] private float maxChaseSpeed = 16f;
     [SerializeField] private float chaseAcceleration = 8f;
-    [Tooltip("Monster stops chasing at this distance - bigger value = stops further away.")]
     [SerializeField] private float attackDistance = 2.8f;
     [SerializeField] private float maxChaseTime = 3.5f;
     [SerializeField] private float silenceBeforeAttack = 0.15f;
+
+    [Header("=== MONSTER SPAWN POSITIONING ===")]
+    [Tooltip("How far from the player to spawn the monster (in the direction they're looking).")]
+    [SerializeField] private float spawnDistanceFromPlayer = 8f;
+
+    [Header("=== SHADOW ON FLOOR ===")]
+    [Tooltip("Light placed above the monster to cast its shadow on the floor.")]
+    [SerializeField] private Light shadowCastingLight;
+    [Tooltip("Height of the shadow casting light above the monster.")]
+    [SerializeField] private float shadowLightHeight = 6f;
 
     [Header("=== GROUND SNAPPING ===")]
     [SerializeField] private LayerMask groundMask = ~0;
@@ -67,28 +67,21 @@ public class WheelchairFinale : MonoBehaviour
     [SerializeField] private float groundRayDistance = 10f;
 
     [Header("=== ATTACK POSITION (seated player) ===")]
-    [Tooltip("How far in front of player the monster ends up. ~1.8 keeps head naturally at eye level.")]
     [SerializeField] private float attackStopDistance = 1.8f;
-    [Tooltip("Vertical offset from camera Y. 0 = same height as camera; negative = lower.")]
     [SerializeField] private float finalHeightOffset = 0f;
-    [Tooltip("Tick this to override everything with a manual Y position relative to camera.")]
-    [SerializeField] private bool useManualHeight = false;
-    [SerializeField] private float manualHeightOverride = -0.3f;
+    [SerializeField] private bool useManualHeight = true;
+    [SerializeField] private float manualHeightOverride = -0.4f;
 
-    [Header("=== LIGHTING: BRIGHT → RED HELLSCAPE ===")]
+    [Header("=== LIGHTING ===")]
     [SerializeField] private string[] scenesToDarken = { "final_jumpscare", "Second Area" };
-    [Tooltip("Dim light BEHIND the monster for silhouette effect during reveal.")]
-    [SerializeField] private Light shadowBacklight;
-    [Tooltip("Red spotlight on monster during chase.")]
     [SerializeField] private Light monsterSpotlight;
     [SerializeField] private Color chaseAmbientColor = new Color(0.2f, 0.02f, 0.02f);
     [SerializeField] private float chaseAmbientIntensity = 0.3f;
     [SerializeField] private float redRampDuration = 0.6f;
 
-    [Header("=== FOG (atmosphere) ===")]
+    [Header("=== FOG ===")]
     [SerializeField] private bool useFogDuringChase = true;
     [SerializeField] private Color chaseFogColor = new Color(0.15f, 0.02f, 0.02f);
-    [Tooltip("Higher = thicker fog. 0.25 = thick horror fog. 0.08 = barely visible.")]
     [SerializeField] private float chaseFogDensity = 0.25f;
     [SerializeField] private FogMode chaseFogMode = FogMode.Exponential;
 
@@ -100,12 +93,11 @@ public class WheelchairFinale : MonoBehaviour
     [SerializeField] private float cameraShakeChaseIntensity = 0.015f;
     [SerializeField] private float cameraShakeAttackIntensity = 0.08f;
 
-    [Header("=== CALIBRATION (for testing) ===")]
-    [Tooltip("Press C during play to test monster attack position.")]
+    [Header("=== CALIBRATION ===")]
     [SerializeField] private bool enableCalibrationMode = true;
 
-    // === Runtime references (auto-found) ===
-    private Transform playerCamera, playerRig, doorMarker;
+    // Runtime
+    private Transform playerCamera, playerRig;
     private ContinuousMoveProvider moveProvider;
     private ContinuousTurnProvider turnProvider;
     private SnapTurnProvider snapTurnProvider;
@@ -113,12 +105,13 @@ public class WheelchairFinale : MonoBehaviour
     private Image redVignetteImage;
     private Image fadeImage;
 
-    // === State ===
+    // State
     private bool hasTriggered = false;
     private bool isShakingCamera = false;
     private Vector3 rigShakeBasePos;
+    private Vector3 plannedSpawnPosition; // where the monster will appear
 
-    // === Cached lighting ===
+    // Cached lighting
     private List<Light> disabledLights = new List<Light>();
     private AmbientMode cachedAmbientMode;
     private Color cachedAmbientLight;
@@ -129,19 +122,15 @@ public class WheelchairFinale : MonoBehaviour
 
     private void Awake()
     {
-        Debug.LogError("[WheelchairFinale] Awake");
         if (monster != null) monster.SetActive(false);
         if (monsterSpotlight != null) monsterSpotlight.enabled = false;
-        if (shadowBacklight != null) shadowBacklight.enabled = false;
+        if (shadowCastingLight != null) shadowCastingLight.enabled = false;
     }
 
     private void Update()
     {
         if (!enableCalibrationMode) return;
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            TestAttackPosition();
-        }
+        if (Input.GetKeyDown(KeyCode.C)) TestAttackPosition();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -152,9 +141,6 @@ public class WheelchairFinale : MonoBehaviour
         StartCoroutine(PlayScare());
     }
 
-    // ============================================================
-    // FIND CROSS-SCENE REFERENCES BY NAME
-    // ============================================================
     private void FindRuntimeReferences()
     {
         if (Camera.main != null) playerCamera = Camera.main.transform;
@@ -168,9 +154,6 @@ public class WheelchairFinale : MonoBehaviour
             snapTurnProvider = p.GetComponentInChildren<SnapTurnProvider>();
         }
 
-        GameObject m = GameObject.Find(doorMarkerName);
-        if (m != null) doorMarker = m.transform;
-
         GameObject postFX = GameObject.Find(postFXGameObjectName);
         if (postFX != null) horrorPostFX = postFX.GetComponent<Volume>();
 
@@ -179,29 +162,17 @@ public class WheelchairFinale : MonoBehaviour
 
         GameObject fade = GameObject.Find(fadeImageName);
         if (fade != null) fadeImage = fade.GetComponent<Image>();
-
-        Debug.LogError("[REFS] cam=" + (playerCamera != null) +
-                       " rig=" + (playerRig != null) +
-                       " door=" + (doorMarker != null) +
-                       " postFX=" + (horrorPostFX != null) +
-                       " vignette=" + (redVignetteImage != null) +
-                       " fade=" + (fadeImage != null));
     }
 
-    // ============================================================
-    // MAIN SCARE SEQUENCE
-    // ============================================================
     private IEnumerator PlayScare()
     {
         FindRuntimeReferences();
         EnsureFadeImageExists();
 
-        // Reset UI/PostFX after finding them
         if (redVignetteImage != null) redVignetteImage.color = new Color(0.9f, 0, 0, 0);
         if (horrorPostFX != null) horrorPostFX.weight = 0f;
 
-        if (monster == null || monsterAnimator == null || playerCamera == null ||
-            doorMarker == null || playerRig == null)
+        if (monster == null || monsterAnimator == null || playerCamera == null || playerRig == null)
         {
             Debug.LogError("[WheelchairFinale] missing critical refs - aborting");
             yield break;
@@ -210,22 +181,20 @@ public class WheelchairFinale : MonoBehaviour
         CacheLightingState();
 
         // === ACT 1: PRE-TRAP DELAY ===
-        Debug.LogError("[Act 1] Pre-trap");
         yield return new WaitForSeconds(preTrapDelay);
 
-        // === ACT 2: TRAP + ROTATE + GNARLY SOUND FROM THE RIGHT ===
-        Debug.LogError("[Act 2] Disable controls, rotate player, gnarly sound to the right");
+        // === ACT 2: TRAP - lock controls + gnarly sound ===
+        Debug.LogError("[Act 2] Disable controls + gnarly sound");
         DisableControllers();
 
-        // Rotate NOW so the sound comes from the correct direction
-        RotatePlayerToFaceMarker();
-
-        PlayGnarlySoundFromMonsterDirection();
+        // Gnarly sound plays from in front of where player is looking
+        // (so they know something's there but can't tell exactly where)
+        PlayGnarlyInFrontOfPlayer();
         StartCoroutine(DuckAudioSource(outdoorAmbient, 0.15f, 1.5f));
 
         yield return new WaitForSeconds(gnarlySoundHoldDuration);
 
-        // === ACT 3: HEARTBEAT + DREAD BUILD ===
+        // === ACT 3: HEARTBEAT BUILDS ===
         Debug.LogError("[Act 3] Heartbeat + dread");
         if (heartbeatAudio != null)
         {
@@ -247,30 +216,38 @@ public class WheelchairFinale : MonoBehaviour
         StartCoroutine(RampPostFX(1f, 1f));
         yield return StartCoroutine(FadeColor(new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), fadeOutDuration));
 
-
+        // === ACT 5: IN DARKNESS - position monster wherever the player is looking ===
+        Debug.LogError("[Act 5] In darkness - place monster where player is looking");
+        DarkenWorldAndGoRed();
         if (useFogDuringChase) ApplyHorrorFog();
 
-        monster.transform.position = doorMarker.position;
-        FacePlayerHorizontal();
+        // Place monster in the direction the player is currently looking
+        SpawnMonsterInPlayersView();
+
         monster.SetActive(true);
         monsterAnimator.applyRootMotion = false;
         monsterAnimator.Play(idleStateName, 0, 0f);
 
-        if (shadowBacklight != null) shadowBacklight.enabled = true;
-        if (shadowReveal != null) shadowReveal.Play();
+        // Set up the shadow-casting light ABOVE the monster
+        SetupShadowCastingLight();
 
+        if (shadowReveal != null) shadowReveal.Play();
         if (heartbeatAudio != null) StartCoroutine(RampPitch(heartbeatAudio, 1.3f, blackHoldDuration));
 
         yield return new WaitForSeconds(blackHoldDuration);
 
-        // === ACT 6: FADE IN - shadow monster visible ===
-        Debug.LogError("[Act 6] Fade in - shadow reveal");
+        // === ACT 6: FADE IN - shadow visible on floor first ===
+        Debug.LogError("[Act 6] Fade in - shadow appears on floor");
         yield return StartCoroutine(FadeColor(new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), fadeInDuration));
 
         StartCoroutine(PulseRedVignette());
-        yield return new WaitForSeconds(shadowRevealDuration);
 
-        // === ACT 7: CHARGE BEGINS ===
+        // Player sees the shadow on the floor — but the monster is far away
+        // The shadow grows as the monster gets closer (light is high above casting it)
+        Debug.LogError("[Act 6.5] Shadow on floor - building dread");
+        yield return new WaitForSeconds(shadowOnFloorDuration);
+
+        // === ACT 7: CHASE BEGINS ===
         Debug.LogError("[Act 7] Charge");
         if (monsterSpotlight != null) monsterSpotlight.enabled = true;
         monsterAnimator.Play(chaseStateName, 0, 0f);
@@ -313,22 +290,27 @@ public class WheelchairFinale : MonoBehaviour
             monster.transform.position = nextPos;
             FacePlayerHorizontal();
 
+            // Keep shadow light above the monster as it moves
+            if (shadowCastingLight != null)
+            {
+                shadowCastingLight.transform.position = monster.transform.position + Vector3.up * shadowLightHeight;
+            }
+
             timer += Time.deltaTime;
             yield return null;
         }
 
-        // === ACT 8: POSITION FOR ATTACK ===
-        Debug.LogError("[Act 8] Position attack");
+        // === ACT 8: ATTACK POSITION ===
         PositionMonsterForAttack();
 
         if (chaseAudio != null && chaseAudio.isPlaying) chaseAudio.Stop();
         if (heartbeatAudio != null && heartbeatAudio.isPlaying) heartbeatAudio.Stop();
         if (lowRumble != null && lowRumble.isPlaying) lowRumble.Stop();
 
-        // === ACT 9: SILENT BEAT ===
+        // === ACT 9: SILENCE ===
         yield return new WaitForSeconds(silenceBeforeAttack);
 
-        // === ACT 10: ATTACK - all audio hits at once ===
+        // === ACT 10: ATTACK ===
         Debug.LogError("[Act 10] ATTACK");
         monsterAnimator.Play(attackStateName, 0, 0f);
         if (attackBoom != null) attackBoom.Play();
@@ -337,7 +319,7 @@ public class WheelchairFinale : MonoBehaviour
         StartCoroutine(CameraShakeBurst(cameraShakeAttackIntensity, redFlashDuration));
         yield return StartCoroutine(RedFlashAndFillVision());
 
-        // === ACT 11: HOLD ON BLACK ===
+        // === ACT 11: HOLD ===
         isShakingCamera = false;
         yield return new WaitForSeconds(holdOnBlackDuration);
 
@@ -345,43 +327,77 @@ public class WheelchairFinale : MonoBehaviour
     }
 
     // ============================================================
-    // CALIBRATION TEST
+    // SPAWN MONSTER IN PLAYER'S VIEW
     // ============================================================
-    private void TestAttackPosition()
+    private void SpawnMonsterInPlayersView()
     {
-        FindRuntimeReferences();
+        // Get the direction the player is currently looking (horizontal only)
+        Vector3 lookDir = playerCamera.forward;
+        lookDir.y = 0;
+        lookDir.Normalize();
 
-        if (monster == null || playerCamera == null)
+        // Place monster in front of the player at spawn distance
+        Vector3 spawnPos = playerCamera.position + lookDir * spawnDistanceFromPlayer;
+
+        // Snap to ground
+        if (Physics.Raycast(spawnPos + Vector3.up * groundRayStartHeight,
+                            Vector3.down, out RaycastHit hit,
+                            groundRayDistance * 2f, groundMask,
+                            QueryTriggerInteraction.Ignore))
         {
-            Debug.LogError("[CALIBRATE] missing refs");
-            return;
+            spawnPos.y = hit.point.y;
+        }
+        else
+        {
+            spawnPos.y = playerCamera.position.y - 1.5f;
         }
 
-        monster.SetActive(true);
-        monsterAnimator.applyRootMotion = false;
-        monsterAnimator.Play(idleStateName, 0, 0f);
+        monster.transform.position = spawnPos;
+        plannedSpawnPosition = spawnPos;
+        FacePlayerHorizontal();
 
-        PositionMonsterForAttack();
-
-        Debug.LogError("[CALIBRATE] ===== RESULTS =====");
-        Debug.LogError("[CALIBRATE] Cam Y: " + playerCamera.position.y +
-                       " | Monster Y: " + monster.transform.position.y);
+        Debug.LogError("[SPAWN] Monster placed at: " + spawnPos +
+                       " | " + spawnDistanceFromPlayer + "m in front of player");
     }
 
     // ============================================================
-    // GNARLY SOUND POSITIONING (behind player)
+    // SHADOW CASTING LIGHT
     // ============================================================
-    private void PlayGnarlySoundFromMonsterDirection()
+    private void SetupShadowCastingLight()
+    {
+        if (shadowCastingLight == null) return;
+
+        // Position the light directly above the monster
+        shadowCastingLight.transform.position = monster.transform.position + Vector3.up * shadowLightHeight;
+        shadowCastingLight.transform.rotation = Quaternion.Euler(90f, 0f, 0f); // Point straight down
+
+        // Configure for shadow casting
+        shadowCastingLight.type = LightType.Spot;
+        shadowCastingLight.spotAngle = 60f;
+        shadowCastingLight.range = shadowLightHeight + 5f;
+        shadowCastingLight.shadows = LightShadows.Hard;
+        shadowCastingLight.intensity = 4f;
+        shadowCastingLight.color = new Color(1f, 0.3f, 0.3f); // tint red
+        shadowCastingLight.enabled = true;
+
+        Debug.LogError("[SHADOW] Light positioned " + shadowLightHeight + "m above monster");
+    }
+
+    // ============================================================
+    // GNARLY SOUND - in front of player
+    // ============================================================
+    private void PlayGnarlyInFrontOfPlayer()
     {
         if (gnarlyBehindSound == null) return;
 
-        // Sound comes from the DoorMarker position (where monster will spawn)
-        // After rotation, this is to the player's RIGHT
-        gnarlyBehindSound.transform.position = doorMarker.position;
+        // Play sound in front of where player is looking
+        Vector3 forwardDir = playerCamera.forward;
+        forwardDir.y = 0;
+        forwardDir.Normalize();
+
+        gnarlyBehindSound.transform.position = playerCamera.position + forwardDir * 5f;
         gnarlyBehindSound.spatialBlend = 1f;
         gnarlyBehindSound.Play();
-
-        Debug.LogError("[WheelchairFinale] Gnarly sound playing from monster direction");
     }
 
     // ============================================================
@@ -397,7 +413,6 @@ public class WheelchairFinale : MonoBehaviour
         monster.transform.position = targetPos;
         FacePlayerHorizontal();
 
-        // Manual override wins if ticked
         if (useManualHeight)
         {
             Vector3 adjusted = monster.transform.position;
@@ -406,7 +421,6 @@ public class WheelchairFinale : MonoBehaviour
             return;
         }
 
-        // Head bone alignment if available
         if (monsterHeadBone != null)
         {
             monsterAnimator.Update(0f);
@@ -417,11 +431,27 @@ public class WheelchairFinale : MonoBehaviour
             adjusted.y = correctY;
             monster.transform.position = adjusted;
         }
-        // Otherwise monster stays at its current Y (ground level from chase)
+    }
+
+    private void TestAttackPosition()
+    {
+        FindRuntimeReferences();
+
+        if (monster == null || playerCamera == null) return;
+
+        monster.SetActive(true);
+        monsterAnimator.applyRootMotion = false;
+        monsterAnimator.Play(idleStateName, 0, 0f);
+
+        SpawnMonsterInPlayersView();
+        PositionMonsterForAttack();
+
+        Debug.LogError("[CALIBRATE] Cam Y: " + playerCamera.position.y +
+                       " | Monster Y: " + monster.transform.position.y);
     }
 
     // ============================================================
-    // LIGHTING TRANSFORMATION
+    // LIGHTING
     // ============================================================
     private void CacheLightingState()
     {
@@ -449,7 +479,7 @@ public class WheelchairFinale : MonoBehaviour
                 foreach (Light l in lights)
                 {
                     if (l == monsterSpotlight) continue;
-                    if (l == shadowBacklight) continue;
+                    if (l == shadowCastingLight) continue;
                     if (!l.enabled) continue;
                     l.enabled = false;
                     disabledLights.Add(l);
@@ -467,7 +497,7 @@ public class WheelchairFinale : MonoBehaviour
 
     private IEnumerator RampToRedAmbient()
     {
-        yield return new WaitForSeconds(shadowRevealDuration + fadeInDuration);
+        yield return new WaitForSeconds(shadowOnFloorDuration + fadeInDuration);
 
         Color startColor = RenderSettings.ambientLight;
         float startIntensity = RenderSettings.ambientIntensity;
@@ -489,7 +519,6 @@ public class WheelchairFinale : MonoBehaviour
         RenderSettings.fogColor = chaseFogColor;
         RenderSettings.fogMode = chaseFogMode;
         RenderSettings.fogDensity = chaseFogDensity;
-        Debug.LogError("[FOG] density=" + chaseFogDensity + " color=" + chaseFogColor);
     }
 
     // ============================================================
@@ -571,7 +600,7 @@ public class WheelchairFinale : MonoBehaviour
     }
 
     // ============================================================
-    // CAMERA SHAKE (VR-safe, via rig offset)
+    // CAMERA SHAKE
     // ============================================================
     private IEnumerator CameraShakeLoop(float intensity)
     {
@@ -607,27 +636,6 @@ public class WheelchairFinale : MonoBehaviour
         if (moveProvider != null) moveProvider.enabled = false;
         if (turnProvider != null) turnProvider.enabled = false;
         if (snapTurnProvider != null) snapTurnProvider.enabled = false;
-    }
-
-    private void RotatePlayerToFaceMarker()
-    {
-        // Direction from player to the marker
-        Vector3 dir = doorMarker.position - playerRig.position;
-        dir.y = 0;
-        dir.Normalize();
-
-        if (dir.sqrMagnitude > 0.001f)
-        {
-            // Get the rotation that would face the marker
-            Quaternion faceMarker = Quaternion.LookRotation(dir);
-
-            // Rotate 90 degrees LEFT so the marker is to the player's RIGHT
-            // (player has to turn right to see the monster)
-            Quaternion offset = Quaternion.Euler(0, -90f, 0);
-            playerRig.rotation = faceMarker * offset;
-
-            Debug.LogError("[WheelchairFinale] Player rotated so monster is 90° to the right");
-        }
     }
 
     private void FacePlayerHorizontal()
@@ -679,7 +687,6 @@ public class WheelchairFinale : MonoBehaviour
     {
         if (fadeImage != null) return;
 
-        // Fallback: create a runtime canvas if no fade image was found
         GameObject canvasGO = new GameObject("RuntimeFadeCanvas");
         Canvas canvas = canvasGO.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
