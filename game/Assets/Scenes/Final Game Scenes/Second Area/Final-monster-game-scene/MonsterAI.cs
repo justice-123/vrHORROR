@@ -41,6 +41,13 @@ public class MonsterAI : MonoBehaviour
     public float stuckThreshold = 1.0f; 
     private float stuckTimer = 0f;
 
+    [Header("Audio")]
+    public AudioSource movementSource; // For footsteps
+    public AudioSource vocalSource;    // For Aggro and Attack
+    public AudioClip walkClip;
+    public AudioClip aggroClip;
+    public AudioClip attackClip;
+
 
     Volume attackVolume;
     private NavMeshAgent agent;
@@ -110,7 +117,11 @@ public class MonsterAI : MonoBehaviour
 
     void Update()
     {
-        if (isGameOver || isAttacking) return;
+        if (isGameOver || isAttacking) 
+        {
+            StopWalkingSound();
+            return;
+        }
 
 
         float distance = Vector3.Distance(transform.position, player.position); //checks current monster distance to player
@@ -126,6 +137,8 @@ public class MonsterAI : MonoBehaviour
             if (totalMotion > moveThreshold)
             {
                 Debug.Log("Hunting");
+                UpdateWalkingSound(3.0f);
+
                 isPausing = false;
                 agent.isStopped = false;
 
@@ -173,6 +186,8 @@ public class MonsterAI : MonoBehaviour
                         agent.velocity = Vector3.zero;
 
                         anim.SetTrigger("Aggro");
+                        vocalSource.PlayOneShot(aggroClip);
+                        StopWalkingSound();
                     }
 
                     if (isPausing)
@@ -189,6 +204,7 @@ public class MonsterAI : MonoBehaviour
                     }
                     else if (!agent.pathPending && agent.remainingDistance < 0.75f)
                     {
+                        UpdateWalkingSound(1.0f);
                         WanderAwayFromPlayer();
                     }
                 }
@@ -204,6 +220,7 @@ public class MonsterAI : MonoBehaviour
                     if (!agent.pathPending && agent.remainingDistance < 0.75f)
                     {
                         Wander();
+                        UpdateWalkingSound(1.0f);
                     }
                 }
 
@@ -221,6 +238,7 @@ public class MonsterAI : MonoBehaviour
         {
 
             // Randomly wander 
+            UpdateWalkingSound(1.0f);
             agent.speed = 1f;
             movementTimer = 0f;
             //BhapticsLibrary.StopAll();
@@ -273,6 +291,7 @@ public class MonsterAI : MonoBehaviour
 
         Debug.Log("Attacking Player");
         //isGameOver = true;
+        StopWalkingSound();
 
 
 
@@ -286,6 +305,7 @@ public class MonsterAI : MonoBehaviour
         lookPos.y = transform.position.y; 
         transform.LookAt(lookPos);
         anim.SetTrigger("Attack");
+        vocalSource.PlayOneShot(attackClip);
 
         // Visuals
         attackVolume.weight = 1f;
@@ -308,6 +328,7 @@ public class MonsterAI : MonoBehaviour
         agent.isStopped = false;
         agent.speed = 3.0f;
         WanderAwayFromPlayer();
+        UpdateWalkingSound(3.0f);
 
 
         // slowly fade away red
@@ -323,11 +344,35 @@ public class MonsterAI : MonoBehaviour
 
 
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(0.5f);
         isAttacking = false;
 
 
     }
+
+    void UpdateWalkingSound(float pitch)
+    {
+        if (agent.velocity.magnitude > 0.2f && !agent.isStopped)
+        {
+            if (!movementSource.isPlaying)
+            {
+                movementSource.clip = walkClip;
+                movementSource.Play();
+            }
+            
+            movementSource.pitch = pitch;
+        }
+        else
+        {
+            StopWalkingSound();
+        }
+    }
+
+    void StopWalkingSound()
+    {
+        if (movementSource.isPlaying) movementSource.Stop();
+    }
+
 
     private System.Collections.IEnumerator PlayHapticForDuration(string clipName, float totalDuration, float clipLength)
     {
