@@ -29,7 +29,7 @@ public class MonsterAI : MonoBehaviour
     private string monster_slash = "monster-slash";
 
     [Header("Chase Settings")]
-    public float chaseDelay = 0.5f;
+    private float chaseDelay = 0.25f;
     private float movementTimer = 0f;
     private float chaseSpeed = 4.0f;
 
@@ -127,6 +127,7 @@ public class MonsterAI : MonoBehaviour
             StopWalkingSound();
             return;
         }
+        UpdateWalkingSound();
 
 
         float distance = Vector3.Distance(transform.position, player.position); //checks current monster distance to player
@@ -142,7 +143,8 @@ public class MonsterAI : MonoBehaviour
             if (totalMotion > moveThreshold)
             {
                 Debug.Log("Hunting");
-                UpdateWalkingSound(chaseSpeed);
+                //UpdateWalkingSound(chaseSpeed);
+                UpdateWalkingSound();
 
                 isPausing = false;
                 agent.isStopped = false;
@@ -209,7 +211,8 @@ public class MonsterAI : MonoBehaviour
                     }
                     else if (!agent.pathPending && agent.remainingDistance < 0.75f)
                     {
-                        UpdateWalkingSound(1.0f);
+                        //UpdateWalkingSound(1.0f);
+                        UpdateWalkingSound();
                         WanderAwayFromPlayer();
                     }
                 }
@@ -225,7 +228,8 @@ public class MonsterAI : MonoBehaviour
                     if (!agent.pathPending && agent.remainingDistance < 0.75f)
                     {
                         Wander();
-                        UpdateWalkingSound(1.0f);
+                        //UpdateWalkingSound(1.0f);
+                        UpdateWalkingSound();
                     }
                 }
 
@@ -243,7 +247,8 @@ public class MonsterAI : MonoBehaviour
         {
 
             // Randomly wander 
-            UpdateWalkingSound(1.0f);
+            //UpdateWalkingSound(1.0f);
+            UpdateWalkingSound();
             agent.speed = 1f;
             movementTimer = 0f;
             //BhapticsLibrary.StopAll();
@@ -353,7 +358,8 @@ public class MonsterAI : MonoBehaviour
         agent.isStopped = false;
         agent.speed = chaseSpeed;
         WanderAwayFromPlayer();
-        UpdateWalkingSound(chaseSpeed);
+        //UpdateWalkingSound(chaseSpeed);
+        UpdateWalkingSound();
 
 
 
@@ -378,17 +384,43 @@ public class MonsterAI : MonoBehaviour
 
     }
 
-    void UpdateWalkingSound(float pitch)
+    void UpdateWalkingSound()
     {
-        if (agent.velocity.magnitude > 0.2f && !agent.isStopped)
+        //if (agent.velocity.magnitude > 0.2f && !agent.isStopped)
+        //{
+        //    if (!movementSource.isPlaying)
+        //    {
+        //        movementSource.clip = walkClip;
+        //        movementSource.Play();
+        //    }
+
+        //    movementSource.pitch = pitch;
+        //}
+        //else
+        //{
+        //    StopWalkingSound();
+        //}
+
+
+        float currentVelocity = agent.velocity.magnitude;
+
+        if (currentVelocity > 0.1f && !agent.isStopped)
         {
             if (!movementSource.isPlaying)
             {
                 movementSource.clip = walkClip;
                 movementSource.Play();
             }
-            
-            movementSource.pitch = pitch;
+            //movementSource.pitch = currentVelocity;
+
+            float minPitch = 1f;
+            float maxPitch = 2f;
+
+            float speedPercentage = currentVelocity / chaseSpeed;
+
+            movementSource.pitch = Mathf.Lerp(minPitch, maxPitch, speedPercentage);
+            //movementSource.volume = Mathf.Lerp(0.7f, 1.0f, speedPercentage);
+
         }
         else
         {
