@@ -243652,10 +243652,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1814112014}
     m_Modifications:
+    - target: {fileID: 3782224713904746515, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782862551739813601, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4709475171769680370, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b9d5b5bd65729b54ea1bdd5d8bbb2d24, type: 2}
+    - target: {fileID: 4726361947713978059, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5951875646402302491, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6267874579622320389, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -243695,6 +243711,14 @@ PrefabInstance:
     - target: {fileID: 8174524819860399446, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_Name
       value: Toilet Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 8174524819860399446, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8352935702636782309, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8807474822005456876, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_RootOrder
@@ -271575,10 +271599,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3782224713904746515, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782862551739813601, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4709475171769680370, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b9d5b5bd65729b54ea1bdd5d8bbb2d24, type: 2}
+    - target: {fileID: 4726361947713978059, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5951875646402302491, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6917133213671452396, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_Size.x
       value: 5.425916
@@ -271602,6 +271642,14 @@ PrefabInstance:
     - target: {fileID: 8174524819860399446, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_Name
       value: Children's Ward Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 8174524819860399446, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8352935702636782309, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8807474822005456876, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_RootOrder
