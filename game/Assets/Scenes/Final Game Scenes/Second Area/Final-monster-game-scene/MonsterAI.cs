@@ -31,6 +31,7 @@ public class MonsterAI : MonoBehaviour
     [Header("Chase Settings")]
     public float chaseDelay = 0.5f;
     private float movementTimer = 0f;
+    private float chaseSpeed = 4.0f;
 
     [Header("Wander Settings")]
     private float pauseDuration = 1.7f; // stare lenght
@@ -38,7 +39,7 @@ public class MonsterAI : MonoBehaviour
     private bool isPausing = false;
 
     [Header("Anti-Stuck")]
-    public float stuckThreshold = 1.0f; 
+    public float stuckThreshold = 3.0f; 
     private float stuckTimer = 0f;
 
     [Header("Audio")]
@@ -49,7 +50,11 @@ public class MonsterAI : MonoBehaviour
     public AudioClip attackClip;
 
 
-    Volume attackVolume;
+    public GameObject attackVolumeObj;
+    public GameObject blackoutVolumeObj;
+    private Volume attackVolume;
+    private Volume blackoutVolume;
+
     private NavMeshAgent agent;
     private Animator anim;
     private Vector3 lastPlayerPos, lastLeftPos, lastRightPos;
@@ -105,11 +110,11 @@ public class MonsterAI : MonoBehaviour
         }
 
         //attackVolume = GameObject.Find("Damage Volume");
-        GameObject volObj = GameObject.Find("Damage Volume");
-        if (volObj != null)
-        {
-            attackVolume = volObj.GetComponent<Volume>();
-        }
+        
+        
+        attackVolume = attackVolumeObj.GetComponent<Volume>();
+        blackoutVolume = blackoutVolumeObj.GetComponent<Volume>();
+
 
         UpdateLastPositions();
         Wander();
@@ -137,7 +142,7 @@ public class MonsterAI : MonoBehaviour
             if (totalMotion > moveThreshold)
             {
                 Debug.Log("Hunting");
-                UpdateWalkingSound(3.0f);
+                UpdateWalkingSound(chaseSpeed);
 
                 isPausing = false;
                 agent.isStopped = false;
@@ -148,7 +153,7 @@ public class MonsterAI : MonoBehaviour
                     HandleHaptics(distance, true);
 
                     agent.SetDestination(player.position);
-                    agent.speed = 3.0f;
+                    agent.speed = chaseSpeed;
 
                     //ChangeColor(huntingColor);
                 }
@@ -302,7 +307,7 @@ public class MonsterAI : MonoBehaviour
         anim.SetFloat("Speed", 0f);
 
         Vector3 lookPos = player.position;
-        lookPos.y = transform.position.y; 
+        lookPos.y = transform.position.y;
         transform.LookAt(lookPos);
         anim.SetTrigger("Attack");
         vocalSource.PlayOneShot(attackClip);
@@ -316,6 +321,16 @@ public class MonsterAI : MonoBehaviour
         rightHandHap.SendHapticImpulse(0, 1.0f, 2f);
         //BhapticsLibrary.Play(monster_slash);
 
+        // slowly fade away red
+        //float fadeTime = 3.0f;
+        //float startWeight = 1f;
+        //for (float t = 0; t < fadeTime; t += Time.deltaTime)
+        //{
+        //    attackVolume.weight = Mathf.Lerp(startWeight, 0f, t / fadeTime);
+        //    yield return null;
+        //}
+        //attackVolume.weight = 0f;
+
         if (playerOxygen != null)
         {
             playerOxygen.UseOxygen(30f);
@@ -324,28 +339,41 @@ public class MonsterAI : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f);
 
-        // monster runs away
-        agent.isStopped = false;
-        agent.speed = 3.0f;
-        WanderAwayFromPlayer();
-        UpdateWalkingSound(3.0f);
-
-
-        // slowly fade away red
-        float fadeTime = 2.0f;
-        float startWeight = 1f;
-        for (float t = 0; t < fadeTime; t += Time.deltaTime)
+        // fade to black
+        float fadeToBlackTime = 1.5f;
+        for (float t = 0; t < fadeToBlackTime; t += Time.deltaTime)
         {
-            attackVolume.weight = Mathf.Lerp(startWeight, 0f, t / fadeTime);
+            blackoutVolume.weight = t / fadeToBlackTime;
             yield return null;
         }
-        attackVolume.weight = 0f;
+        blackoutVolume.weight = 1f;
 
+
+        // monster runs away
+        agent.isStopped = false;
+        agent.speed = chaseSpeed;
+        WanderAwayFromPlayer();
+        UpdateWalkingSound(chaseSpeed);
 
 
 
         yield return new WaitForSeconds(0.5f);
         isAttacking = false;
+
+
+        float finalFade = 2.5f;
+        for (float t = 0; t < finalFade; t += Time.deltaTime)
+        {
+            blackoutVolume.weight = 1f - (t / finalFade);
+            attackVolume.weight = 1f - (t / finalFade);
+
+            yield return null;
+        }
+
+        blackoutVolume.weight = 0f;
+        attackVolume.weight = 0f;
+
+
 
 
     }
