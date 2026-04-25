@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
+using Bhaptics.SDK2;
+using System.Runtime.CompilerServices;
 
 public class LiftScare : MonoBehaviour
 {
@@ -33,6 +36,20 @@ public class LiftScare : MonoBehaviour
     [SerializeField] private float postFirstCloseDelay = 0.5f;
     [SerializeField] private float allIsWellDuration = 1.0f;
 
+    [Header("Timing")]
+    [SerializeField] private Volume darkVolume;
+
+    [Header("Post-Processing")]
+
+    [SerializeField] private string horrorVolumeName = "HorrorVolume";
+    [SerializeField] private float scareExposure = -10f;
+
+    private Volume horrorVolume;
+
+    private ColorAdjustments colorAdjustments;
+    private float cachedPostExposure;
+
+
     private DoorMovement doors;
     private Transform playerHead;
     private List<Light> disabledLights = new List<Light>();
@@ -51,6 +68,7 @@ public class LiftScare : MonoBehaviour
 
         if (monster != null)
             monster.SetActive(false);
+
     }
 
     private void DisableFirstAreaLights()
@@ -75,6 +93,12 @@ public class LiftScare : MonoBehaviour
                 l.enabled = false;
                 disabledLights.Add(l);
             }
+        }
+
+        if (colorAdjustments != null)
+        {
+            cachedPostExposure = colorAdjustments.postExposure.value;
+            colorAdjustments.postExposure.value = scareExposure;
         }
 
         cachedAmbientMode = RenderSettings.ambientMode;
@@ -102,6 +126,11 @@ public class LiftScare : MonoBehaviour
         RenderSettings.ambientLight = cachedAmbientLight;
         RenderSettings.ambientIntensity = cachedAmbientIntensity;
         RenderSettings.reflectionIntensity = cachedReflectionIntensity;
+
+        if (colorAdjustments != null)
+        {
+            colorAdjustments.postExposure.value = cachedPostExposure;
+        }
     }
 
     public IEnumerator PlayScare()
@@ -128,6 +157,23 @@ public class LiftScare : MonoBehaviour
             yield break;
         }
 
+        if (horrorVolume == null)
+        {
+            GameObject volumeObj = GameObject.Find(horrorVolumeName);
+            if (volumeObj != null)
+            {
+                horrorVolume = volumeObj.GetComponent<Volume>();
+                if (horrorVolume != null && horrorVolume.profile != null)
+                {
+                    horrorVolume.profile.TryGet(out colorAdjustments);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("[LiftScare] HorrorVolume not found by name: " + horrorVolumeName);
+            }
+        }
+
         Debug.LogWarning("[LiftScare] first close (normal)");
         yield return StartCoroutine(doors.closeDoorsRoutine());
 
@@ -149,6 +195,13 @@ public class LiftScare : MonoBehaviour
         Debug.LogWarning("[LiftScare] second close + approach");
 
         yield return new WaitForSeconds(emergenceDelay);
+
+        //bhaptics ?>>
+        for (int i = 0; i < 10; i++)
+        {
+            BhapticsLibrary.Play("hunt_vibration");
+        }
+
 
         monster.transform.position = startPoint.position;
         monster.transform.rotation = startPoint.rotation;
