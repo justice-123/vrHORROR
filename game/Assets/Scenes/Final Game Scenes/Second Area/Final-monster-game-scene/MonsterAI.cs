@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using Bhaptics.SDK2;
 using UnityEngine.XR;
 using System.Collections;
+using UnityEngine.Rendering;
 
 
 
@@ -36,6 +37,12 @@ public class MonsterAI : MonoBehaviour
     private float pauseTimer = 0f;
     private bool isPausing = false;
 
+    [Header("Anti-Stuck")]
+    public float stuckThreshold = 1.0f; 
+    private float stuckTimer = 0f;
+
+
+    Volume attackVolume;
     private NavMeshAgent agent;
     private Animator anim;
     private Vector3 lastPlayerPos, lastLeftPos, lastRightPos;
@@ -49,6 +56,8 @@ public class MonsterAI : MonoBehaviour
     private UnityEngine.XR.InputDevice rightHandHap;
 
     private OxygenTank playerOxygen;
+
+
 
 
     void Start()
@@ -86,6 +95,13 @@ public class MonsterAI : MonoBehaviour
         if (playerOxygen == null)
         {
             Debug.LogError("ox_tank not found");
+        }
+
+        //attackVolume = GameObject.Find("Damage Volume");
+        GameObject volObj = GameObject.Find("Damage Volume");
+        if (volObj != null)
+        {
+            attackVolume = volObj.GetComponent<Volume>();
         }
 
         UpdateLastPositions();
@@ -216,7 +232,34 @@ public class MonsterAI : MonoBehaviour
             StartCoroutine(AttackAndFlee());
         }
 
-        //lastPlayerPos = player.position;
+
+
+
+        // Anti-stuck stuff
+        if (!agent.isStopped && !isPausing && !isAttacking && !isGameOver)
+        {
+            if (agent.velocity.magnitude < 0.2f)
+            {
+                stuckTimer += Time.deltaTime;
+                if (stuckTimer >= stuckThreshold)
+                {
+                    Debug.Log("Monster is stuck");
+                    Wander(); 
+                    stuckTimer = 0f;
+                }
+            }
+            else
+            {
+                stuckTimer = 0f;
+            }
+        }
+        else
+        {
+            stuckTimer = 0f;
+        }
+
+
+
 
         anim.SetFloat("Speed", agent.velocity.magnitude);
         UpdateLastPositions();
@@ -244,6 +287,9 @@ public class MonsterAI : MonoBehaviour
         transform.LookAt(lookPos);
         anim.SetTrigger("Attack");
 
+        // Visuals
+        attackVolume.weight = 1f;
+
         BhapticsLibrary.StopAll();
         StartCoroutine(PlayHapticForDuration(huntClip, 2.0f, 0.1f));
         leftHandHap.SendHapticImpulse(0, 1.0f, 2f);
@@ -263,7 +309,21 @@ public class MonsterAI : MonoBehaviour
         agent.speed = 3.0f;
         WanderAwayFromPlayer();
 
-        yield return new WaitForSeconds(5.0f);
+
+        // slowly fade away red
+        float fadeTime = 2.0f;
+        float startWeight = 1f;
+        for (float t = 0; t < fadeTime; t += Time.deltaTime)
+        {
+            attackVolume.weight = Mathf.Lerp(startWeight, 0f, t / fadeTime);
+            yield return null;
+        }
+        attackVolume.weight = 0f;
+
+
+
+
+        yield return new WaitForSeconds(2.0f);
         isAttacking = false;
 
 
@@ -293,6 +353,7 @@ public class MonsterAI : MonoBehaviour
 
     void WanderAwayFromPlayer()
     {
+        agent.ResetPath();
         agent.isStopped = false;
         //agent.speed = 1.0f;
 
@@ -404,7 +465,7 @@ public class MonsterAI : MonoBehaviour
             if (Physics.Raycast(rayOrigin, directionToPlayer, out RaycastHit hit, viewRange))
             {
                 if (hit.transform != null)
-                    Debug.Log("Monster ray hit: " + hit.transform.name + " with tag: " + hit.transform.tag);
+                    //Debug.Log("Monster ray hit: " + hit.transform.name + " with tag: " + hit.transform.tag);
 
 
                 return (hit.transform.root == player.root || hit.transform.CompareTag("Player") || hit.transform.CompareTag("MainCamera") || hit.transform == player);
@@ -415,9 +476,9 @@ public class MonsterAI : MonoBehaviour
 
 
     void Wander() 
-    { 
-        
+    {
 
+        agent.ResetPath();
         //agent.speed = 1.0f;
 
         for (int i = 0; i < 5; i++)
