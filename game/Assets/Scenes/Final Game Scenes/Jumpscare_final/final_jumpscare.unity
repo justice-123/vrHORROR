@@ -1362,7 +1362,7 @@ MonoBehaviour:
   silenceBeforeAttack: 0
   attackTriggerDistance: 3.5
   maxChaseTime: 5
-  attackDistanceFromPlayer: 1
+  attackDistanceFromPlayer: 1.5
   attackHeightOffset: -0.4
   redAmbientColor: {r: 0.5, g: 0.05, b: 0.05, a: 1}
   redAmbientIntensity: 0.6

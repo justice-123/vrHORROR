@@ -210,73 +210,86 @@ public class WheelchairFinale : MonoBehaviour
         // Fade in DURING the chase
         StartCoroutine(FadeColor(new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), fadeInDuration));
 
-        // === STEP 5: NAVMESH CHASE with live distance check ===
+        // // === STEP 5: NAVMESH CHASE - target the EXACT attack position ===
         float timer = 0f;
+
+        // Calculate the perfect attack position ONCE (in front of player camera)
+        Vector3 perfectAttackPos = CalculatePerfectAttackPosition();
+        Debug.Log("[CHASE] Targeting perfect attack position: " + perfectAttackPos);
+
         while (timer < maxChaseTime)
         {
-            // CONTINUOUS distance check from monster TO player
-            float distance = Vector3.Distance(monster.transform.position, playerCamera.position);
+            // Make monster path to the perfect attack spot, not just "near the player"
+            agent.SetDestination(perfectAttackPos);
 
-            Debug.Log("[CHASE] Distance: " + distance);
+            // Check distance from monster to the TARGET position (not player)
+            float distanceToTarget = Vector3.Distance(monster.transform.position, perfectAttackPos);
+            Debug.Log("[CHASE] Distance to attack spot: " + distanceToTarget);
 
-            // The moment monster is too close, stop immediately
-            if (distance <= attackTriggerDistance)
+            // The moment monster reaches the attack spot, stop
+            if (distanceToTarget <= 0.5f)
             {
-                Debug.Log("[CHASE] Reached attack distance - stopping");
+                Debug.Log("[CHASE] Reached attack spot - attacking now");
                 break;
             }
-
-            // Direction from PLAYER to MONSTER (so we can target a point in front of player)
-            Vector3 dirFromPlayerToMonster = monster.transform.position - playerCamera.position;
-            dirFromPlayerToMonster.y = 0;
-
-            if (dirFromPlayerToMonster.sqrMagnitude > 0.01f)
-            {
-                dirFromPlayerToMonster.Normalize();
-            }
-            else
-            {
-                dirFromPlayerToMonster = -playerCamera.forward;
-                dirFromPlayerToMonster.y = 0;
-                dirFromPlayerToMonster.Normalize();
-            }
-
-            // Target is attackTriggerDistance AWAY from player (not on player)
-            Vector3 chaseTarget = playerCamera.position + dirFromPlayerToMonster * attackTriggerDistance;
-            agent.SetDestination(chaseTarget);
 
             timer += Time.deltaTime;
             yield return null;
         }
 
-        // === BULLETPROOF AGENT STOP - 5 layers of protection ===
+        // === BULLETPROOF AGENT STOP ===
         agent.isStopped = true;
         agent.speed = 0;
         agent.velocity = Vector3.zero;
         agent.ResetPath();
         agent.enabled = false;
 
-        // === STEP 6: SNAP TO ATTACK POSITION ===
-        Debug.Log("[Step 6] Snap to attack position");
-        SnapMonsterToAttackPositionInFrontOfPlayer();
+        // === IMMEDIATE ATTACK - monster is already in the perfect position ===
+        Debug.Log("[ATTACK] Seamless attack from perfect position");
 
+        // Stop chase audio
         if (chaseAudio != null && chaseAudio.isPlaying) chaseAudio.Stop();
         if (heartbeatAudio != null && heartbeatAudio.isPlaying) heartbeatAudio.Stop();
         if (subBassRumble != null && subBassRumble.isPlaying) subBassRumble.Stop();
 
-        // === STEP 7: SILENT BEAT ===
-        yield return new WaitForSeconds(silenceBeforeAttack);
+        // Tiny height correction for seated VR (no horizontal teleport - monster's already in the right spot)
+        Vector3 finalPos = monster.transform.position;
+        finalPos.y = playerCamera.position.y + attackHeightOffset;
+        monster.transform.position = finalPos;
 
-        // === STEP 8: ATTACK + INSTANT FADE TO BLACK ===
-        Debug.Log("[Step 8] ATTACK");
+        // Make sure facing player
+        FaceMonsterAtPlayer();
 
-        // All happen on the same frame
+        // INSTANT attack
+        monsterAnimator.CrossFadeInFixedTime(attackStateName, 0f, 0, 0f);
         if (attackBoom != null) attackBoom.Play();
         if (attackScreech != null) attackScreech.Play();
-        monsterAnimator.Play(attackStateName, 0, 0f);
-        monsterAnimator.Update(0f); // Force animator to immediately apply the new state
         StartCoroutine(ImpactShake(impactShakeIntensity, 0.2f));
-        StartCoroutine(FadeColor(new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), 0.2f)); ;
+
+        // === BULLETPROOF AGENT STOP ===
+        agent.isStopped = true;
+        agent.speed = 0;
+        agent.velocity = Vector3.zero;
+        agent.ResetPath();
+        agent.enabled = false;
+
+        // === STEP 6: ATTACK + INSTANT BLACK CUT (hides the snap) ===
+        Debug.Log("[Step 6] Attack + cut to black");
+
+        // Stop all chase audio first
+        if (chaseAudio != null && chaseAudio.isPlaying) chaseAudio.Stop();
+        if (heartbeatAudio != null && heartbeatAudio.isPlaying) heartbeatAudio.Stop();
+        if (subBassRumble != null && subBassRumble.isPlaying) subBassRumble.Stop();
+
+        // Snap monster + trigger attack + impact sounds + screen flash all in same frame
+        SnapMonsterToAttackPositionInFrontOfPlayer();
+        monsterAnimator.Play(attackStateName, 0, 0f);
+        if (attackBoom != null) attackBoom.Play();
+        if (attackScreech != null) attackScreech.Play();
+        StartCoroutine(ImpactShake(impactShakeIntensity, 0.2f));
+
+        // Very fast fade to black - hides the snap teleport
+        yield return StartCoroutine(FadeColor(new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), 0.15f));
 
         // Quick impact shake
         StartCoroutine(ImpactShake(impactShakeIntensity, 0.2f));
@@ -300,7 +313,26 @@ public class WheelchairFinale : MonoBehaviour
         OnFinaleComplete();
     }
 
-    
+    private Vector3 CalculatePerfectAttackPosition()
+    {
+        if (playerCamera == null) return Vector3.zero;
+
+        // Place the perfect attack position in front of the player camera
+        Vector3 playerForward = playerCamera.forward;
+        playerForward.y = 0;
+        playerForward.Normalize();
+
+        Vector3 attackPos = playerCamera.position + playerForward * attackDistanceFromPlayer;
+
+        // Snap to NavMesh so the agent can actually reach it
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(attackPos, out hit, 3f, NavMesh.AllAreas))
+        {
+            attackPos = hit.position;
+        }
+
+        return attackPos;
+    }
     // ============================================================
     // SPAWN AT CHOSEN POINT
     // ============================================================
