@@ -7,7 +7,7 @@ public class DoorFallingOver : MonoBehaviour
 
     private Rigidbody rb;
     private bool hasFallen = false;
-    private bool visitedEChair = false;
+    private bool visitedEChair = true;
     public AudioSource doorSound;
 
     void Awake()
