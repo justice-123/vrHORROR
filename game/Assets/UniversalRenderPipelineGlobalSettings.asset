@@ -62,7 +62,9 @@ MonoBehaviour:
     m_RuntimeSettings:
       m_List:
       - rid: 7799646622281629784
+      - rid: 7799646622281629785
       - rid: 7799646622281629786
+      - rid: 7799646622281629791
       - rid: 7799646622281629794
       - rid: 7799646622281629795
       - rid: 7799646622281629797
@@ -180,7 +182,7 @@ MonoBehaviour:
       data:
         m_Version: 0
         m_StripUnusedPostProcessingVariants: 0
-        m_StripUnusedVariants: 1
+        m_StripUnusedVariants: 0
         m_StripScreenCoordOverrideVariants: 1
     - rid: 7799646622281629790
       type: {class: Renderer2DResources, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
