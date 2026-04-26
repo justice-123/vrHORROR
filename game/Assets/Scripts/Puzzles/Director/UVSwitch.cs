@@ -9,16 +9,8 @@ public class UVSwitch : MonoBehaviour
     private bool canToggle = true;
     public float cooldown = 1f;
 
-    public bool hintTriggered = false;
-
     public void pressSwitch()
     {
-
-        if (hintTriggered == false)
-        {
-            hintTriggered = true;
-            HintButton.Instance.changeHintState(HintButton.HintState.ObtainLiftKey);
-        }
 
         keypadLight.enableKeyPadLight();
 

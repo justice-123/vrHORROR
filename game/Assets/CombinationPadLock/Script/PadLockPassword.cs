@@ -1,6 +1,5 @@
 ﻿// Script by Marcelli Michele
 
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -35,14 +34,7 @@ public class PadLockPassword : MonoBehaviour
                 rb.isKinematic = false;
                 rb.useGravity = true;
             }
-            StartCoroutine(deletePadlock());
 
         }
-    }
-
-    public IEnumerator deletePadlock()
-    {
-        yield return new WaitForSeconds(2f);
-        Destroy(gameObject);
     }
 }
