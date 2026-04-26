@@ -1136,13 +1136,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690922934}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7169378, z: -0, w: 0.69713724}
-  m_LocalPosition: {x: 3.578, y: 1.835, z: -0.188}
+  m_LocalRotation: {x: 0.10983061, y: 0.70798445, z: -0.11295007, w: 0.68843126}
+  m_LocalPosition: {x: 4.055, y: 1.052, z: -0.561}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 91.604, z: 0}
+  m_LocalEulerAnglesHint: {x: 18.129, y: 91.604, z: 0}
 --- !u!1 &727667953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1329,6 +1329,7 @@ MonoBehaviour:
   redVignetteName: RedVignette
   fadeImageName: FadeImage
   spawnPointName: DoorMarker
+  horrorPostFXName: HorrorPostFX
   flickerLights:
   - {fileID: 848146887}
   - {fileID: 169087291}
@@ -1354,22 +1355,24 @@ MonoBehaviour:
   chaseAudio: {fileID: 2084173758}
   attackBoom: {fileID: 1992135249}
   attackScreech: {fileID: 1992135249}
+  falseSafetyDuration: 3
   crashHoldDuration: 0.5
-  dreadBuildDuration: 2.5
+  dreadBuildDuration: 3
   fadeOutDuration: 0.3
   blackHoldDuration: 0.3
   fadeInDuration: 0.3
-  silenceBeforeAttack: 0
-  attackTriggerDistance: 3.5
+  silenceBeforeAttack: 0.2
   maxChaseTime: 5
-  attackDistanceFromPlayer: 1.5
-  attackHeightOffset: -0.4
+  chaseSpeed: 16
+  chaseAcceleration: 20
+  attackDistanceFromPlayer: 1.3
+  attackHeightOffset: -1.3
+  postFXRampDuration: 1
   redAmbientColor: {r: 0.5, g: 0.05, b: 0.05, a: 1}
   redAmbientIntensity: 0.6
   scenesToDarken:
   - final_jumpscare
   - Second Area
-  redFlashDuration: 0.6
   holdOnBlackDuration: 2
   chaseShakeIntensity: 0.015
   impactShakeIntensity: 0.06
@@ -1457,7 +1460,7 @@ Transform:
   m_GameObject: {fileID: 817084915}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.58, y: 0.754, z: -0.4749}
+  m_LocalPosition: {x: 12.73, y: 1.03, z: -0.4749}
   m_LocalScale: {x: 2.6719356, y: 2.0505726, z: 10.52529}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2363,11 +2366,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.8
-  m_Speed: 8
-  m_Acceleration: 8
+  m_Speed: 14
+  m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0.5
+  m_AngularSpeed: 260
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
