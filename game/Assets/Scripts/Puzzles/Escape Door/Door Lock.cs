@@ -4,7 +4,7 @@ using UnityEngine;
 public class DoorLock : MonoBehaviour
 {
 
-    public FrontDoor frontDoor;
+    public TutorialDoor tutorialDoor;
     public bool unlocked;
     public AudioSource lockAudio;
 
@@ -20,7 +20,7 @@ public class DoorLock : MonoBehaviour
         if (!unlocked && InventoryManager.Instance.getActiveItemID() == "doorkey")
         {
             unlocked = true;
-            frontDoor.unlockLock();
+            tutorialDoor.unlockLock();
             lockAudio.Play();
             InventoryManager.Instance.DeleteCurrentItem();
         }
