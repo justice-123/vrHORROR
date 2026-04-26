@@ -28,13 +28,18 @@ public class BreathInputML : MonoBehaviour
     public float confidenceThreshold = 0.95f;
 
     [Header("RMS Gate (ML path only)")]
+    [Tooltip("ML inhale rejected if RMS exceeds this (likely speech)")]
     public float maxInhaleRms = 0.02f;
 
     [Header("Pitch Detection (loud breath path)")]
+    [Tooltip("Lowest voice pitch to search for (Hz)")]
     public float minPitchHz = 70f;
+    [Tooltip("Highest voice pitch to search for (Hz)")]
     public float maxPitchHz = 400f;
+    [Tooltip("Autocorrelation peak below this = no pitch = breath")]
     [Range(0f, 1f)]
     public float pitchConfidenceThreshold = 0.4f;
+    [Tooltip("RMS must be above this for pitch path to activate")]
     public float minLoudBreathRms = 0.005f;
 
     [Header("Smoothing")]
@@ -46,7 +51,6 @@ public class BreathInputML : MonoBehaviour
     public float inhaleConfidence;
     public float exhaleConfidence;
     public float silenceConfidence;
-    public float noiseConfidence;
     public bool isBreathing;
     [Range(0f, 1f)]
     public float breathIntensity01;
@@ -59,12 +63,6 @@ public class BreathInputML : MonoBehaviour
     private int clipSamples;
     private float classifyClock;
     private float smoothedIntensity;
-
-    // Class indices: 0=inhale, 1=exhale, 2=silence, 3=noise
-    private const int CLASS_INHALE = 0;
-    private const int CLASS_EXHALE = 1;
-    private const int CLASS_SILENCE = 2;
-    private const int CLASS_NOISE = 3;
 
     IEnumerator Start()
     {
@@ -142,31 +140,22 @@ public class BreathInputML : MonoBehaviour
         Tensor<float> outputTensor = worker.PeekOutput() as Tensor<float>;
         outputTensor.ReadbackAndClone();
 
-        // Softmax over 4 classes
-        float logitInhale = outputTensor[0, CLASS_INHALE];
-        float logitExhale = outputTensor[0, CLASS_EXHALE];
-        float logitSilence = outputTensor[0, CLASS_SILENCE];
-        float logitNoise = outputTensor[0, CLASS_NOISE];
+        float logitInhale = outputTensor[0, 0];
+        float logitExhale = outputTensor[0, 1];
+        float logitSilence = outputTensor[0, 2];
 
-        float maxLogit = Mathf.Max(logitInhale,
-                         Mathf.Max(logitExhale,
-                         Mathf.Max(logitSilence, logitNoise)));
-
+        float maxLogit = Mathf.Max(logitInhale, Mathf.Max(logitExhale, logitSilence));
         float expInhale = Mathf.Exp(logitInhale - maxLogit);
         float expExhale = Mathf.Exp(logitExhale - maxLogit);
         float expSilence = Mathf.Exp(logitSilence - maxLogit);
-        float expNoise = Mathf.Exp(logitNoise - maxLogit);
-        float expSum = expInhale + expExhale + expSilence + expNoise;
+        float expSum = expInhale + expExhale + expSilence;
 
         inhaleConfidence = expInhale / expSum;
         exhaleConfidence = expExhale / expSum;
         silenceConfidence = expSilence / expSum;
-        noiseConfidence = expNoise / expSum;
 
-        // ML says inhale if it's the top class, above threshold, and not too loud
-        bool mlSaysInhale = inhaleConfidence > exhaleConfidence
-            && inhaleConfidence > silenceConfidence
-            && inhaleConfidence > noiseConfidence
+        bool mlSaysInhale = inhaleConfidence >= exhaleConfidence
+            && inhaleConfidence >= silenceConfidence
             && inhaleConfidence >= confidenceThreshold
             && rms <= maxInhaleRms;
 
@@ -183,11 +172,13 @@ public class BreathInputML : MonoBehaviour
             DetectPitch(audioBuffer, sampleRate, minPitchHz, maxPitchHz,
                         out pitchConf, out pitchHz);
             debugPitchConfidence = pitchConf;
+
+            // No pitch detected = not speech = loud breath
             pitchSaysBreath = pitchConf < pitchConfidenceThreshold;
         }
 
         // =============================================
-        // Combine paths
+        // Combine: either path can confirm a breath
         // =============================================
         if (mlSaysInhale)
         {
@@ -203,18 +194,12 @@ public class BreathInputML : MonoBehaviour
         }
         else
         {
-            if (noiseConfidence > exhaleConfidence && noiseConfidence > silenceConfidence)
-                detectedClass = "noise";
-            else if (exhaleConfidence > silenceConfidence)
-                detectedClass = "exhale";
-            else
-                detectedClass = "silence";
-
+            detectedClass = (exhaleConfidence > silenceConfidence) ? "exhale" : "silence";
             detectionPath = "none";
             isBreathing = false;
         }
 
-        // Intensity
+        // Intensity: baseline 0.5 + RMS boost
         float targetIntensity = 0f;
         if (isBreathing)
         {
@@ -229,6 +214,7 @@ public class BreathInputML : MonoBehaviour
         outputTensor.Dispose();
     }
 
+    // Pitch detection via normalized autocorrelation
     static void DetectPitch(float[] data, int sr, float minHz, float maxHz,
                             out float confidence, out float pitchHz)
     {

@@ -51,14 +51,15 @@ public class InventoryManager : MonoBehaviour
         CycleItem();
     }
 
-    public void StoreItem(InventoryItem item)
+    public void StoreItem(InventoryItem item, IXRSelectInteractor interactor)
     {
         if (items.Contains(item)) return;
 
         var grabInteractable = item.GetComponent<XRGrabInteractable>();
         if (grabInteractable != null && grabInteractable.isSelected)
         {
-            handInteractor.interactionManager.CancelInteractorSelection((IXRSelectInteractor)handInteractor);
+            //handInteractor.interactionManager.CancelInteractorSelection((IXRSelectInteractor)handInteractor);
+            grabInteractable.interactionManager.CancelInteractorSelection(interactor);
         }
 
         items.Add(item);
@@ -150,5 +151,10 @@ public class InventoryManager : MonoBehaviour
     public string getActiveItemID()
     {
         return currentIndex != -1 ? items[currentIndex].itemId : "-1";
+    }
+
+    public bool itemInInventory()
+    {
+        return items.Count > 0;
     }
 }

@@ -21,7 +21,7 @@ public class FragmentBreak : MonoBehaviour
             rb.isKinematic = false;
             rb.AddForceAtPosition(force, hitPoint, ForceMode.Impulse);
 
-            Destroy(gameObject, 10f);
+            Destroy(gameObject, 3f);
 
             foreach (FragmentBreak neighbour in neighbours)
             {
@@ -58,7 +58,7 @@ public class FragmentBreak : MonoBehaviour
                 rb.isKinematic = false;
                 rb.useGravity = true;
 
-                Destroy(gameObject, 10f);
+                Destroy(gameObject, 3f);
             }
         }
     }

@@ -1,28 +1,36 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ToxicityDevice : MonoBehaviour
 {
-    [Header("Toxicity Settings")]
+    [Header("Toxicity")]
     [Range(0f, 100f)]
     public float toxicityLevel = 0f;
-    public float fillRate = 1f;    // units/sec when NOT breathing
-    public float drainRate = 5f;   // units/sec when breathing
+
+    public float fillRate = 1f;   // increases when NOT breathing
+    public float drainRate = 5f;  // decreases when breathing
 
     [Header("References")]
     public BreathInputML breathInput;
 
     [Header("Visuals")]
-    public Image barFill;
+    public Renderer lightRenderer;
+
+    public Color startColor = Color.white;
+    public Color endColor = Color.green;
+
+    [Header("Emission")]
+    public float emissionStrength = 1.5f;
 
     void Update()
     {
-        bool currentlyBreathing = breathInput != null && breathInput.isBreathing;
-
-        if (currentlyBreathing)
+        if (breathInput != null && breathInput.isBreathing)
+        {
             toxicityLevel -= drainRate * Time.deltaTime;
+        }
         else
+        {
             toxicityLevel += fillRate * Time.deltaTime;
+        }
 
         toxicityLevel = Mathf.Clamp(toxicityLevel, 0f, 100f);
 
@@ -31,9 +39,22 @@ public class ToxicityDevice : MonoBehaviour
 
     void UpdateVisuals()
     {
-        if (barFill == null) return;
+        if (lightRenderer == null) return;
 
-        // fillAmount drives the Filled image — 1 = full bar (100% toxic), 0 = empty
-        barFill.fillAmount = toxicityLevel / 100f;
+        float t = toxicityLevel / 100f;
+        Color currentColor = Color.Lerp(startColor, endColor, t);
+
+        Material mat = lightRenderer.material;
+
+        if (mat.HasProperty("_BaseColor"))
+            mat.SetColor("_BaseColor", currentColor);
+        else
+            mat.color = currentColor;
+
+        if (mat.HasProperty("_EmissionColor"))
+        {
+            mat.EnableKeyword("_EMISSION");
+            mat.SetColor("_EmissionColor", currentColor * emissionStrength);
+        }
     }
 }
