@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Diagnostics;
+using JetBrains.Annotations;
 using Meta.WitAi.Utilities;
 using Microsoft.VisualBasic;
 using Oculus.Interaction;
@@ -197,6 +198,7 @@ public class forwardMotion : MonoBehaviour
     public IEnumerator SnapTurn(float direction)
     {
        isSnapping = true;
+       float snapAngle = PlayerSettings.Instance.snapTurnAngle;
 
        float elapsed = 0f;
        while (elapsed <= snapFadeSpeed)
@@ -208,7 +210,7 @@ public class forwardMotion : MonoBehaviour
         blinkerCanvasGroup.alpha = 1f;
 
         float currentRotation = transform.eulerAngles.y;
-        float targetRotation = Mathf.Round((transform.eulerAngles.y + (45f * direction)) / 45f) * 45f;
+        float targetRotation = Mathf.Round((transform.eulerAngles.y + (snapAngle * direction)) / snapAngle) * snapAngle;
 
         controller.RotatePlayer(Mathf.DeltaAngle(currentRotation, targetRotation));
 

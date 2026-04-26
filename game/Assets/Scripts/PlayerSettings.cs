@@ -6,6 +6,7 @@ public class PlayerSettings : MonoBehaviour
     public enum TurningMethod {Smooth, Snap}
     public TurningMethod turningmethod;
     public float vignetteIntensityMultiplier = 1f;
+    public float snapTurnAngle = 45f;
 
 
     public static PlayerSettings Instance { get; private set; }
@@ -29,6 +30,11 @@ public class PlayerSettings : MonoBehaviour
     public void SetVignetteIntensity(float multiplier)
     {
         vignetteIntensityMultiplier = multiplier;
+    }
+
+    public void SetSnapTurnAngle(float angle)
+    {
+        snapTurnAngle = angle;
     }
 
     
