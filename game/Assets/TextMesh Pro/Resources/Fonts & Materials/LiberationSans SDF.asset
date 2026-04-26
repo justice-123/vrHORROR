@@ -167,7 +167,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
-    - _FaceColor: {r: 3.823894, g: 1.4849511, b: 0.051932123, a: 1}
+    - _FaceColor: {r: 4.623576, g: 4.3948107, b: 4.2528176, a: 1}
     - _FaceUVSpeed: {r: 0, g: 0, b: 0, a: 0}
     - _GlowColor: {r: 0.51697046, g: 0.111618534, b: 0.7490196, a: 1}
     - _IsoPerimeter: {r: 0, g: 0, b: 0, a: 0}

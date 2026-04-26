@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class OxygenManager : MonoBehaviour
 {
@@ -11,18 +11,26 @@ public class OxygenManager : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource audioSource;
-
     private bool canPlayBreathAudio = false;
+
+    private bool _deathTriggered = false;
 
     void Update()
     {
-        if (OxygenTank.Instance == null) return;
+        if (OxygenTank.Instance == null)
+        {
+            VRDebugHUD.Instance?.SetStatus("OxygenTank NULL - returning");
+            return;
+        }
+
+        if (OxygenTank.Instance.oxygenLevel > 0f)
+            _deathTriggered = false;
 
         if (OxygenTank.Instance.isRefilling)
         {
             OxygenTank.Instance.oxygenLevel = Mathf.Clamp(
                 OxygenTank.Instance.oxygenLevel + refillRate * Time.deltaTime, 0f, 100f);
-            canPlayBreathAudio = true; // prime for next breath
+            canPlayBreathAudio = true;
             return;
         }
 
@@ -43,9 +51,29 @@ public class OxygenManager : MonoBehaviour
         }
         else
         {
-            // stop audio if it somehow keeps playing
             if (audioSource != null && audioSource.isPlaying)
                 audioSource.Stop();
+        }
+
+        // Death check — outside breathing block so it always fires
+        if (OxygenTank.Instance.oxygenLevel <= 0f && !_deathTriggered)
+        {
+            _deathTriggered = true;
+            VRDebugHUD.Instance?.SetStatus("O2=0 detected, calling Respawn...");
+            OnPlayerDied();
+        }
+    }
+
+    private void OnPlayerDied()
+    {
+        if (RespawnManager.Instance != null)
+        {
+            VRDebugHUD.Instance?.SetStatus("Respawn() called OK");
+            RespawnManager.Instance.Respawn();
+        }
+        else
+        {
+            VRDebugHUD.Instance?.SetStatus("RespawnManager is NULL!");
         }
     }
 }
