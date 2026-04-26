@@ -380,37 +380,6 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!1 &267125413
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 267125414}
-  m_Layer: 0
-  m_Name: SpawnPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &267125414
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 267125413}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11, y: 5.079, z: -11.401}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &277177686
 GameObject:
   m_ObjectHideFlags: 0
@@ -1167,13 +1136,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690922934}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.973, y: 1.52, z: 0.334}
+  m_LocalRotation: {x: -0, y: 0.7169378, z: -0, w: 0.69713724}
+  m_LocalPosition: {x: 3.578, y: 1.835, z: -0.188}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 91.604, z: 0}
 --- !u!1 &727667953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,9 +1324,11 @@ MonoBehaviour:
   agent: {fileID: 1151250301}
   chaseStateName: Chase
   attackStateName: Attack
+  idleStateName: Idle
   playerTag: Player
   redVignetteName: RedVignette
   fadeImageName: FadeImage
+  spawnPointName: DoorMarker
   flickerLights:
   - {fileID: 848146887}
   - {fileID: 169087291}
@@ -1375,7 +1346,8 @@ MonoBehaviour:
   - {fileID: 410470026}
   - {fileID: 310895751}
   - {fileID: 1607786810}
-  flickerDuration: 0.5
+  flickerDuration: 1
+  flickerRedColor: {r: 0.4811321, g: 0.020425411, b: 0.020425411, a: 1}
   crashSound: {fileID: 7260293}
   heartbeatAudio: {fileID: 854367536}
   subBassRumble: {fileID: 0}
@@ -1384,26 +1356,24 @@ MonoBehaviour:
   attackScreech: {fileID: 1992135249}
   crashHoldDuration: 0.5
   dreadBuildDuration: 2.5
-  silenceBeforeAttack: 0.15
-  gazeTriggerThreshold: 0.6
-  maxWaitToLookTime: 10
-  spawnDistance: 8
-  minSpawnAngle: 100
-  maxSpawnAngle: 180
-  attackDistance: 2.8
-  maxChaseTime: 3
-  useManualHeight: 0
-  manualHeightOverride: -0.3
-  attackStopDistance: 1.8
+  fadeOutDuration: 0.3
+  blackHoldDuration: 0.3
+  fadeInDuration: 0.3
+  silenceBeforeAttack: 0
+  attackTriggerDistance: 3.5
+  maxChaseTime: 5
+  attackDistanceFromPlayer: 1
+  attackHeightOffset: -0.4
   redAmbientColor: {r: 0.5, g: 0.05, b: 0.05, a: 1}
   redAmbientIntensity: 0.6
   scenesToDarken:
   - final_jumpscare
   - Second Area
-  redFlashDuration: 0.3
+  redFlashDuration: 0.6
   holdOnBlackDuration: 2
   chaseShakeIntensity: 0.015
   impactShakeIntensity: 0.06
+  enableCalibrationMode: 1
 --- !u!65 &817084917
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1487,7 +1457,7 @@ Transform:
   m_GameObject: {fileID: 817084915}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.69, y: 0.754, z: -0.4749}
+  m_LocalPosition: {x: 12.58, y: 0.754, z: -0.4749}
   m_LocalScale: {x: 2.6719356, y: 2.0505726, z: 10.52529}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2392,12 +2362,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 1151250298}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.3
-  m_Speed: 4
+  m_Radius: 1.8
+  m_Speed: 8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2.5
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -4561,4 +4531,3 @@ SceneRoots:
   - {fileID: 690922938}
   - {fileID: 100125397}
   - {fileID: 856672377}
-  - {fileID: 267125414}
