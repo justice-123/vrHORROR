@@ -22,13 +22,6 @@ public class AxeTrigger : MonoBehaviour
             if (doorSwap != null)            {
                 doorSwap.swapToBrokenModel();
             }
-        } else if (other.gameObject.CompareTag("Wood"))
-        {
-            WoodBreak woodBreak = other.gameObject.GetComponent<WoodBreak>();
-            if (woodBreak != null)
-            {
-                woodBreak.swapToBrokenModel();
-            }
         }
     }
 }

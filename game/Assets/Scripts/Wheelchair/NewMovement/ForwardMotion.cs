@@ -38,6 +38,9 @@ public class forwardMotion : MonoBehaviour
 
     public Wheelchair_Vignette vignette;
 
+    public enum TurningMethod {Smooth, Snap}
+    public TurningMethod methodChosen = TurningMethod.Snap;
+
     public CanvasGroup blinkerCanvasGroup;
     public float snapAngle = 45f;
     private bool isSnapping = false;
@@ -148,7 +151,7 @@ public class forwardMotion : MonoBehaviour
                     forwardImpulse = 0;
                     float direction = (leftHandImpulse > 0) ? 1f : -1f;
 
-                    if (PlayerSettings.Instance.turningmethod == PlayerSettings.TurningMethod.Smooth) SmoothTurn(leftHandImpulse, rightHandImpulse);
+                    if (methodChosen == TurningMethod.Smooth) SmoothTurn(leftHandImpulse, rightHandImpulse);
                     else if (!isSnapping && Mathf.Abs(leftHandImpulse) >= snapDeadzone && Mathf.Abs(rightHandImpulse) >= snapDeadzone) StartCoroutine(SnapTurn(direction));
                 }
             }

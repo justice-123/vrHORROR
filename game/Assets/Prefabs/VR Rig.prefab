@@ -17430,7 +17430,6 @@ MonoBehaviour:
   head: {fileID: 6280090011958278503}
   currentSpeed: 0
   rotationSpeed: 0
-  movementEnabled: 0
   initialForward: {x: 0, y: 0, z: 0}
   wheelchairModel: {fileID: 8082104776597185065}
 --- !u!114 &4763236765422436564
@@ -17452,16 +17451,10 @@ MonoBehaviour:
   leftHandNode: 4
   head: {fileID: 6280090011958278503}
   friction: 0.99
-  brakingFriction: 0.75
   maximumMoveSpeed: 1.5
-  pushStrength: 4
   chairVelocity: 0
   turnStrength: 60
   vignette: {fileID: 2460679463734724365}
-  blinkerCanvasGroup: {fileID: 0}
-  snapAngle: 45
-  snapFadeSpeed: 0.5
-  snapDeadzone: 0.2
 --- !u!114 &2460679463734724365
 MonoBehaviour:
   m_ObjectHideFlags: 0
