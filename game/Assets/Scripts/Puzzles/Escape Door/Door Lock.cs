@@ -23,6 +23,7 @@ public class DoorLock : MonoBehaviour
             tutorialDoor.unlockLock();
             lockAudio.Play();
             InventoryManager.Instance.DeleteCurrentItem();
+            HintButton.Instance.changeHintState(HintButton.HintState.ExploreFirstArea);
         }
     }
 }

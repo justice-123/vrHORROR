@@ -15,6 +15,19 @@ public class TurningButton : MonoBehaviour
         selectSmooth();
     }
 
+    public void Update() {
+        if (PlayerSettings.Instance.turningmethod == PlayerSettings.TurningMethod.Snap)
+        {
+            snapButton.GetComponent<UnityEngine.UI.Image>().color = activeColor;
+            smoothButton.GetComponent<UnityEngine.UI.Image>().color = inactiveColor;
+        }
+        else
+        {
+            snapButton.GetComponent<UnityEngine.UI.Image>().color = inactiveColor;
+            smoothButton.GetComponent<UnityEngine.UI.Image>().color = activeColor;
+        }
+    }
+
     public void selectSnap()
     {
         snapButton.GetComponent<UnityEngine.UI.Image>().color = activeColor;
