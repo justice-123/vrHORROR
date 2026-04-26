@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,9 +6,8 @@ public class RespawnManager : MonoBehaviour
 {
     public static RespawnManager Instance { get; private set; }
 
-    [Header("Scene Names � must match Build Settings exactly")]
+    [Header("Scene Names — must match Build Settings exactly")]
     [SerializeField] private string firstAreaSceneName = "First Area";
-    [SerializeField] private string liftSceneName = "Lift";
 
     [SerializeField] private float fadeDuration = 0.5f;
 
@@ -30,31 +29,24 @@ public class RespawnManager : MonoBehaviour
     {
         if (_isRespawning) return;
 
-        string scene = GetCurrentAreaScene();
-        VRDebugHUD.Instance?.SetStatus($"Scene: {scene}");
-
-        if (scene == liftSceneName) return;
-
-        _isRespawning = true;
-        StartCoroutine(RespawnRoutine(scene));
-    }
-
-    /// <summary>
-    /// Loops through all loaded scenes and returns the first one that isn't
-    /// CoreSceneMain � since areas are loaded additively on top of it.
-    /// </summary>
-    private string GetCurrentAreaScene()
-    {
+        // Check all loaded scenes for First Area
+        bool inFirstArea = false;
         for (int i = 0; i < SceneManager.sceneCount; i++)
         {
-            string name = SceneManager.GetSceneAt(i).name;
-            if (name != "CoreSceneMain")
-                return name;
+            if (SceneManager.GetSceneAt(i).name == firstAreaSceneName)
+            {
+                inFirstArea = true;
+                break;
+            }
         }
-        return SceneManager.GetActiveScene().name;
+
+        VRDebugHUD.Instance?.SetStatus($"Respawning - FirstArea: {inFirstArea}");
+
+        _isRespawning = true;
+        StartCoroutine(RespawnRoutine(inFirstArea));
     }
 
-    private IEnumerator RespawnRoutine(string scene)
+    private IEnumerator RespawnRoutine(bool isFirstArea)
     {
         if (AreaTransition.Instance == null)
         {
@@ -83,13 +75,13 @@ public class RespawnManager : MonoBehaviour
         }
         fade.alpha = 1f;
 
-        // Teleport
-        bool isFirstArea = scene == firstAreaSceneName;
+        // First Area → spawn outside tutorial, O2 = 100
+        // Anything else → spawn at lift in Second Area, O2 = 0
         Transform spawnPoint = isFirstArea ? FirstAreaSpawn : SecondAreaSpawn;
 
         if (spawnPoint == null)
         {
-            VRDebugHUD.Instance?.SetStatus($"SPAWN NULL for {scene}!");
+            VRDebugHUD.Instance?.SetStatus($"SPAWN NULL - isFirstArea:{isFirstArea}");
         }
         else
         {
@@ -97,7 +89,6 @@ public class RespawnManager : MonoBehaviour
             VRDebugHUD.Instance?.SetStatus($"Teleported to {spawnPoint.name}");
         }
 
-        // Set oxygen
         if (OxygenTank.Instance != null)
         {
             OxygenTank.Instance.oxygenLevel = isFirstArea ? 100f : 0f;

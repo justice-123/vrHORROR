@@ -3597,7 +3597,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstAreaSceneName: First Area
-  liftSceneName: Lift
   fadeDuration: 0.5
 --- !u!4 &1592465870
 Transform:
@@ -9170,7 +9169,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6111674079172702675, guid: 2f3b2e90d64d8b04e8ea4ccc0544a07e, type: 3}
       propertyPath: oxygenLevel
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7396432716522711933, guid: 2f3b2e90d64d8b04e8ea4ccc0544a07e, type: 3}
       propertyPath: m_LocalPosition.x
