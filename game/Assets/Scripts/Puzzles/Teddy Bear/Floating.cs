@@ -3,7 +3,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [RequireComponent(typeof(Rigidbody))]
-public class FloatingTeddy : MonoBehaviour
+public class Floating : MonoBehaviour
 {
     [Header("Bobbing")]
     public float bobHeight = 0.3f;
@@ -16,8 +16,8 @@ public class FloatingTeddy : MonoBehaviour
     public float tiltAmount = 15f;
     public float tiltSpeed = 0.8f;
 
-    [Header("Audio")]
-    public AudioSource roomAmbienceSource;
+    [Header("Grab Sequence")]
+    public TeddyGrabSequence grabSequence; // drag TeddyGrabSequence object in inspector
 
     private Vector3 startPos;
     private Rigidbody rb;
@@ -57,12 +57,12 @@ public class FloatingTeddy : MonoBehaviour
 
     private void OnGrabbed(SelectEnterEventArgs args)
     {
-        enabled = false;         // stops Update() running, ending all bobbing/spinning
+        enabled = false;
         rb.isKinematic = false;
         rb.useGravity = true;
 
-        if (roomAmbienceSource != null)
-            roomAmbienceSource.Stop();
+        if (grabSequence != null)
+            grabSequence.StartSequence(); // hands off to the sequence script
     }
 
     void OnDestroy()
