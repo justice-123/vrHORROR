@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Animations/Monster/MonsterWalk.controller.meta
+guid: 876fb8d2b7b1d79459a25005b6ce408c
+========
+guid: dc4c24db19afa6b4e862429e3a28aa55
+>>>>>>>> dev:game/Assets/Horror Creatures/Demo/LightingData.asset.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
