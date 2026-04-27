@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:game/Assets/Horror Creatures/Demo/LightingData.asset.meta
-guid: dc4c24db19afa6b4e862429e3a28aa55
+<<<<<<<< HEAD:game/Assets/Animations/Monster/MonsterWalk.controller.meta
+guid: 876fb8d2b7b1d79459a25005b6ce408c
 ========
-guid: 5068cc1ad60cd9c4fb4eb94d50e78646
->>>>>>>> a09c9d5 (Squashed commit of the following:):game/Assets/Materials/Red.mat.meta
+guid: dc4c24db19afa6b4e862429e3a28aa55
+>>>>>>>> dev:game/Assets/Horror Creatures/Demo/LightingData.asset.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 2100000
+  mainObjectFileID: 9100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

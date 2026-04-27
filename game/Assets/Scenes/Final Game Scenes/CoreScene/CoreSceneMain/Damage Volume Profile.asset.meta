@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Scenes/Final Game Scenes/CoreScene/CoreSceneMain/Damage Volume Profile.asset.meta
 guid: 57b997c7044f05a4f9a36b56dea76288
+========
+guid: 5b18f23348338694baebaf7131948462
+>>>>>>>> dev:game/Assets/Animations/Gril.controller.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 11400000
+  mainObjectFileID: 9100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:game/Assets/Materials/Red.mat.meta
 guid: 5068cc1ad60cd9c4fb4eb94d50e78646
-========
-guid: a8806503a9dfb614f812f8daefd7d2b3
->>>>>>>> dev:game/Assets/Materials/Glass_01_Fade_.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000
