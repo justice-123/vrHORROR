@@ -247,11 +247,16 @@ public class WheelchairFinale : MonoBehaviour
         float timer = 0f;
         while (timer < maxChaseTime)
         {
-            float distance = Vector3.Distance(monster.transform.position, playerCamera.position);
+            // THE FIX: Calculate distance using Vector2 (X and Z only) to ignore headset height
+            float horizontalDist = Vector2.Distance(
+                new Vector2(monster.transform.position.x, monster.transform.position.z),
+                new Vector2(playerCamera.position.x, playerCamera.position.z)
+            );
 
             // Chase stops a little before you
-            if (distance <= attackTriggerDistance)
+            if (horizontalDist <= attackTriggerDistance)
             {
+                Debug.Log("[CHASE] Reached attack distance instantly!");
                 break;
             }
 
@@ -278,10 +283,12 @@ public class WheelchairFinale : MonoBehaviour
             yield return null;
         }
 
-        // === PHASE 8: FAST FADE TO BLACK THEN SETUP ===
+        // === PHASE 8: INSTANT BLACK + SETUP ===
 
-        // 1. Fast fade to black to hide the transition
-        yield return StartCoroutine(FadeAlpha(0f, 1f, 0.15f));
+        // 1. SMASH to black RIGHT NOW (no fade - just instant)
+        if (fadeScreen != null) fadeScreen.alpha = 1f;
+        yield return null; // wait one frame for it to render
+        yield return null;
 
         // 2. Shut down the agent COMPLETELY so it stops fighting the animator
         agent.isStopped = true;
