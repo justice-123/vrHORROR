@@ -11,9 +11,11 @@ public class OxygenManager : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource audioSource;
-    private bool canPlayBreathAudio = false;
+    public AudioSource chokingAudio;  // drag your choking sound in here
 
+    private bool canPlayBreathAudio = false;
     private bool _deathTriggered = false;
+    private bool _chokingTriggered = false;
 
     void Update()
     {
@@ -25,6 +27,14 @@ public class OxygenManager : MonoBehaviour
 
         if (OxygenTank.Instance.oxygenLevel > 0f)
             _deathTriggered = false;
+
+        // Reset choking flag once oxygen recovers above 5%
+        if (OxygenTank.Instance.oxygenLevel > 5f)
+        {
+            _chokingTriggered = false;
+            if (chokingAudio != null && chokingAudio.isPlaying)
+                chokingAudio.Stop();
+        }
 
         if (OxygenTank.Instance.isRefilling)
         {
@@ -55,10 +65,22 @@ public class OxygenManager : MonoBehaviour
                 audioSource.Stop();
         }
 
-        // Death check — outside breathing block so it always fires
+        // Choking at 5%
+        if (OxygenTank.Instance.oxygenLevel <= 5f && !_chokingTriggered)
+        {
+            _chokingTriggered = true;
+            if (chokingAudio != null)
+            {
+                chokingAudio.loop = false;
+                chokingAudio.Play();
+            }
+        }
+
+        // Death at 0%
         if (OxygenTank.Instance.oxygenLevel <= 0f && !_deathTriggered)
         {
             _deathTriggered = true;
+            if (chokingAudio != null) chokingAudio.Stop();
             VRDebugHUD.Instance?.SetStatus("O2=0 detected, calling Respawn...");
             OnPlayerDied();
         }
