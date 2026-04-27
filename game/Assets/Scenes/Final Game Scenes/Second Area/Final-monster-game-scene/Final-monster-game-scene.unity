@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000002, guid: e59a581f574807749ae2b4d0756ed3ae, type: 2}
+  m_LightingDataAsset: {fileID: 112000002, guid: 5ce6a2e53dac3bd49ab02a2c41046367, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -645,7 +645,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eyeHeight: 0.5
-  chaseDelay: 0.5
   stuckThreshold: 1
   movementSource: {fileID: 121871119}
   vocalSource: {fileID: 842170638}
