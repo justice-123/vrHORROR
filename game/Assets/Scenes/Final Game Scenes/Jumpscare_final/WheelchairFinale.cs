@@ -1,6 +1,6 @@
-﻿using Bhaptics.SDK2;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using Bhaptics.SDK2;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -23,15 +23,12 @@ public class WheelchairFinale : MonoBehaviour
 
     [Header("=== CROSS-SCENE REFERENCES ===")]
     [SerializeField] private string playerTag = "Player";
-    [SerializeField] private string redVignetteName = "RedVignette";
-    [SerializeField] private string fadeImageName = "FadeImage";
     [SerializeField] private string spawnPointName = "DoorMarker";
     [SerializeField] private string horrorPostFXName = "HorrorPostFX";
 
     [Header("=== FLICKER LIGHTS ===")]
     [SerializeField] private Light[] flickerLights;
     [SerializeField] private float flickerDuration = 0.6f;
-    [SerializeField] private Color flickerRedColor = new Color(1f, 0.1f, 0.1f);
 
     [Header("=== AUDIO ===")]
     [SerializeField] private AudioSource crashSound;
@@ -40,46 +37,56 @@ public class WheelchairFinale : MonoBehaviour
     [SerializeField] private AudioSource chaseAudio;
     [SerializeField] private AudioSource attackBoom;
     [SerializeField] private AudioSource attackScreech;
+    [Tooltip("Optional: distant ambient wind/city sounds for false safety phase.")]
+    [SerializeField] private AudioSource ambientWind;
+    [Tooltip("Optional: tinnitus ringing after the attack.")]
+    [SerializeField] private AudioSource tinnitusAudio;
 
     [Header("=== TIMING ===")]
-    [SerializeField] private float falseSafetyDuration = 3f;
+    [SerializeField] private float falseSafetyDuration = 4f;
     [SerializeField] private float crashHoldDuration = 0.5f;
     [SerializeField] private float dreadBuildDuration = 2.5f;
-    [SerializeField] private float fadeOutDuration = 0.3f;
-    [SerializeField] private float blackHoldDuration = 0.3f;
+    [SerializeField] private float fadeOutDuration = 0.4f;
+    [SerializeField] private float blackHoldDuration = 0.4f;
     [SerializeField] private float fadeInDuration = 0.3f;
+    [Tooltip("Magic beat of silence right before attack. 0.15-0.25 sweet spot.")]
     [SerializeField] private float silenceBeforeAttack = 0.2f;
 
     [Header("=== CHASE ===")]
+    [SerializeField] private float attackTriggerDistance = 2.5f;
     [SerializeField] private float maxChaseTime = 5f;
     [SerializeField] private float chaseSpeed = 12f;
     [SerializeField] private float chaseAcceleration = 20f;
 
     [Header("=== ATTACK POSITION ===")]
-    [Tooltip("How far in front of player camera the monster stops.")]
     [SerializeField] private float attackDistanceFromPlayer = 1.8f;
-    [Tooltip("HOW FAR BELOW THE CAMERA the monster ROOT should be. " +
-             "Press C to test. Start at -1.0 and adjust. " +
-             "More negative = monster drops lower. Less negative = rises higher.")]
-    [SerializeField] private float attackHeightOffset = -1.0f;
+    [Tooltip("Vertical offset from camera Y. Press C to test. Try -0.3 to -0.7.")]
+    [SerializeField] private float attackHeightOffset = -0.4f;
 
     [Header("=== POST-PROCESSING ===")]
     [SerializeField] private float postFXRampDuration = 1f;
 
-    [Header("=== RED LIGHTING ===")]
-    [SerializeField] private Color redAmbientColor = new Color(0.5f, 0.05f, 0.05f);
-    [SerializeField] private float redAmbientIntensity = 0.6f;
+    [Header("=== NIGHT LIGHTING ===")]
+    [SerializeField] private Color nightAmbientColor = new Color(0.06f, 0.08f, 0.12f);
+    [SerializeField] private float nightAmbientIntensity = 0.25f;
+    [SerializeField] private Light moonLight;
+    [SerializeField] private Color moonLightColor = new Color(0.7f, 0.8f, 1f);
+    [SerializeField] private float moonLightIntensity = 0.4f;
     [SerializeField] private string[] scenesToDarken = { "final_jumpscare", "Second Area" };
 
+    [Header("=== NIGHT FOG ===")]
+    [SerializeField] private bool useNightFog = true;
+    [SerializeField] private Color nightFogColor = new Color(0.04f, 0.05f, 0.08f);
+    [SerializeField] private float nightFogDensity = 0.05f;
+
     [Header("=== IMPACT ===")]
-    [SerializeField] private float holdOnBlackDuration = 4f;
+    [SerializeField] private float holdOnBlackDuration = 5f;
 
     [Header("=== CAMERA SHAKE ===")]
-    [SerializeField] private float chaseShakeIntensity = 0.015f;
+    [SerializeField] private float chaseShakeIntensity = 0.012f;
     [SerializeField] private float impactShakeIntensity = 0.08f;
 
     [Header("=== CALIBRATION ===")]
-    [Tooltip("Press C in play mode to test attack position instantly.")]
     [SerializeField] private bool enableCalibrationMode = true;
 
     // Runtime
@@ -88,8 +95,7 @@ public class WheelchairFinale : MonoBehaviour
     private ContinuousMoveProvider moveProvider;
     private ContinuousTurnProvider turnProvider;
     private SnapTurnProvider snapTurnProvider;
-    private Image redVignetteImage;
-    private Image fadeImage;
+    private CanvasGroup fadeScreen;
     private Volume horrorPostFX;
 
     // State
@@ -131,11 +137,14 @@ public class WheelchairFinale : MonoBehaviour
             snapTurnProvider = p.GetComponentInChildren<SnapTurnProvider>();
         }
 
-        GameObject vignette = GameObject.Find(redVignetteName);
-        if (vignette != null) redVignetteImage = vignette.GetComponent<Image>();
-
-        GameObject fade = GameObject.Find(fadeImageName);
-        if (fade != null) fadeImage = fade.GetComponent<Image>();
+        if (AreaTransition.Instance != null)
+        {
+            fadeScreen = AreaTransition.Instance.fadeScreen;
+        }
+        else
+        {
+            Debug.LogError("[FADE] AreaTransition.Instance is NULL - fade won't work!");
+        }
 
         GameObject sp = GameObject.Find(spawnPointName);
         if (sp != null) spawnPoint = sp.transform;
@@ -146,68 +155,12 @@ public class WheelchairFinale : MonoBehaviour
     }
 
     // ============================================================
-    // THE SINGLE SOURCE OF TRUTH FOR ATTACK POSITION
-    // Both calibration AND the real scare call this same method
-    // ============================================================
-    private void PlaceMonsterAtAttackPosition()
-    {
-        if (monster == null || playerCamera == null) return;
-
-        // Get horizontal direction player is looking
-        Vector3 playerForward = playerCamera.forward;
-        playerForward.y = 0;
-        playerForward.Normalize();
-
-        // XZ position: directly in front of player
-        Vector3 targetPos = playerCamera.position + playerForward * attackDistanceFromPlayer;
-
-        // Y position: camera height + offset
-        // attackHeightOffset controls how far BELOW the camera the monster ROOT sits
-        // The monster's head is ABOVE the root, so this offset needs to be negative enough
-        // to account for the monster's height
-        targetPos.y = playerCamera.position.y + attackHeightOffset;
-
-        monster.transform.position = targetPos;
-        FaceMonsterAtPlayer();
-
-        Debug.Log("[ATTACK POS] Camera Y: " + playerCamera.position.y +
-                  " | Monster root Y: " + targetPos.y +
-                  " | Offset: " + attackHeightOffset);
-    }
-
-    // ============================================================
-    // CHASE TARGET (XZ only - we handle Y separately at attack time)
-    // ============================================================
-    private Vector3 CalculateChaseTarget()
-    {
-        if (playerCamera == null) return Vector3.zero;
-
-        Vector3 playerForward = playerCamera.forward;
-        playerForward.y = 0;
-        playerForward.Normalize();
-
-        // Target is in front of player on the ground plane
-        Vector3 chaseTarget = playerCamera.position + playerForward * attackDistanceFromPlayer;
-
-        // Snap XZ to NavMesh so agent can reach it
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(chaseTarget, out hit, 3f, NavMesh.AllAreas))
-        {
-            chaseTarget = hit.position; // NavMesh Y (floor level)
-        }
-
-        return chaseTarget;
-    }
-
-    // ============================================================
     // MAIN SEQUENCE
     // ============================================================
     private IEnumerator PlayScare()
     {
         FindRuntimeReferences();
-        EnsureFadeImageExists();
 
-        if (redVignetteImage != null) redVignetteImage.color = new Color(0.9f, 0, 0, 0);
         if (horrorPostFX != null) horrorPostFX.weight = 0f;
 
         if (monster == null || monsterAnimator == null || playerCamera == null ||
@@ -217,23 +170,32 @@ public class WheelchairFinale : MonoBehaviour
             yield break;
         }
 
-        // === FALSE SAFETY - player thinks they escaped ===
-        Debug.Log("[False Safety] Player thinks they're free");
+        // === PHASE 1: FALSE SAFETY ===
+        if (ambientWind != null)
+        {
+            ambientWind.volume = 0.4f;
+            ambientWind.Play();
+        }
+
         yield return new WaitForSeconds(falseSafetyDuration);
 
-        // === STEP 1: TRAP ===
-        Debug.Log("[Step 1] Crash + lock + flicker + spawn monster");
+        // === PHASE 2: WRONGNESS ===
+        if (ambientWind != null) StartCoroutine(RampVolume(ambientWind, 0f, 0.8f));
+
+        if (subBassRumble != null)
+        {
+            subBassRumble.volume = 0.05f;
+            subBassRumble.Play();
+            StartCoroutine(RampVolume(subBassRumble, 0.4f, 1.5f));
+        }
+
+        yield return new WaitForSeconds(0.8f);
+
+        // === PHASE 3: TRAP ===
         DisableControllers();
 
         if (crashSound != null) crashSound.Play();
-        StartCoroutine(FlickerLightsRedThenOff(flickerDuration));
-
-        // Sub bass starts immediately with the crash
-        if (subBassRumble != null)
-        {
-            subBassRumble.volume = 0.15f;
-            subBassRumble.Play();
-        }
+        StartCoroutine(FlickerLightsCinematic(flickerDuration));
 
         SpawnMonsterAtChosenPoint();
         monster.SetActive(true);
@@ -244,9 +206,7 @@ public class WheelchairFinale : MonoBehaviour
 
         yield return new WaitForSeconds(crashHoldDuration);
 
-        // === STEP 2: HEARTBEAT + DREAD ===
-        Debug.Log("[Step 2] Heartbeat + dread builds");
-
+        // === PHASE 4: HEARTBEAT + DREAD ===
         if (heartbeatAudio != null)
         {
             heartbeatAudio.pitch = 1f;
@@ -257,19 +217,16 @@ public class WheelchairFinale : MonoBehaviour
         if (subBassRumble != null)
             StartCoroutine(RampVolume(subBassRumble, 0.9f, dreadBuildDuration));
 
-        ApplyRedHorrorLighting();
-        StartCoroutine(PulseRedVignette());
+        ApplyNightHorrorLighting();
 
         yield return new WaitForSeconds(dreadBuildDuration);
 
-        // === STEP 3: FADE TO BLACK + ROTATE PLAYER ===
-        Debug.Log("[Step 3] Fade + rotate to face monster");
-        yield return StartCoroutine(FadeColor(new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), fadeOutDuration));
+        // === PHASE 5: FADE TO BLACK + ROTATE ===
+        yield return StartCoroutine(FadeAlpha(0f, 1f, fadeOutDuration));
         RotatePlayerToFaceSpawnPoint();
         yield return new WaitForSeconds(blackHoldDuration);
 
-        // === STEP 4: CHASE BEGINS WHILE STILL BLACK ===
-        Debug.Log("[Step 4] Chase starts while still in black");
+        // === PHASE 6: CHASE BEGINS ===
         monsterAnimator.Play(chaseStateName, 0, 0f);
         if (chaseAudio != null) chaseAudio.Play();
 
@@ -282,98 +239,124 @@ public class WheelchairFinale : MonoBehaviour
         agent.speed = chaseSpeed;
         agent.acceleration = chaseAcceleration;
         agent.angularSpeed = 360f;
+        agent.updateRotation = false;
 
-        // Fade in during chase - monster already moving when revealed
-        StartCoroutine(FadeColor(new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), fadeInDuration));
+        StartCoroutine(FadeAlpha(1f, 0f, fadeInDuration));
 
-        // === STEP 5: NAVMESH CHASE ===
-        // Monster chases to a NavMesh-valid point in front of player
-        // Y will be floor level from NavMesh - that's fine, we fix it at attack time
-        Vector3 chaseTarget = CalculateChaseTarget();
-        Debug.Log("[CHASE] Target: " + chaseTarget);
-
+        // === PHASE 7: NAVMESH CHASE ===
         float timer = 0f;
         while (timer < maxChaseTime)
         {
-            agent.SetDestination(chaseTarget);
+            float distance = Vector3.Distance(monster.transform.position, playerCamera.position);
 
-            float distanceToTarget = Vector3.Distance(
-                new Vector3(monster.transform.position.x, 0, monster.transform.position.z),
-                new Vector3(chaseTarget.x, 0, chaseTarget.z));
-
-            if (distanceToTarget <= 0.5f)
+            // Chase stops a little before you
+            if (distance <= attackTriggerDistance)
             {
-                Debug.Log("[CHASE] Reached attack spot");
                 break;
             }
+
+            Vector3 dirFromPlayerToMonster = monster.transform.position - playerCamera.position;
+            dirFromPlayerToMonster.y = 0;
+
+            if (dirFromPlayerToMonster.sqrMagnitude > 0.01f)
+            {
+                dirFromPlayerToMonster.Normalize();
+            }
+            else
+            {
+                dirFromPlayerToMonster = -playerCamera.forward;
+                dirFromPlayerToMonster.y = 0;
+                dirFromPlayerToMonster.Normalize();
+            }
+
+            Vector3 chaseTarget = playerCamera.position + dirFromPlayerToMonster * attackTriggerDistance;
+            agent.SetDestination(chaseTarget);
+
+            FaceMonsterAtPlayer();
 
             timer += Time.deltaTime;
             yield return null;
         }
 
-        // === BULLETPROOF AGENT STOP ===
+        // === PHASE 8: FAST FADE TO BLACK THEN SETUP ===
+
+        // 1. Fast fade to black to hide the transition
+        yield return StartCoroutine(FadeAlpha(0f, 1f, 0.15f));
+
+        // 2. Shut down the agent COMPLETELY so it stops fighting the animator
         agent.isStopped = true;
         agent.speed = 0;
         agent.velocity = Vector3.zero;
         agent.ResetPath();
         agent.enabled = false;
 
-        // === STEP 6: ATTACK ===
-        Debug.Log("[Step 6] Attack");
-
+        // 3. Stop chase audio
         if (chaseAudio != null && chaseAudio.isPlaying) chaseAudio.Stop();
         if (heartbeatAudio != null && heartbeatAudio.isPlaying) heartbeatAudio.Stop();
         if (subBassRumble != null && subBassRumble.isPlaying) subBassRumble.Stop();
 
-        // FORCE THE MONSTER TO ATTACK POSITION - this is the version that worked!
-        // It snaps to be in front of the player at correct seated height
+        // 4. Snap to attack position and trigger animation while hidden in black
         SnapMonsterToAttackPositionInFrontOfPlayer();
+        monsterAnimator.Play(attackStateName, 0, 0f);
+        monsterAnimator.Update(0f); // Force animator to update instantly so it doesn't glitch
 
-        // INSTANT attack - all same frame as the snap (player won't see the snap because everything happens together)
-        monsterAnimator.CrossFadeInFixedTime(attackStateName, 0f, 0, 0f);
+        // Magic beat of silence in darkness
+        yield return new WaitForSeconds(silenceBeforeAttack);
+
+        // === PHASE 9: REVEAL ATTACK, THEN FADE OUT ===
+
+        // Instantly reveal the attack
+        if (fadeScreen != null) fadeScreen.alpha = 0f;
+
         if (attackBoom != null) attackBoom.Play();
         if (attackScreech != null) attackScreech.Play();
         StartCoroutine(ImpactShake(impactShakeIntensity, 0.2f));
         BhapticsLibrary.Play("hunt_vibration");
 
-        // Cut to black IMMEDIATELY after the snap+attack - hides any visible repositioning
-        yield return StartCoroutine(FadeColor(new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), 0.1f));
+        // Show the attack happening for a fraction of a second
+        yield return new WaitForSeconds(0.4f);
 
-        // === STEP 7: HOLD ON BLACK ===
+        // Fade out to black again for the finale
+        yield return StartCoroutine(FadeAlpha(0f, 1f, 0.15f));
+
+        // === PHASE 10: HOLD ON BLACK ===
         isShakingCamera = false;
+
         if (attackBoom != null) attackBoom.Stop();
         if (attackScreech != null) attackScreech.Stop();
-        if (fadeImage != null) fadeImage.color = new Color(0, 0, 0, 1);
+
+        if (monster != null) monster.SetActive(false);
+
+        if (tinnitusAudio != null)
+        {
+            tinnitusAudio.volume = 0.6f;
+            tinnitusAudio.Play();
+            StartCoroutine(RampVolume(tinnitusAudio, 0f, holdOnBlackDuration));
+        }
 
         yield return new WaitForSeconds(holdOnBlackDuration);
+
+        if (fadeScreen != null) fadeScreen.alpha = 1f;
 
         OnFinaleComplete();
     }
 
     // ============================================================
-    // SNAP MONSTER TO ATTACK POSITION (the version that worked perfectly)
+    // SNAP TO ATTACK POSITION
     // ============================================================
     private void SnapMonsterToAttackPositionInFrontOfPlayer()
     {
         if (monster == null || playerCamera == null) return;
 
-        // Direction the player is currently looking (horizontal only)
         Vector3 playerForward = playerCamera.forward;
         playerForward.y = 0;
         playerForward.Normalize();
 
-        // Position: directly in front of player at attack distance
         Vector3 targetPos = playerCamera.position + playerForward * attackDistanceFromPlayer;
-
-        // Height: camera Y + offset (this is what fixes "attack above head")
         targetPos.y = playerCamera.position.y + attackHeightOffset;
 
         monster.transform.position = targetPos;
         FaceMonsterAtPlayer();
-
-        Debug.Log("[ATTACK SNAP] Camera Y: " + playerCamera.position.y +
-                  " | Monster Y: " + targetPos.y +
-                  " | Offset: " + attackHeightOffset);
     }
 
     // ============================================================
@@ -390,12 +373,8 @@ public class WheelchairFinale : MonoBehaviour
             monster.transform.position = spawnPoint.position;
 
         FaceMonsterAtPlayer();
-        Debug.Log("[SPAWN] Monster placed at " + monster.transform.position);
     }
-    // ============================================================
-    // SNAP MONSTER TO ATTACK POSITION (the version that worked perfectly)
-    // ============================================================
-    
+
     // ============================================================
     // ROTATE PLAYER
     // ============================================================
@@ -428,7 +407,7 @@ public class WheelchairFinale : MonoBehaviour
     }
 
     // ============================================================
-    // CALIBRATION - uses EXACT same method as the real attack
+    // CALIBRATION
     // ============================================================
     private void TestAttackPosition()
     {
@@ -441,9 +420,24 @@ public class WheelchairFinale : MonoBehaviour
 
         SnapMonsterToAttackPositionInFrontOfPlayer();
 
-        Debug.Log("[CALIBRATE] Camera Y: " + playerCamera.position.y +
-                  " | Monster Y: " + monster.transform.position.y +
-                  " | Adjust attackHeightOffset and press C again");
+        Debug.Log("[CALIBRATE] Adjust attackHeightOffset and press C again.");
+    }
+
+    // ============================================================
+    // FADE (using CanvasGroup alpha)
+    // ============================================================
+    private IEnumerator FadeAlpha(float startAlpha, float endAlpha, float duration)
+    {
+        if (fadeScreen == null) yield break;
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            fadeScreen.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsed / duration);
+            yield return null;
+        }
+        fadeScreen.alpha = endAlpha;
     }
 
     // ============================================================
@@ -464,9 +458,9 @@ public class WheelchairFinale : MonoBehaviour
     }
 
     // ============================================================
-    // RED LIGHTING
+    // NIGHT LIGHTING
     // ============================================================
-    private void ApplyRedHorrorLighting()
+    private void ApplyNightHorrorLighting()
     {
         disabledLights.Clear();
 
@@ -480,6 +474,7 @@ public class WheelchairFinale : MonoBehaviour
                 Light[] lights = root.GetComponentsInChildren<Light>(true);
                 foreach (Light l in lights)
                 {
+                    if (l == moonLight) continue;
                     if (!l.enabled) continue;
                     l.enabled = false;
                     disabledLights.Add(l);
@@ -488,56 +483,58 @@ public class WheelchairFinale : MonoBehaviour
         }
 
         RenderSettings.ambientMode = AmbientMode.Flat;
-        RenderSettings.ambientLight = redAmbientColor;
-        RenderSettings.ambientIntensity = redAmbientIntensity;
+        RenderSettings.ambientLight = nightAmbientColor;
+        RenderSettings.ambientIntensity = nightAmbientIntensity;
+
+        if (moonLight != null)
+        {
+            moonLight.enabled = true;
+            moonLight.color = moonLightColor;
+            moonLight.intensity = moonLightIntensity;
+            moonLight.type = LightType.Directional;
+            moonLight.shadows = LightShadows.Soft;
+            moonLight.transform.rotation = Quaternion.Euler(50f, -30f, 0f);
+        }
+
+        if (useNightFog)
+        {
+            RenderSettings.fog = true;
+            RenderSettings.fogMode = FogMode.ExponentialSquared;
+            RenderSettings.fogColor = nightFogColor;
+            RenderSettings.fogDensity = nightFogDensity;
+        }
     }
 
     // ============================================================
     // CINEMATIC FLICKER
     // ============================================================
-    private IEnumerator FlickerLightsRedThenOff(float duration)
+    private IEnumerator FlickerLightsCinematic(float duration)
     {
         if (flickerLights == null || flickerLights.Length == 0) yield break;
 
-        Color[] originalColors = new Color[flickerLights.Length];
         float[] originalIntensities = new float[flickerLights.Length];
-
         for (int i = 0; i < flickerLights.Length; i++)
-        {
             if (flickerLights[i] != null)
-            {
-                originalColors[i] = flickerLights[i].color;
                 originalIntensities[i] = flickerLights[i].intensity;
-            }
-        }
 
-        SetAllLights(false, originalColors, originalIntensities);
-        yield return new WaitForSeconds(0.1f);
-
-        SetAllLights(true, originalColors, originalIntensities);
-        yield return new WaitForSeconds(0.2f);
-
-        for (int i = 0; i < flickerLights.Length; i++)
-        {
-            if (flickerLights[i] == null) continue;
-            flickerLights[i].color = flickerRedColor;
-            flickerLights[i].intensity = originalIntensities[i] * 0.5f;
-        }
+        SetLightsState(false, originalIntensities);
         yield return new WaitForSeconds(0.08f);
 
-        SetAllLights(false, originalColors, originalIntensities);
+        SetLightsState(true, originalIntensities);
+        yield return new WaitForSeconds(0.15f);
+
+        SetLightsState(false, originalIntensities);
         yield return new WaitForSeconds(0.05f);
 
         for (int i = 0; i < flickerLights.Length; i++)
         {
             if (flickerLights[i] == null) continue;
             flickerLights[i].enabled = true;
-            flickerLights[i].color = originalColors[i];
-            flickerLights[i].intensity = originalIntensities[i] * 0.7f;
+            flickerLights[i].intensity = originalIntensities[i] * 0.4f;
         }
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.2f);
 
-        float remaining = duration - 0.58f;
+        float remaining = duration - 0.48f;
         if (remaining > 0)
         {
             float elapsed = 0f;
@@ -546,15 +543,11 @@ public class WheelchairFinale : MonoBehaviour
                 for (int i = 0; i < flickerLights.Length; i++)
                 {
                     if (flickerLights[i] == null) continue;
-                    bool on = Random.value > 0.4f;
+                    bool on = Random.value > 0.5f;
                     flickerLights[i].enabled = on;
-                    if (on)
-                    {
-                        flickerLights[i].color = Random.value > 0.5f ? flickerRedColor : originalColors[i];
-                        flickerLights[i].intensity = originalIntensities[i] * Random.Range(0.3f, 0.8f);
-                    }
+                    if (on) flickerLights[i].intensity = originalIntensities[i] * Random.Range(0.2f, 0.7f);
                 }
-                float wait = Random.Range(0.04f, 0.08f);
+                float wait = Random.Range(0.04f, 0.1f);
                 elapsed += wait;
                 yield return new WaitForSeconds(wait);
             }
@@ -564,39 +557,14 @@ public class WheelchairFinale : MonoBehaviour
             if (flickerLights[i] != null) flickerLights[i].enabled = false;
     }
 
-    private void SetAllLights(bool on, Color[] originalColors, float[] originalIntensities)
+    private void SetLightsState(bool on, float[] originalIntensities)
     {
         for (int i = 0; i < flickerLights.Length; i++)
         {
             if (flickerLights[i] == null) continue;
             flickerLights[i].enabled = on;
-            if (on)
-            {
-                flickerLights[i].color = originalColors[i];
-                flickerLights[i].intensity = originalIntensities[i];
-            }
+            if (on) flickerLights[i].intensity = originalIntensities[i];
         }
-    }
-
-    // ============================================================
-    // VIGNETTE
-    // ============================================================
-    private IEnumerator PulseRedVignette()
-    {
-        if (redVignetteImage == null) yield break;
-
-        Color off = new Color(0.9f, 0f, 0f, 0f);
-        Color on = new Color(0.9f, 0f, 0f, 0.5f);
-
-        float t = 0f;
-        while (isShakingCamera || t < 5f)
-        {
-            t += Time.deltaTime;
-            float pulse = (Mathf.Sin(t * 5f) + 1f) * 0.5f;
-            redVignetteImage.color = Color.Lerp(off, on, pulse);
-            yield return null;
-        }
-        redVignetteImage.color = off;
     }
 
     // ============================================================
@@ -666,44 +634,6 @@ public class WheelchairFinale : MonoBehaviour
         if (moveProvider != null) moveProvider.enabled = false;
         if (turnProvider != null) turnProvider.enabled = false;
         if (snapTurnProvider != null) snapTurnProvider.enabled = false;
-    }
-
-    // ============================================================
-    // FADE
-    // ============================================================
-    private IEnumerator FadeColor(Color startColor, Color endColor, float duration)
-    {
-        if (fadeImage == null) yield break;
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            fadeImage.color = Color.Lerp(startColor, endColor, elapsed / duration);
-            yield return null;
-        }
-        fadeImage.color = endColor;
-    }
-
-    private void EnsureFadeImageExists()
-    {
-        if (fadeImage != null) return;
-
-        GameObject canvasGO = new GameObject("RuntimeFadeCanvas");
-        Canvas canvas = canvasGO.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 32767;
-        canvasGO.AddComponent<CanvasScaler>();
-
-        GameObject imgGO = new GameObject("FadeImage");
-        imgGO.transform.SetParent(canvasGO.transform, false);
-        fadeImage = imgGO.AddComponent<Image>();
-        fadeImage.color = new Color(0, 0, 0, 0);
-
-        RectTransform rt = fadeImage.rectTransform;
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
-        rt.offsetMin = Vector2.zero;
-        rt.offsetMax = Vector2.zero;
     }
 
     private void OnFinaleComplete()
