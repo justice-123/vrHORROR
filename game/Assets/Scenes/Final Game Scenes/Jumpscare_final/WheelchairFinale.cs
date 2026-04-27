@@ -455,6 +455,9 @@ public class WheelchairFinale : MonoBehaviour
     // ============================================================
     // NIGHT LIGHTING
     // ============================================================
+    // ============================================================
+    // NIGHT LIGHTING
+    // ============================================================
     private void ApplyNightHorrorLighting()
     {
         disabledLights.Clear();
@@ -471,8 +474,10 @@ public class WheelchairFinale : MonoBehaviour
                 {
                     if (l == moonLight) continue;
                     if (!l.enabled) continue;
-                    l.enabled = false;
-                    disabledLights.Add(l);
+
+                    // THE FIX: Drop the lights to 15% power instead of turning them off.
+                    // It keeps the 3D depth of the room but makes it terrifyingly dim.
+                    l.intensity *= 0.15f;
                 }
             }
         }
