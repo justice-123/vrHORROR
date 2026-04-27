@@ -235,6 +235,8 @@ public class WheelchairFinale : MonoBehaviour
         StartCoroutine(CameraShakeLoop(chaseShakeIntensity));
 
         agent.enabled = true;
+        yield return null; // THE FIX: Wait 1 frame so the NavMesh actually registers the monster!
+
         agent.isStopped = false;
         agent.speed = chaseSpeed;
         agent.acceleration = chaseAcceleration;
@@ -247,35 +249,23 @@ public class WheelchairFinale : MonoBehaviour
         float timer = 0f;
         while (timer < maxChaseTime)
         {
-            // THE FIX: Calculate distance using Vector2 (X and Z only) to ignore headset height
-            float horizontalDist = Vector2.Distance(
+            // Use 2D distance so height differences don't break the trigger
+            float distance = Vector2.Distance(
                 new Vector2(monster.transform.position.x, monster.transform.position.z),
-                new Vector2(playerCamera.position.x, playerCamera.position.z)
-            );
+                new Vector2(playerCamera.position.x, playerCamera.position.z));
 
-            // Chase stops a little before you
-            if (horizontalDist <= attackTriggerDistance)
+            if (distance <= attackTriggerDistance)
             {
-                Debug.Log("[CHASE] Reached attack distance instantly!");
-                break;
+                break; // Stop slightly before the player
             }
 
-            Vector3 dirFromPlayerToMonster = monster.transform.position - playerCamera.position;
-            dirFromPlayerToMonster.y = 0;
-
-            if (dirFromPlayerToMonster.sqrMagnitude > 0.01f)
+            // THE FIX: Path directly to the floor under the player, not an offset inside a wall
+            Vector3 targetFloorPos = playerCamera.position;
+            if (NavMesh.SamplePosition(playerCamera.position, out NavMeshHit playerHit, 5f, NavMesh.AllAreas))
             {
-                dirFromPlayerToMonster.Normalize();
+                targetFloorPos = playerHit.position;
             }
-            else
-            {
-                dirFromPlayerToMonster = -playerCamera.forward;
-                dirFromPlayerToMonster.y = 0;
-                dirFromPlayerToMonster.Normalize();
-            }
-
-            Vector3 chaseTarget = playerCamera.position + dirFromPlayerToMonster * attackTriggerDistance;
-            agent.SetDestination(chaseTarget);
+            agent.SetDestination(targetFloorPos);
 
             FaceMonsterAtPlayer();
 
@@ -283,12 +273,10 @@ public class WheelchairFinale : MonoBehaviour
             yield return null;
         }
 
-        // === PHASE 8: INSTANT BLACK + SETUP ===
+        // === PHASE 8: FAST FADE TO BLACK THEN SETUP ===
 
-        // 1. SMASH to black RIGHT NOW (no fade - just instant)
-        if (fadeScreen != null) fadeScreen.alpha = 1f;
-        yield return null; // wait one frame for it to render
-        yield return null;
+        // 1. Fast fade to black to hide the transition glitch
+        yield return StartCoroutine(FadeAlpha(0f, 1f, 0.15f));
 
         // 2. Shut down the agent COMPLETELY so it stops fighting the animator
         agent.isStopped = true;
@@ -305,7 +293,7 @@ public class WheelchairFinale : MonoBehaviour
         // 4. Snap to attack position and trigger animation while hidden in black
         SnapMonsterToAttackPositionInFrontOfPlayer();
         monsterAnimator.Play(attackStateName, 0, 0f);
-        monsterAnimator.Update(0f); // Force animator to update instantly so it doesn't glitch
+        monsterAnimator.Update(0f); // Force animator to update instantly
 
         // Magic beat of silence in darkness
         yield return new WaitForSeconds(silenceBeforeAttack);
