@@ -11,6 +11,18 @@ public class KeypadDoor : MonoBehaviour
     private Vector3 defaulRot;
     private Vector3 openRot;
 
+    public AudioClip dooropen;
+    private AudioSource audioSource;
+
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 1f; // 3D sound
+        audioSource.volume = 1f;
+    }
 
 
     void Start()
@@ -31,5 +43,7 @@ public class KeypadDoor : MonoBehaviour
     public void correctCombination()
     {
         open = true;
+
+        audioSource.PlayOneShot(dooropen);
     }
 }

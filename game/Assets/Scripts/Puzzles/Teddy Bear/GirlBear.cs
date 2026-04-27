@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class GirlBear : MonoBehaviour
 {
     public GameObject axePrefab;
     public Animator animator;
     public string animTriggerName = "ReceiveBear";
-    public Transform playerTransform;      
+    public Transform playerTransform;
+
+    [Header("Audio")]
+    public AudioClip receiveBearSound;
+    public AudioClip axeDropSound;
 
     [Header("Float Settings")]
     public float floatHeight = 1.5f;
@@ -17,10 +22,12 @@ public class GirlBear : MonoBehaviour
     public float fadeStartPercent = 0.7f;
 
     [Header("Axe Throw Settings")]
-    public float axeForwardForce = 5f;     
-    public float axeUpForce = 3f;         
-    public float axeSpinSpeed = 720f;     
-    public float axeSpawnBehindDistance = 1.5f; 
+    public float axeForwardForce = 5f;
+    public float axeUpForce = 3f;
+    public float axeSpinSpeed = 720f;
+    public float axeSpawnBehindDistance = 1.5f;
+
+    private AudioSource audioSource;
 
     private bool activated = false;
     private bool floating = false;
@@ -30,9 +37,21 @@ public class GirlBear : MonoBehaviour
     private bool axeSpawned = false;
     private Renderer[] renderers;
 
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 1f; // 3D sound
+        audioSource.volume = 1f;
+        audioSource.minDistance = 1f;
+        audioSource.maxDistance = 10f;
+    }
+
     void Start()
     {
         renderers = GetComponentsInChildren<Renderer>();
+
         if (playerTransform == null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -53,6 +72,9 @@ public class GirlBear : MonoBehaviour
                 animator.SetTrigger(animTriggerName);
 
             InventoryManager.Instance.DeleteCurrentItem();
+
+            PlayReceiveBearSound();
+
             waitTimer = waitAfterAnim;
         }
     }
@@ -94,6 +116,18 @@ public class GirlBear : MonoBehaviour
             Destroy(gameObject);
     }
 
+    void PlayReceiveBearSound()
+    {
+        if (receiveBearSound != null)
+        {
+            audioSource.PlayOneShot(receiveBearSound);
+        }
+        else
+        {
+            Debug.LogWarning("Receive bear sound is missing.", this);
+        }
+    }
+
     void SpawnAxeFromBehindPlayer()
     {
         if (playerTransform == null) return;
@@ -117,13 +151,13 @@ public class GirlBear : MonoBehaviour
         if (col != null)
             col.enabled = false;
 
-
         AxeSpin spin = axe.AddComponent<AxeSpin>();
         spin.spinSpeed = axeSpinSpeed;
         spin.startPos = behindPlayer;
         spin.targetPos = target;
-        spin.flyDuration = 0.8f;   
-        spin.arcHeight = 2.5f;     
+        spin.flyDuration = 0.8f;
+        spin.arcHeight = 2.5f;
+        spin.axeDropSound = axeDropSound;
     }
 
     void SetAlpha(float alpha)
@@ -135,6 +169,7 @@ public class GirlBear : MonoBehaviour
                 Color c = mat.color;
                 c.a = alpha;
                 mat.color = c;
+
                 if (alpha < 1f)
                 {
                     mat.SetFloat("_Surface", 1);
