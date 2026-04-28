@@ -88,6 +88,7 @@ public class GirlBear : MonoBehaviour
         {
             axeSpawned = true;
             SpawnAxeFromBehindPlayer();
+            MySceneManager.Instance.LoadNewScene("Final-monster-game-scene");
         }
 
         if (progress >= 1f)

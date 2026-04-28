@@ -9,17 +9,14 @@ public class MySceneManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
-        
-         LoadNewScene("First Area");
-         LoadNewScene("Lift");
-
-         
-         LoadNewScene("final_jumpscare");
+        LoadNewScene("MainMenu");
+        LoadNewScene("final_jumpscare");
+        LoadNewScene("First Area");
+        LoadNewScene("Lift");
     }
 
     public void LoadNewScene(string sceneName)
@@ -38,6 +35,13 @@ public class MySceneManager : MonoBehaviour
     {
         StartCoroutine(LoadFinalSceneAdditive());
     }
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        DynamicGI.UpdateEnvironment();
+        SceneManager.LoadScene(0);
+    }
+
 
     private IEnumerator LoadFinalSceneAdditive()
     {
