@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class RoomEntranceTrigger : MonoBehaviour
 {
-    public ToiletDoor door; // drag the door in here in the inspector
+    public ToiletDoor door;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-            door.SlamDoor();
+            door.SlamDoor(GetComponent<Collider>()); // passes its own collider to be disabled
     }
 }

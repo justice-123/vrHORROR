@@ -1,6 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+
 
 [RequireComponent(typeof(Rigidbody))]
 public class Floating : MonoBehaviour
@@ -21,6 +22,8 @@ public class Floating : MonoBehaviour
 
     [Header("Grab Sequence")]
     public TeddyGrabSequence grabSequence; // drag TeddyGrabSequence object in inspector
+
+    public ToiletDoor toiletDoor; // drag the door in the inspector
 
     private Vector3 startPos;
     private Rigidbody rb;
@@ -69,6 +72,9 @@ public class Floating : MonoBehaviour
 
         if (grabSequence != null)
             grabSequence.StartSequence();
+
+        if (toiletDoor != null)
+            toiletDoor.OpenAfterDelay(7f); 
     }
 
     void OnDestroy()

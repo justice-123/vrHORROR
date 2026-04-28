@@ -9383,7 +9383,7 @@ PrefabInstance:
       objectReference: {fileID: 427577600}
     - target: {fileID: 7902821567335160169, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: fillRate
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7902821567335160169, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: drainRate

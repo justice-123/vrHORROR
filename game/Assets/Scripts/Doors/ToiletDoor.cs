@@ -6,10 +6,12 @@ public class ToiletDoor : MonoBehaviour
     public bool openPadlock = false;
     private bool open = false;
     public float duration = 3.0f;
+    public float slamDuration = 0.15f;
     public float DoorOpenAngle = 120.0f;
     public AudioSource flushAudio;
-    public AudioSource slamAudio;
+    public AudioClip slamClip;
     public AudioSource roomAmbienceAudio;
+    public AudioSource bgMusic;
 
     private Vector3 defaulRot;
     private Vector3 openRot;
@@ -25,12 +27,14 @@ public class ToiletDoor : MonoBehaviour
     {
         openPadlock = true;
         StartCoroutine(openDoor());
-        StartCoroutine(FadeInAmbience(5f)); // fades in over 5 seconds as door opens
+        StartCoroutine(FadeInAmbience(5f));
         flushAudio.Play();
+        if (bgMusic != null) bgMusic.Stop();
     }
 
-    public void SlamDoor()
+    public void SlamDoor(Collider triggerCollider)
     {
+        triggerCollider.enabled = false;
         StartCoroutine(closeDoor());
     }
 
@@ -42,7 +46,7 @@ public class ToiletDoor : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            transform.rotation = Quaternion.Slerp(startRot, endRot, elapsed);
+            transform.rotation = Quaternion.Slerp(startRot, endRot, elapsed / duration);
             yield return null;
         }
         transform.rotation = endRot;
@@ -53,14 +57,26 @@ public class ToiletDoor : MonoBehaviour
         float elapsed = 0f;
         Quaternion startRot = transform.rotation;
         Quaternion endRot = Quaternion.Euler(defaulRot);
-        while (elapsed < duration)
+        while (elapsed < slamDuration)
         {
             elapsed += Time.deltaTime;
-            transform.rotation = Quaternion.Slerp(startRot, endRot, elapsed);
+            transform.rotation = Quaternion.Slerp(startRot, endRot, elapsed / slamDuration);
             yield return null;
         }
         transform.rotation = endRot;
-        if (slamAudio != null) slamAudio.Play(); // plays when fully shut
+        if (slamClip != null)
+            AudioSource.PlayClipAtPoint(slamClip, transform.position, 1f);
+    }
+
+    public void OpenAfterDelay(float delay)
+    {
+        StartCoroutine(DelayedOpen(delay));
+    }
+
+    IEnumerator DelayedOpen(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        StartCoroutine(openDoor());
     }
 
     IEnumerator FadeInAmbience(float fadeDuration)
