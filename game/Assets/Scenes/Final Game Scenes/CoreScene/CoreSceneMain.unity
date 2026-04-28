@@ -11998,7 +11998,7 @@ PrefabInstance:
       objectReference: {fileID: 1292080283}
     - target: {fileID: 7902821567335160169, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: toxicityLevel
-      value: 50
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2646078432856813370, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
