@@ -11,6 +11,9 @@ public class RespawnManager : MonoBehaviour
 
     [SerializeField] private float fadeDuration = 0.5f;
 
+    [Header("Death Audio")]
+    [SerializeField] private AudioSource tinnitusAudio;
+
     public Transform FirstAreaSpawn { get; private set; }
     public Transform SecondAreaSpawn { get; private set; }
 
@@ -75,6 +78,9 @@ public class RespawnManager : MonoBehaviour
         }
         fade.alpha = 1f;
 
+        // Play tinnitus while screen is black
+        if (tinnitusAudio != null) tinnitusAudio.Play();
+
         // First Area → spawn outside tutorial, O2 = 100
         // Anything else → spawn at lift in Second Area, O2 = 0
         Transform spawnPoint = isFirstArea ? FirstAreaSpawn : SecondAreaSpawn;
@@ -95,7 +101,9 @@ public class RespawnManager : MonoBehaviour
             OxygenTank.Instance.isRefilling = false;
         }
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(2.3f);
+
+        if (tinnitusAudio != null) tinnitusAudio.Stop();
 
         // Fade back in
         elapsed = 0f;

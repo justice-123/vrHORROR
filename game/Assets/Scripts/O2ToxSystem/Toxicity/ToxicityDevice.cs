@@ -6,8 +6,8 @@ public class ToxicityDevice : MonoBehaviour
     [Header("Toxicity Settings")]
     [Range(0f, 100f)]
     public float toxicityLevel = 0f;
-    public float fillRate = 1f;    // units/sec when NOT breathing
-    public float drainRate = 5f;   // units/sec when breathing
+    public float fillRate = 1f;  // units/sec when NOT breathing
+    public float drainRate = 5f;  // units/sec when breathing
 
     [Header("References")]
     public BreathInputML breathInput;
@@ -32,8 +32,6 @@ public class ToxicityDevice : MonoBehaviour
     void UpdateVisuals()
     {
         if (barFill == null) return;
-
-        // fillAmount drives the Filled image — 1 = full bar (100% toxic), 0 = empty
         barFill.fillAmount = toxicityLevel / 100f;
     }
 }
