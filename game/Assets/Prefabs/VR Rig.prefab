@@ -17451,10 +17451,17 @@ MonoBehaviour:
   leftHandNode: 4
   head: {fileID: 6280090011958278503}
   friction: 0.99
+  brakingFriction: 0.75
   maximumMoveSpeed: 1.5
+  pushStrength: 4
   chairVelocity: 0
   turnStrength: 60
   vignette: {fileID: 2460679463734724365}
+  methodChosen: 1
+  blinkerCanvasGroup: {fileID: 0}
+  snapAngle: 45
+  snapFadeSpeed: 0.5
+  snapDeadzone: 0.2
 --- !u!114 &2460679463734724365
 MonoBehaviour:
   m_ObjectHideFlags: 0
