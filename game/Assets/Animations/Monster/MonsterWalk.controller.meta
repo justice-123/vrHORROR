@@ -1,15 +1,8 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:game/Assets/Animations/Monster/MonsterWalk.controller.meta
 guid: 3eddcafcded58bd479488c96a9830805
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0
-========
-guid: 6214ac3799476184192880b76e37bffe
-NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 9100000
->>>>>>>> dev:game/Assets/Animations/Monster/IdleAttack.controller.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 
