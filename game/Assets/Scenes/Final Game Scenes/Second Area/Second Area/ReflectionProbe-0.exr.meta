@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 22b965a6076d99a49861596bbfd4442b
+guid: 42ef79ce5de0d5249b0bb69712b8d876
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -67,16 +67,13 @@ TextureImporter:
   swizzle: 50462976
   cookieLightType: 0
   platformSettings:
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 32
+    maxTextureSize: 2048
     resizeAlgorithm: 0
-<<<<<<<< HEAD:game/Assets/Cosmic_Retro_Laboratory_Props_Demo/Textures/Cosmic_Retro_Laboratory_Props_Emissive.png.meta
-    textureFormat: 3
-========
     textureFormat: -1
     textureCompression: 1
-    compressionQuality: 100
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -88,7 +85,6 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
->>>>>>>> dev:game/Assets/Scenes/Final Game Scenes/Second Area/Second Area/ReflectionProbe-0.exr.meta
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -97,8 +93,8 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Standalone
+  - serializedVersion: 4
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -153,6 +149,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
+    customData: 
     physicsShape: []
     bones: []
     spriteID: 
@@ -162,16 +159,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
     nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 346024
-  packageName: 'FREE Demo: Low Poly Sci-Fi Laboratory / Cosmic Retro'
-  packageVersion: 1.1.0
-  assetPath: Assets/Cosmic_Retro_Laboratory_Props_Demo/Textures/Cosmic_Retro_Laboratory_Props_Emissive.png
-  uploadId: 896120
