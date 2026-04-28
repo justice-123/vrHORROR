@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 1221026402979992434}
   - component: {fileID: 2406131008820168476}
   - component: {fileID: 6918017495425123955}
+  - component: {fileID: 2326020471961868873}
   m_Layer: 0
   m_Name: Axe Interactable
   m_TagString: Untagged
@@ -521,21 +522,9 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: FlickeringLight, Assembly-CSharp
-        m_MethodName: TurnOffLight
+      - m_Target: {fileID: 2326020471961868873}
+        m_TargetAssemblyTypeName: AxeHint, Assembly-CSharp
+        m_MethodName: axeHint
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -647,3 +636,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.04751104, y: 0.23565388, z: 0.82448786}
   m_Center: {x: -0.02159153, y: -0.053370953, z: -0.017199993}
+--- !u!114 &2326020471961868873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7539594985578568455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b342a90f902e1264e8b19dcb99ff39e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintTriggered: 0

@@ -14,6 +14,7 @@ public class UVSwitch : MonoBehaviour
     private bool canToggle = true;
     public float cooldown = 1f;
 
+<<<<<<< HEAD
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -31,6 +32,20 @@ public class UVSwitch : MonoBehaviour
         {
             keypadLight.enableKeyPadLight();
         }
+=======
+    public bool hintTriggered = false;
+
+    public void pressSwitch()
+    {
+
+        if (hintTriggered == false)
+        {
+            hintTriggered = true;
+            HintButton.Instance.changeHintState(HintButton.HintState.ObtainLiftKey);
+        }
+
+        keypadLight.enableKeyPadLight();
+>>>>>>> origin/dev
 
         if (canToggle)
         {
