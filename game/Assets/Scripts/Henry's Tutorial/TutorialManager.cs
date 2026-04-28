@@ -33,6 +33,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject rightControllerTriggerArrow;
     public GameObject leftControllerMenuArrow;
     public GameObject rightControllerAButtonArrow;
+    public Light[] controllerLights;
 
 
     public static TutorialManager Instance { get; private set; }
@@ -246,6 +247,11 @@ public class TutorialManager : MonoBehaviour
 
         rightController.SetActive(false);
         leftController.SetActive(false);
+
+        foreach (Light light in controllerLights)
+        {
+            light.enabled = false;
+        }
     }
 
 }

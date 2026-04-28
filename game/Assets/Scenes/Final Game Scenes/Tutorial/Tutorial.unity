@@ -183,6 +183,11 @@ MonoBehaviour:
   rightControllerTriggerArrow: {fileID: 969016878}
   leftControllerMenuArrow: {fileID: 1383666321}
   rightControllerAButtonArrow: {fileID: 1704130923}
+  controllerLights:
+  - {fileID: 1056540252}
+  - {fileID: 1721024271}
+  - {fileID: 550692894}
+  - {fileID: 905955177}
 --- !u!82 &224483984
 AudioSource:
   m_ObjectHideFlags: 0
