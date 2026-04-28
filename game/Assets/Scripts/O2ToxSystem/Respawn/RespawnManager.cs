@@ -13,6 +13,7 @@ public class RespawnManager : MonoBehaviour
 
     [Header("Death Audio")]
     [SerializeField] private AudioSource tinnitusAudio;
+    [SerializeField] private float audioFadeDuration = 0.5f;
 
     public Transform FirstAreaSpawn { get; private set; }
     public Transform SecondAreaSpawn { get; private set; }
@@ -32,7 +33,6 @@ public class RespawnManager : MonoBehaviour
     {
         if (_isRespawning) return;
 
-        // Check all loaded scenes for First Area
         bool inFirstArea = false;
         for (int i = 0; i < SceneManager.sceneCount; i++)
         {
@@ -68,7 +68,7 @@ public class RespawnManager : MonoBehaviour
             yield break;
         }
 
-        // Fade to black
+        // Fade screen to black
         float elapsed = 0f;
         while (elapsed < fadeDuration)
         {
@@ -78,17 +78,25 @@ public class RespawnManager : MonoBehaviour
         }
         fade.alpha = 1f;
 
-        // Play tinnitus while screen is black
-        if (tinnitusAudio != null) tinnitusAudio.Play();
-
-        // First Area → spawn outside tutorial, O2 = 100
-        // Anything else → spawn at lift in Second Area, O2 = 0
-        Transform spawnPoint = isFirstArea ? FirstAreaSpawn : SecondAreaSpawn;
-
-        if (spawnPoint == null)
+        // Fade tinnitus in
+        if (tinnitusAudio != null)
         {
-            VRDebugHUD.Instance?.SetStatus($"SPAWN NULL - isFirstArea:{isFirstArea}");
+            tinnitusAudio.volume = 0f;
+            tinnitusAudio.Play();
+            elapsed = 0f;
+            while (elapsed < audioFadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                tinnitusAudio.volume = Mathf.Clamp01(elapsed / audioFadeDuration);
+                yield return null;
+            }
+            tinnitusAudio.volume = 1f;
         }
+
+        // Teleport
+        Transform spawnPoint = isFirstArea ? FirstAreaSpawn : SecondAreaSpawn;
+        if (spawnPoint == null)
+            VRDebugHUD.Instance?.SetStatus($"SPAWN NULL - isFirstArea:{isFirstArea}");
         else
         {
             player.position = spawnPoint.position;
@@ -101,11 +109,24 @@ public class RespawnManager : MonoBehaviour
             OxygenTank.Instance.isRefilling = false;
         }
 
+        // Hold in darkness
         yield return new WaitForSeconds(2.3f);
 
-        if (tinnitusAudio != null) tinnitusAudio.Stop();
+        // Fade tinnitus out
+        if (tinnitusAudio != null)
+        {
+            elapsed = 0f;
+            while (elapsed < audioFadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                tinnitusAudio.volume = Mathf.Clamp01(1f - (elapsed / audioFadeDuration));
+                yield return null;
+            }
+            tinnitusAudio.volume = 0f;
+            tinnitusAudio.Stop();
+        }
 
-        // Fade back in
+        // Fade screen back in
         elapsed = 0f;
         while (elapsed < fadeDuration)
         {

@@ -3730,6 +3730,7 @@ MonoBehaviour:
   firstAreaSceneName: First Area
   fadeDuration: 0.5
   tinnitusAudio: {fileID: 1989851831}
+  audioFadeDuration: 0.5
 --- !u!4 &1592465870
 Transform:
   m_ObjectHideFlags: 0
@@ -8669,7 +8670,7 @@ MonoBehaviour:
   minVignetteIntensity: 0.35
   maxVignetteIntensity: 0.9
   vignetteSmoothness: 0.7
-  flashSpeed: 2
+  flashSpeed: 2.5
   maxGrainIntensity: 0.7
   fadeInDuration: 1.5
 --- !u!114 &1730463863
@@ -9170,7 +9171,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 41cf0715beec7714baea6df651708f8b, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -9382,11 +9383,11 @@ PrefabInstance:
       objectReference: {fileID: 427577600}
     - target: {fileID: 7902821567335160169, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: fillRate
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7902821567335160169, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: drainRate
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7902821567335160169, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: breathInput
