@@ -9,6 +9,9 @@ public class Floating : MonoBehaviour
     public float bobHeight = 0.3f;
     public float bobSpeed = 1.5f;
 
+    [Header("Ritual Light")]
+    public Light ritualLight; // drag the child Point Light in here
+
     [Header("Rotation")]
     public float spinSpeed = 45f;
 
@@ -61,8 +64,11 @@ public class Floating : MonoBehaviour
         rb.isKinematic = false;
         rb.useGravity = true;
 
+        if (ritualLight != null)
+            ritualLight.enabled = false;
+
         if (grabSequence != null)
-            grabSequence.StartSequence(); // hands off to the sequence script
+            grabSequence.StartSequence();
     }
 
     void OnDestroy()
