@@ -261825,6 +261825,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2483513361328643670, guid: ee6636602e68c0c4a9fe226aea5e374b, type: 3}
+      propertyPath: DopplerLevel
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2636463864574308053, guid: ee6636602e68c0c4a9fe226aea5e374b, type: 3}
       propertyPath: m_Name
       value: storage_tank_ (1)
