@@ -912,8 +912,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 647792018}
-        m_TargetAssemblyTypeName: ContinueButton, Assembly-CSharp
-        m_MethodName: PressContinueButton
+        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
+        m_MethodName: PressButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2132,8 +2132,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1030547765}
-        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
-        m_MethodName: PressButton
+        m_TargetAssemblyTypeName: LorePlayButton, Assembly-CSharp
+        m_MethodName: OnPlayButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2190,9 +2190,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1030547760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5959de3c973d75f41bd34cb5a3dfacc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 444d40c5da025e44bb80827b5ddd2723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenu: {fileID: 609725102}
+  loreMenu: {fileID: 1307206435}
 --- !u!1 &1103708884
 GameObject:
   m_ObjectHideFlags: 0

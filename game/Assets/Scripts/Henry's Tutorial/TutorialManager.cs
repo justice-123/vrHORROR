@@ -25,6 +25,15 @@ public class TutorialManager : MonoBehaviour
 
     public AudioSource successSound;
 
+    public GameObject leftController;
+    public GameObject rightController;
+    public GameObject leftControllerGripArrow;
+    public GameObject rightControllerGripArrow;
+    public GameObject leftControllerTriggerArrow;
+    public GameObject rightControllerTriggerArrow;
+    public GameObject leftControllerMenuArrow;
+    public GameObject rightControllerAButtonArrow;
+
 
     public static TutorialManager Instance { get; private set; }
 
@@ -49,6 +58,12 @@ public class TutorialManager : MonoBehaviour
     {
         okButtonObject.SetActive(false);
         okButton.onClick.AddListener(() => { okButtonPressed = true; });
+        leftControllerGripArrow.SetActive(false);
+        rightControllerGripArrow.SetActive(false);
+        leftControllerTriggerArrow.SetActive(false);
+        rightControllerTriggerArrow.SetActive(false);
+        leftControllerMenuArrow.SetActive(false);
+        rightControllerAButtonArrow.SetActive(false);
         StartCoroutine(Tutorial());
     }
 
@@ -80,7 +95,10 @@ public class TutorialManager : MonoBehaviour
     public IEnumerator GripTutorial()
     {
         //enable step 1 on the tutorial canvas
-        tutorialText.text = "press down both grip buttons to grab your wheels.";
+        tutorialText.text = "Press down both grip buttons to grab your wheels.";
+
+        leftControllerGripArrow.SetActive(true);
+        rightControllerGripArrow.SetActive(true);
 
         //begin the animation for the controllers
         leftHandAnimator.SetInteger("LeftTutorialStage", 1);
@@ -104,19 +122,14 @@ public class TutorialManager : MonoBehaviour
     public IEnumerator MoveTutorial()
     {
         
-        tutorialText.text = "while gripping, push both controllers forward and let go to move forward.";
+        tutorialText.text = "While gripping, push both controllers forward/backwards and let go to move in that direction.";
 
-        while (MovementController.Instance.currentSpeed <= 0) yield return null;
-
-        successSound.Play();
-        yield return new WaitForSeconds(2f);
-        tutorialText.text = "while gripping, pull both controllers backwards and let go to move backwards.";
-
-        while(MovementController.Instance.currentSpeed >= 0) yield return null;
+        while (MovementController.Instance.currentSpeed == 0) yield return null;
 
         successSound.Play();
         yield return new WaitForSeconds(2f);
-        tutorialText.text = "gripping and not moving your hands will stop the wheelchair.";
+        
+        tutorialText.text = "Gripping and not moving your hands will stop the wheelchair.";
 
         okButtonObject.SetActive(true);
 
@@ -130,7 +143,7 @@ public class TutorialManager : MonoBehaviour
     public IEnumerator TurnTutorial()
     {
         
-        tutorialText.text = "to turn left, push the right controller forward and pull the left controller backwards while gripping. to turn right, do the reverse.";
+        tutorialText.text = "To turn left, push the right controller forward and pull the left controller backwards while gripping. To turn right, do the reverse.";
 
         MovementController.Instance.ListenForMovement();
         while (MovementController.Instance.rotated == false) yield return null;
@@ -144,7 +157,12 @@ public class TutorialManager : MonoBehaviour
         leftHandAnimator.SetInteger("LeftTutorialStage", 2);
         rightHandAnimator.SetInteger("RightTutorialStage", 2);
 
-        tutorialText.text = "press the menu button on your left controller to open the pause menu.";
+        leftControllerGripArrow.SetActive(false);
+        rightControllerGripArrow.SetActive(false);
+        leftControllerMenuArrow.SetActive(true);
+        leftController.transform.eulerAngles = new Vector3(-90, 0, 0);
+
+        tutorialText.text = "Press the menu button on your left controller to open the pause menu.";
         
         leftHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out bool menuButtonPressed);
         while (!menuButtonPressed)
@@ -161,16 +179,25 @@ public class TutorialManager : MonoBehaviour
     {
         okButtonObject.SetActive(true);
 
-        tutorialText.text = "Due to the toxicity of the air, you have an oxygen tank on the left side of your wheelchair.";
+        tutorialText.text = "Due to the toxicity of the air, you must pick up the oxygen tank and blood toxicity meter in the room.";
 
         yield return new WaitUntil(() => okButtonPressed);
         okButtonPressed = false;
 
-        tutorialText.text = "Breathing consumes oxygen. You must refill your tank at oxygen stations, or else you will begin to hallucinate";
+        tutorialText.text = "Breathing consumes oxygen. You can refill your tank in safe zones.";
 
         yield return new WaitUntil(() => okButtonPressed);
         okButtonPressed = false;
 
+        tutorialText.text = "You must breathe to decrease your blood toxicity. If your blood toxicity gets too high, you will begin to hallucinate.";
+
+        yield return new WaitUntil(() => okButtonPressed);
+        okButtonPressed = false;
+
+        tutorialText.text = "If you run out of oxygen, or if your blood toxicity gets too high, you will pass out.";
+
+        yield return new WaitUntil(() => okButtonPressed);
+        okButtonPressed = false;
     }
 
     public IEnumerator ItemInteraction()
@@ -185,7 +212,13 @@ public class TutorialManager : MonoBehaviour
         rightHandAnimator.SetInteger("RightTutorialStage", 3);
         leftHandAnimator.SetInteger("LeftTutorialStage", 3);
 
-        tutorialText.text = "Point your controller at the key and press the trigger to pick it up.";
+        leftControllerMenuArrow.SetActive(false);
+        rightControllerTriggerArrow.SetActive(true);
+        leftControllerTriggerArrow.SetActive(true);
+        leftController.transform.eulerAngles = new Vector3(0, 180, 0);
+        rightController.transform.eulerAngles = new Vector3(0, 180, 0);
+
+        tutorialText.text = "Point your controller at the key, oxygen tank and blood toxicity meter and press the trigger to pick them up.";
         while (!InventoryManager.Instance.itemInInventory()) yield return null;
 
         successSound.Play();
@@ -193,13 +226,26 @@ public class TutorialManager : MonoBehaviour
 
         rightHandAnimator.SetInteger("RightTutorialStage", 4);
         leftHandAnimator.SetInteger("LeftTutorialStage", 4);
-        tutorialText.text = "Press the A button on the right controllerto cycle through your inventory items";
+
+        rightControllerTriggerArrow.SetActive(false);
+        leftControllerTriggerArrow.SetActive(false);
+        rightControllerAButtonArrow.SetActive(true);
+        leftController.transform.eulerAngles = new Vector3(0, 0, 0);
+        rightController.transform.eulerAngles = new Vector3(-90, 0, 0);
+
+        tutorialText.text = "Press the A button on the right controller to cycle through your inventory items";
 
         while (InventoryManager.Instance.getActiveItemID() != "doorkey") yield return null;
 
         successSound.Play();
         yield return new WaitForSeconds(2f);
+
+        rightControllerAButtonArrow.SetActive(false);
+
         tutorialText.text = "You have completed the tutorial. Hold the key to the lock to unlock the door, and continue to escape the hospital!";
+
+        rightController.SetActive(false);
+        leftController.SetActive(false);
     }
 
 }
