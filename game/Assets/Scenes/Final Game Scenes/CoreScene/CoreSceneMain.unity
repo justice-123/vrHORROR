@@ -742,7 +742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d50d3dc1caf12d4d97aa3bb181d4318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toxicityLevel: 100
+  toxicityLevel: 50
   fillRate: 1
   drainRate: 5
   breathInput: {fileID: 1292080283}
