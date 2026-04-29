@@ -108,7 +108,7 @@ public class MonsterAI : MonoBehaviour
 
 
         GameObject OxyTank = GameObject.FindGameObjectWithTag("oxygentank");
-        playerOxygen = OxyTank.GetComponentInChildren<OxygenTank>();
+        playerOxygen = OxyTank.GetComponent<OxygenTank>();
 
         if (playerOxygen == null)
         {
