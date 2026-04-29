@@ -5,7 +5,7 @@ public class TeddyGrabSequence : MonoBehaviour
 {
     [Header("Lights")]
     public Light[] roomLights;
-    public float flickerDelay = 2f; // how many seconds after grab before flicker starts
+    public float flickerDelay = 2f;
 
     [Header("Flickering")]
     public float minFlickerIntensity = 0.05f;
@@ -32,19 +32,28 @@ public class TeddyGrabSequence : MonoBehaviour
 
     IEnumerator GrabSequence()
     {
-        if (roomAmbienceAudio != null)
-            roomAmbienceAudio.Stop();
+        StartCoroutine(FadeOutAmbience(0.8f));
 
-        // lights off
         SetLights(false);
-
-        // start flicker on timer regardless of growl
         StartCoroutine(DelayedFlicker(flickerDelay));
 
-        // growl plays after 2 seconds of silence
         yield return new WaitForSeconds(2f);
         if (growlAudioSource != null)
             growlAudioSource.Play();
+    }
+
+    IEnumerator FadeOutAmbience(float fadeDuration)
+    {
+        float startVolume = roomAmbienceAudio.volume;
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            roomAmbienceAudio.volume = Mathf.Lerp(startVolume, 0f, elapsed / fadeDuration);
+            yield return null;
+        }
+        roomAmbienceAudio.volume = 0f;
+        roomAmbienceAudio.Stop();
     }
 
     IEnumerator DelayedFlicker(float delay)

@@ -216849,7 +216849,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uvLamp: {fileID: 1253937836}
-  keypadLight: {fileID: 0}
   cooldown: 1
   hintTriggered: 0
 --- !u!1001 &1951464988
