@@ -6,7 +6,7 @@ public class HallucinationAudio : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] clips;
     public float activateAbove = 40f;
-    public float minDelay = 5f;
+    public float minDelay = 2f;
     public float maxDelay = 15f;
 
     float timer;
