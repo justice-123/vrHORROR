@@ -9,17 +9,14 @@ public class MySceneManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
-        
-         LoadNewScene("First Area");
-         LoadNewScene("Lift");
-
-         
-        
+        LoadNewScene("MainMenu");
+        //LoadNewScene("final_jumpscare");
+        LoadNewScene("First Area");
+        LoadNewScene("Lift");
     }
 
     public void LoadNewScene(string sceneName)

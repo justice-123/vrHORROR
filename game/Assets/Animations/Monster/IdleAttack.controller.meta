@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:game/Assets/Animations/Monster/IdleAttack.controller.meta
 guid: 6214ac3799476184192880b76e37bffe
+========
+guid: 5b18f23348338694baebaf7131948462
+>>>>>>>> dev:game/Assets/Animations/Gril.controller.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 9100000

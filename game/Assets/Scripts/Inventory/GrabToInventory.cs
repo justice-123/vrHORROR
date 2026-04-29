@@ -21,7 +21,7 @@ public class GrabToInventory : MonoBehaviour
         InventoryItem item = args.interactableObject.transform.GetComponent<InventoryItem>();
         if (item != null)
         {
-            InventoryManager.Instance.StoreItem(item);
+            InventoryManager.Instance.StoreItem(item, args.interactorObject);
         }
     }
 }

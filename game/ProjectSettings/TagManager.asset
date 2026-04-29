@@ -14,6 +14,8 @@ TagManager:
   - Lift
   - DoorFragment
   - DoorPiece
+  - Wood
+  - oxygentank
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - ShadowOnlys
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 

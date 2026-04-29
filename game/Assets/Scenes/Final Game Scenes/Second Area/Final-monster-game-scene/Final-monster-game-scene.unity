@@ -200,12 +200,12 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 25
   Pan2D: 0
@@ -242,7 +242,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -272,7 +272,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -329,12 +329,12 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 25
   Pan2D: 0
@@ -371,7 +371,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -401,7 +401,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.33333334
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 6ac8898ba74dd5f45b5c0e2cb5bf9c37, type: 2}
   m_BuildHeightMesh: 0
@@ -587,26 +587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4167d4c3ce36d48a8aa062e699009a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  leftHand: {fileID: 0}
-  rightHand: {fileID: 0}
-  viewAngle: 30
-  viewRange: 25
-  moveThreshold: 0.25
   eyeHeight: 0.5
-  deadzone: 0.001
-  personalSpace: 2
-  heartbeatClip: heartbeat_buzz
-  huntClip: hunt_vibration
-  monster_slash: monster-slash
-  chaseDelay: 0.25
-  movementTimer: 0
-  chaseSpeed: 4
-  pauseDuration: 1.7
-  pauseTimer: 0
-  isPausing: 0
   stuckThreshold: 1
-  stuckTimer: 0
   movementSource: {fileID: 121871119}
   vocalSource: {fileID: 842170638}
   walkClip: {fileID: 8300000, guid: 178e2f77b78e22348bd01e999acecf39, type: 3}
@@ -614,18 +596,6 @@ MonoBehaviour:
   attackClip: {fileID: 8300000, guid: 5a0fc6b788773b944b19c5d83ed9c129, type: 3}
   attackVolumeObj: {fileID: 1714415148}
   blackoutVolumeObj: {fileID: 53285893}
-  attackVolume: {fileID: 0}
-  blackoutVolume: {fileID: 0}
-  agent: {fileID: 0}
-  anim: {fileID: 0}
-  lastPlayerPos: {x: 0, y: 0, z: 0}
-  lastLeftPos: {x: 0, y: 0, z: 0}
-  lastRightPos: {x: 0, y: 0, z: 0}
-  hapticTimer: 0
-  isGameOver: 0
-  isAttacking: 0
-  initialized: 0
-  playerOxygen: {fileID: 0}
 --- !u!195 &1815568901
 NavMeshAgent:
   m_ObjectHideFlags: 0

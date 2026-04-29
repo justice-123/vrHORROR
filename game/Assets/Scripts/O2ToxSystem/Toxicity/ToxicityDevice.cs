@@ -1,60 +1,66 @@
 using UnityEngine;
+using UnityEngine.UI;
+using static Oculus.Interaction.Context;
 
 public class ToxicityDevice : MonoBehaviour
 {
-    [Header("Toxicity")]
+    [Header("Toxicity Settings")]
     [Range(0f, 100f)]
     public float toxicityLevel = 0f;
-
-    public float fillRate = 1f;   // increases when NOT breathing
-    public float drainRate = 5f;  // decreases when breathing
+    public float fillRate = 1f;
+    public float drainRate = 5f;
+    public bool disabled = false;
 
     [Header("References")]
     public BreathInputML breathInput;
 
     [Header("Visuals")]
-    public Renderer lightRenderer;
+    public Image barFill;
 
-    public Color startColor = Color.white;
-    public Color endColor = Color.green;
+    public static ToxicityDevice Instance { get; private set; }
 
-    [Header("Emission")]
-    public float emissionStrength = 1.5f;
+    private bool[] toxAnnounced = new bool[4]; // 75, 50, 20, 10 (going up)
+
+    void CheckToxAnnouncements()
+    {
+        float[] thresholds = { 10f, 20f, 50f, 75f };
+        string[] messages = { "Toxicity at 10 percent", "Toxicity at 20 percent", "Toxicity at 50 percent", "Warning Toxicity at 75 percent" };
+
+        for (int i = 0; i < thresholds.Length; i++)
+        {
+            if (!toxAnnounced[i] && toxicityLevel >= thresholds[i])
+            {
+                toxAnnounced[i] = true;
+            }
+        }
+    }
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Update()
     {
-        if (breathInput != null && breathInput.isBreathing)
-        {
+        if (disabled) return;
+
+        bool currentlyBreathing = breathInput != null && breathInput.isBreathing;
+
+        if (currentlyBreathing)
             toxicityLevel -= drainRate * Time.deltaTime;
-        }
         else
-        {
             toxicityLevel += fillRate * Time.deltaTime;
-        }
 
         toxicityLevel = Mathf.Clamp(toxicityLevel, 0f, 100f);
-
         UpdateVisuals();
     }
 
     void UpdateVisuals()
     {
-        if (lightRenderer == null) return;
+        if (barFill == null) return;
+        barFill.fillAmount = toxicityLevel / 100f;
 
-        float t = toxicityLevel / 100f;
-        Color currentColor = Color.Lerp(startColor, endColor, t);
-
-        Material mat = lightRenderer.material;
-
-        if (mat.HasProperty("_BaseColor"))
-            mat.SetColor("_BaseColor", currentColor);
-        else
-            mat.color = currentColor;
-
-        if (mat.HasProperty("_EmissionColor"))
-        {
-            mat.EnableKeyword("_EMISSION");
-            mat.SetColor("_EmissionColor", currentColor * emissionStrength);
-        }
+        CheckToxAnnouncements();
     }
+
 }

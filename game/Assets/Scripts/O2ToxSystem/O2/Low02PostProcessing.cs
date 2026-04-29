@@ -19,44 +19,61 @@ public class LowO2PostProcessing : MonoBehaviour
     [Header("Pulse")]
     public float flashSpeed = 3f;
 
-    private Vignette vignette;
+    [Header("Film Grain")]
+    public float maxGrainIntensity = 1f;
+
+    [Header("Fade In")]
+    public float fadeInDuration = 1.5f;
+
+    private Vignette _vignette;
+    private FilmGrain _filmGrain;
+    private float _fadeT = 0f;
 
     void Start()
     {
-        if (horrorVolume == null)
+        if (horrorVolume == null) { Debug.LogError("LowO2PostProcessing: No Volume assigned."); return; }
+
+        horrorVolume.profile.TryGet(out _vignette);
+        horrorVolume.profile.TryGet(out _filmGrain);
+
+        if (_vignette != null)
         {
-            Debug.LogError("LowO2PostProcessing: No Volume assigned.");
-            return;
+            _vignette.color.overrideState = true;
+            _vignette.intensity.overrideState = true;
+            _vignette.smoothness.overrideState = true;
+            _vignette.color.value = vignetteColor;
+            _vignette.smoothness.value = vignetteSmoothness;
+            _vignette.intensity.value = 0f;
         }
 
-        if (!horrorVolume.profile.TryGet(out vignette))
+        if (_filmGrain != null)
         {
-            Debug.LogError("LowO2PostProcessing: No Vignette override found on the assigned Volume profile.");
-            return;
+            _filmGrain.intensity.overrideState = true;
+            _filmGrain.response.overrideState = true;
+            _filmGrain.intensity.value = 0f;
+            _filmGrain.response.value = 0.8f;
         }
-
-        vignette.color.overrideState = true;
-        vignette.intensity.overrideState = true;
-        vignette.smoothness.overrideState = true;
-
-        vignette.color.value = vignetteColor;
-        vignette.smoothness.value = vignetteSmoothness;
-        vignette.intensity.value = 0f;
     }
 
     void Update()
     {
-        if (tank == null || vignette == null)
-            return;
+        if (tank == null) return;
 
         if (tank.oxygenLevel <= dangerThreshold)
         {
+            _fadeT = Mathf.MoveTowards(_fadeT, 1f, Time.deltaTime / fadeInDuration);
+
             float pulse = (Mathf.Sin(Time.time * flashSpeed) + 1f) * 0.5f;
-            vignette.intensity.value = Mathf.Lerp(minVignetteIntensity, maxVignetteIntensity, pulse);
+            float vignetteIntensity = Mathf.Lerp(minVignetteIntensity, maxVignetteIntensity, pulse);
+
+            if (_vignette != null) _vignette.intensity.value = Mathf.Lerp(0f, vignetteIntensity, _fadeT);
+            if (_filmGrain != null) _filmGrain.intensity.value = Mathf.Lerp(0f, maxGrainIntensity, _fadeT);
         }
         else
         {
-            vignette.intensity.value = 0f;
+            _fadeT = 0f;
+            if (_vignette != null) _vignette.intensity.value = 0f;
+            if (_filmGrain != null) _filmGrain.intensity.value = 0f;
         }
     }
 }
