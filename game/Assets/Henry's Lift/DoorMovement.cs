@@ -43,8 +43,8 @@ public class DoorMovement : MonoBehaviour
 
     public void crackDoorsOpen()
     {
-        StartCoroutine(moveDoor(leftDoor, -0.3f, 1.5f));
-        StartCoroutine(moveDoor(rightDoor, 0.3f, 1.5f));
+        StartCoroutine(moveDoor(leftDoor, -0.9f, 1.5f));
+        StartCoroutine(moveDoor(rightDoor, 0.9f, 1.5f));
         doorOpen.Play();
     }
 
