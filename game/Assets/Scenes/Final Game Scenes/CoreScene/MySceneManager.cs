@@ -14,7 +14,6 @@ public class MySceneManager : MonoBehaviour
     void Start()
     {
         LoadNewScene("MainMenu");
-        LoadNewScene("final_jumpscare");
         LoadNewScene("First Area");
         LoadNewScene("Lift");
     }
@@ -31,10 +30,7 @@ public class MySceneManager : MonoBehaviour
         SceneManager.UnloadSceneAsync(sceneName);
     }
 
-    public void TransitionToFinalScene(string sceneToUnload)
-    {
-        StartCoroutine(LoadFinalSceneAdditive());
-    }
+    
     public void RestartGame()
     {
         Time.timeScale = 1f;
@@ -43,17 +39,4 @@ public class MySceneManager : MonoBehaviour
     }
 
 
-    private IEnumerator LoadFinalSceneAdditive()
-    {
-        Debug.Log("Loading final_jumpscare on top of Second Area");
-
-        AsyncOperation load = SceneManager.LoadSceneAsync("final_jumpscare", LoadSceneMode.Additive);
-
-        while (!load.isDone)
-        {
-            yield return null;
-        }
-
-        Debug.Log("final_jumpscare loaded successfully!");
-    }
 }
