@@ -31,7 +31,6 @@ public class ToxicityDevice : MonoBehaviour
             if (!toxAnnounced[i] && toxicityLevel >= thresholds[i])
             {
                 toxAnnounced[i] = true;
-                TTSManager.Instance?.Speak(messages[i]);
             }
         }
     }

@@ -102,7 +102,6 @@ public class OxygenManager : MonoBehaviour
             if (!o2Announced[i] && o2 <= thresholds[i])
             {
                 o2Announced[i] = true;
-                TTSManager.Instance?.Speak(messages[i]);
             }
         }
     }
