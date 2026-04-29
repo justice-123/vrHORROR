@@ -8,10 +8,11 @@ public class OxygenManager : MonoBehaviour
     public BreathInputML breathInput;
     public float drainRate = 5f;
     public float refillRate = 25f;
+    public bool disabled = false;
 
     [Header("Audio")]
     public AudioSource audioSource;
-    public AudioSource chokingAudio;  // drag your choking sound in here
+    public AudioSource chokingAudio;
 
     private bool canPlayBreathAudio = false;
     private bool _deathTriggered = false;
@@ -19,6 +20,8 @@ public class OxygenManager : MonoBehaviour
 
     void Update()
     {
+        if (disabled) return;
+
         if (OxygenTank.Instance == null)
         {
             VRDebugHUD.Instance?.SetStatus("OxygenTank NULL - returning");
@@ -28,7 +31,6 @@ public class OxygenManager : MonoBehaviour
         if (OxygenTank.Instance.oxygenLevel > 0f)
             _deathTriggered = false;
 
-        // Reset choking flag once oxygen recovers above 5%
         if (OxygenTank.Instance.oxygenLevel > 5f)
         {
             _chokingTriggered = false;
@@ -48,7 +50,6 @@ public class OxygenManager : MonoBehaviour
         {
             OxygenTank.Instance.oxygenLevel = Mathf.Clamp(
                 OxygenTank.Instance.oxygenLevel - drainRate * Time.deltaTime, 0f, 100f);
-
             if (canPlayBreathAudio)
             {
                 if (audioSource != null)
@@ -65,7 +66,6 @@ public class OxygenManager : MonoBehaviour
                 audioSource.Stop();
         }
 
-        // Choking at 5%
         if (OxygenTank.Instance.oxygenLevel <= 5f && !_chokingTriggered)
         {
             _chokingTriggered = true;
@@ -76,7 +76,6 @@ public class OxygenManager : MonoBehaviour
             }
         }
 
-        // Death at 0%
         if (OxygenTank.Instance.oxygenLevel <= 0f && !_deathTriggered)
         {
             _deathTriggered = true;

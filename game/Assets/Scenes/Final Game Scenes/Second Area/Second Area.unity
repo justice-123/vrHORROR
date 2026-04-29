@@ -263108,9 +263108,14 @@ PrefabInstance:
       propertyPath: m_Splines.Array.data[0].m_Knots.Array.data[0].Position.x
       value: -0.49918664
       objectReference: {fileID: 0}
+    - target: {fileID: 5877735916300779642, guid: ee6636602e68c0c4a9fe226aea5e374b, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4771210736821108052, guid: ee6636602e68c0c4a9fe226aea5e374b, type: 3}
+    - {fileID: 2053683938980212145, guid: ee6636602e68c0c4a9fe226aea5e374b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee6636602e68c0c4a9fe226aea5e374b, type: 3}

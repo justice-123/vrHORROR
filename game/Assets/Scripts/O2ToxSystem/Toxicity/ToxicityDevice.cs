@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static Oculus.Interaction.Context;
 
 public class ToxicityDevice : MonoBehaviour
 {
     [Header("Toxicity Settings")]
     [Range(0f, 100f)]
     public float toxicityLevel = 0f;
-    public float fillRate = 1f;  // units/sec when NOT breathing
-    public float drainRate = 5f;  // units/sec when breathing
+    public float fillRate = 1f;
+    public float drainRate = 5f;
+    public bool disabled = false;
 
     [Header("References")]
     public BreathInputML breathInput;
@@ -15,8 +17,17 @@ public class ToxicityDevice : MonoBehaviour
     [Header("Visuals")]
     public Image barFill;
 
+    public static ToxicityDevice Instance { get; private set; }
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void Update()
     {
+        if (disabled) return;
+
         bool currentlyBreathing = breathInput != null && breathInput.isBreathing;
 
         if (currentlyBreathing)
@@ -25,7 +36,6 @@ public class ToxicityDevice : MonoBehaviour
             toxicityLevel += fillRate * Time.deltaTime;
 
         toxicityLevel = Mathf.Clamp(toxicityLevel, 0f, 100f);
-
         UpdateVisuals();
     }
 
