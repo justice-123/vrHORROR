@@ -6,7 +6,7 @@ public class ToiletDoor : MonoBehaviour
     public bool openPadlock = false;
     private bool open = false;
     public float duration = 3.0f;
-    public float slamDuration = 0.15f;
+    public float slamDuration = 0.7f;
     public float DoorOpenAngle = 120.0f;
     public AudioSource flushAudio;
     public AudioClip slamClip;
