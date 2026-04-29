@@ -41,6 +41,8 @@ public class WheelchairFinale : MonoBehaviour
     [SerializeField] private AudioSource ambientWind;
     [Tooltip("Optional: tinnitus ringing after the attack.")]
     [SerializeField] private AudioSource tinnitusAudio;
+    [SerializeField] private AudioSource beepAudio;
+
 
     [Header("=== TIMING ===")]
     [SerializeField] private float falseSafetyDuration = 4f;
@@ -343,11 +345,24 @@ public class WheelchairFinale : MonoBehaviour
 
         if (monster != null) monster.SetActive(false);
 
+        yield return new WaitForSeconds(1f);
+        if (beepAudio != null)
+        {
+            GameObject beepObj = new GameObject("BeepSound");
+            beepObj.transform.position = playerCamera.position;
+            AudioSource src = beepObj.AddComponent<AudioSource>();
+            src.clip = beepAudio.clip;
+            src.volume = beepAudio.volume;
+            src.spatialBlend = 0f;
+            src.Play();
+            Destroy(beepObj, beepAudio.clip.length + 0.1f);
+        }
+
         if (tinnitusAudio != null)
         {
             tinnitusAudio.volume = 0.6f;
             tinnitusAudio.Play();
-            StartCoroutine(RampVolume(tinnitusAudio, 0f, holdOnBlackDuration));
+            //StartCoroutine(RampVolume(tinnitusAudio, 0f, holdOnBlackDuration));
         }
 
         yield return new WaitForSeconds(holdOnBlackDuration);
