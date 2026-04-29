@@ -105,7 +105,7 @@ public class RespawnManager : MonoBehaviour
 
         if (OxygenTank.Instance != null)
         {
-            OxygenTank.Instance.oxygenLevel = isFirstArea ? 100f : 0f;
+            OxygenTank.Instance.oxygenLevel = isFirstArea ? 100f : 10f;
             OxygenTank.Instance.isRefilling = false;
         }
 
