@@ -28,7 +28,7 @@ public class PadLockPassword : MonoBehaviour
             // Here enter the event for the correct combination
             Debug.Log("Password correct");
             
-            toiletDoor.PadlockOpen();
+            //toiletDoor.PadlockOpen();
             mainCollider.enabled = true;
             if (rb != null)
             {
