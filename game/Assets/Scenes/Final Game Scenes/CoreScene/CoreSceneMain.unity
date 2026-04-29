@@ -12709,6 +12709,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ox_tank
       objectReference: {fileID: 0}
+    - target: {fileID: 7921472147264483783, guid: 2f3b2e90d64d8b04e8ea4ccc0544a07e, type: 3}
+      propertyPath: m_TagString
+      value: oxygentank
+      objectReference: {fileID: 0}
     - target: {fileID: 8942254830204261444, guid: 2f3b2e90d64d8b04e8ea4ccc0544a07e, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 2.7

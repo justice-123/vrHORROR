@@ -107,7 +107,8 @@ public class MonsterAI : MonoBehaviour
         rightHandHap = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
 
 
-        playerOxygen = player.root.GetComponentInChildren<OxygenTank>();
+        GameObject OxyTank = GameObject.FindGameObjectWithTag("oxygentank");
+        playerOxygen = OxyTank.GetComponentInChildren<OxygenTank>();
 
         if (playerOxygen == null)
         {
