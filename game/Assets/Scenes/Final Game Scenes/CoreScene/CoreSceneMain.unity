@@ -7540,7 +7540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breathInput: {fileID: 1292080283}
-  drainRate: 5
+  drainRate: 3
   refillRate: 25
   disabled: 0
   audioSource: {fileID: 1508108605}
@@ -12577,7 +12577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d50d3dc1caf12d4d97aa3bb181d4318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toxicityLevel: 50
+  toxicityLevel: 35
   fillRate: 2
   drainRate: 10
   disabled: 0
