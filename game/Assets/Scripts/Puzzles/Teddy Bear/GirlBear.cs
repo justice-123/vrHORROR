@@ -117,7 +117,11 @@ public class GirlBear : MonoBehaviour
     IEnumerator PauseBeforeAxe()
     {
         if (pauseAudio != null)
+        {
+            pauseAudio.volume = 2f;
             pauseAudio.Play();
+        }
+         
 
         float clipLength = pauseAudio != null && pauseAudio.clip != null ? pauseAudio.clip.length : 0f;
         yield return new WaitForSeconds(clipLength + pauseBeforeAxe);

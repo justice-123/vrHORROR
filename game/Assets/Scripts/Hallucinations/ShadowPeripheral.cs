@@ -19,6 +19,8 @@ public class ShadowPeripheral : MonoBehaviour
     [Header("Audio")]
     public AudioSource crawlSource;
     public AudioClip crawlClip;
+    public AudioClip appearClip;
+    public float appearVolume = 1f;
 
     Transform player;
     Vector3 startPos;
@@ -27,6 +29,7 @@ public class ShadowPeripheral : MonoBehaviour
     float respawnTimer;
     Vector3 lastPlayerPos;
     bool playerMoving;
+    bool wasVisible = false;
 
     void Start()
     {
@@ -72,6 +75,10 @@ public class ShadowPeripheral : MonoBehaviour
         {
             currentIntensity = Mathf.MoveTowards(currentIntensity, 0f, fadeSpeed * Time.deltaTime);
             spotLight.intensity = currentIntensity;
+
+            bool isVisible = currentIntensity > 0f;
+            wasVisible = isVisible;
+
             if (currentIntensity <= 0f)
             {
                 if (monsterAnimator != null)
@@ -99,6 +106,10 @@ public class ShadowPeripheral : MonoBehaviour
             respawnTimer -= Time.deltaTime;
             currentIntensity = Mathf.MoveTowards(currentIntensity, 0f, fadeSpeed * Time.deltaTime);
             spotLight.intensity = currentIntensity;
+
+            bool isVisible = currentIntensity > 0f;
+            wasVisible = isVisible;
+
             if (currentIntensity <= 0f)
             {
                 if (monsterAnimator != null)
@@ -139,6 +150,14 @@ public class ShadowPeripheral : MonoBehaviour
         float targetIntensity = looking ? 0f : baseIntensity;
         currentIntensity = Mathf.MoveTowards(currentIntensity, targetIntensity, fadeSpeed * Time.deltaTime);
         spotLight.intensity = currentIntensity;
+
+        // detect shadow appearing
+        bool isVisibleNow = currentIntensity > 0f;
+        if (isVisibleNow && !wasVisible && appearClip != null)
+        {
+            AudioSource.PlayClipAtPoint(appearClip, transform.position, appearVolume);
+        }
+        wasVisible = isVisibleNow;
 
         if (currentIntensity <= 0f)
         {
