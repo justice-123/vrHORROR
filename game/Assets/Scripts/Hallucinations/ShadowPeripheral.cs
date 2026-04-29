@@ -114,6 +114,7 @@ public class ShadowPeripheral : MonoBehaviour
         Vector3 shadowPoint;
         RaycastHit hit;
         if (Physics.Raycast(spotLight.transform.position, spotLight.transform.forward, out hit, Mathf.Infinity, layerMask))
+           
             shadowPoint = hit.point;
         else
             shadowPoint = spotLight.transform.position + spotLight.transform.forward * 5f;
@@ -123,6 +124,8 @@ public class ShadowPeripheral : MonoBehaviour
         Vector3 playerForward = player.forward;
         playerForward.y = 0f;
         float angle = Vector3.Angle(playerForward, toShadow);
+
+        Debug.LogWarning("Raycast hit: " + (hit.collider != null ? hit.collider.gameObject.name : "nothing") + " angle: " + angle);
 
         bool looking = angle < hideAngle;
 
