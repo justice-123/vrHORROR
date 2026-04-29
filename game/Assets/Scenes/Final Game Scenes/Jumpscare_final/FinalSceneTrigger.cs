@@ -1,21 +1,16 @@
 using UnityEngine;
 
-public class FinalSceneTrigger : MonoBehaviour
+public class JumpscareLoader : MonoBehaviour
 {
-    public string sceneToUnload = "Second Area";
-    private bool hasTriggered = false;
+    private bool hasLoaded = false;
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger entered by: " + other.name + " with tag: " + other.tag);
+        if (hasLoaded) return;
+        if (!other.CompareTag("Player")) return;
 
-        if (hasTriggered) return;
-
-        if (other.CompareTag("Player"))
-        {
-            hasTriggered = true;
-            Debug.Log("Player crossed doorway - loading final_jumpscare!");
-            MySceneManager.Instance.TransitionToFinalScene(sceneToUnload);
-        }
+        hasLoaded = true;
+        Debug.Log("Player crossed loader - loading final_jumpscare");
+        MySceneManager.Instance.LoadNewScene("final_jumpscare");
     }
 }
