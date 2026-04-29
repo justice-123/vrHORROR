@@ -25,9 +25,15 @@ public class TutorialDoor : MonoBehaviour
     public void unlockLock()
     {
         open = true;
-        
+
+        // Re-enable oxygen and toxicity when tutorial ends
+        OxygenManager.Instance.disabled = false;
+        ToxicityDevice.Instance.disabled = false;
+
+
         audioSource.Play();
         StartCoroutine(openDoor());
+
         
     }
 

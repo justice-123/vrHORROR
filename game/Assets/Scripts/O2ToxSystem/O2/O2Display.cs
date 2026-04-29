@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
@@ -14,7 +14,7 @@ public class O2Display : MonoBehaviour
     public Color dangerColor = Color.red;
 
     [Header("Thresholds")]
-    public float warningThreshold = 49f;
+    public float warningThreshold = 50f;
     public float dangerThreshold = 15f;
 
     [Header("Flashing")]
@@ -31,49 +31,34 @@ public class O2Display : MonoBehaviour
 
         // Update text
         if (oxygenText != null)
-        {
             oxygenText.text = Mathf.RoundToInt(oxygen) + "%";
-        }
 
-        // Update bar amount
+        // Update bar fill amount
         if (oxygenBarFill != null)
-        {
             oxygenBarFill.fillAmount = normalizedOxygen;
-        }
 
-        // Update colours
-        if (oxygen <= dangerThreshold)
+        // Smooth colour: green → orange between 100% and warningThreshold
+        //                orange → red   between warningThreshold and dangerThreshold
+        Color targetColor;
+        if (oxygen > warningThreshold)
         {
-            float alpha = Mathf.Lerp(
-                lowAlpha,
-                highAlpha,
-                (Mathf.Sin(Time.time * flashSpeed) + 1f) * 0.5f
-            );
-
-            Color flashingRed = dangerColor;
-            flashingRed.a = alpha;
-
-            if (oxygenText != null)
-                oxygenText.color = flashingRed;
-
-            if (oxygenBarFill != null)
-                oxygenBarFill.color = flashingRed;
+            float t = 1f - ((oxygen - warningThreshold) / (100f - warningThreshold));
+            targetColor = Color.Lerp(normalColor, warningColor, t);
         }
-        else if (oxygen <= warningThreshold)
+        else if (oxygen > dangerThreshold)
         {
-            if (oxygenText != null)
-                oxygenText.color = warningColor;
-
-            if (oxygenBarFill != null)
-                oxygenBarFill.color = warningColor;
+            float t = 1f - ((oxygen - dangerThreshold) / (warningThreshold - dangerThreshold));
+            targetColor = Color.Lerp(warningColor, dangerColor, t);
         }
         else
         {
-            if (oxygenText != null)
-                oxygenText.color = normalColor;
-
-            if (oxygenBarFill != null)
-                oxygenBarFill.color = normalColor;
+            // Below danger threshold — flash red
+            float alpha = Mathf.Lerp(lowAlpha, highAlpha, (Mathf.Sin(Time.time * flashSpeed) + 1f) * 0.5f);
+            targetColor = dangerColor;
+            targetColor.a = alpha;
         }
+
+        if (oxygenText != null) oxygenText.color = targetColor;
+        if (oxygenBarFill != null) oxygenBarFill.color = targetColor;
     }
 }
