@@ -14429,8 +14429,6 @@ MonoBehaviour:
   axeSpawnBehindDistance: 1.5
   pauseAudio: {fileID: 1536373799}
   pauseBeforeAxe: 2
-  eyeLight: {fileID: 290684866}
-  eyeFlashSpeed: 0.15
 --- !u!1001 &122277235
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -259778,7 +259776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2054488340
 Transform:
   m_ObjectHideFlags: 0
