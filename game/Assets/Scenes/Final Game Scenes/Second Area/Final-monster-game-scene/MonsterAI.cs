@@ -67,7 +67,6 @@ public class MonsterAI : MonoBehaviour
     private UnityEngine.XR.InputDevice leftHandHap;
     private UnityEngine.XR.InputDevice rightHandHap;
 
-    private OxygenTank playerOxygen;
 
     private GameObject playerWheelchair;
 
@@ -107,13 +106,7 @@ public class MonsterAI : MonoBehaviour
         rightHandHap = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
 
 
-        GameObject OxyTank = GameObject.FindGameObjectWithTag("oxygentank");
-        playerOxygen = OxyTank.GetComponent<OxygenTank>();
-
-        if (playerOxygen == null)
-        {
-            Debug.LogError("ox_tank not found");
-        }
+       
 
         //attackVolume = GameObject.Find("Damage Volume");
         
@@ -342,10 +335,10 @@ public class MonsterAI : MonoBehaviour
         //}
         //attackVolume.weight = 0f;
 
-        if (playerOxygen != null)
+        if (OxygenTank.Instance != null)
         {
-            playerOxygen.UseOxygen(30f);
-            Debug.Log($"Oxygen remaining: {playerOxygen.oxygenLevel}%");
+            OxygenTank.Instance.UseOxygen(30f);
+            Debug.Log($"Oxygen remaining: {OxygenTank.Instance.oxygenLevel}%");
         }
 
         yield return new WaitForSeconds(2.0f);
