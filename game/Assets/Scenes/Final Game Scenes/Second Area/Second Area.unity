@@ -14429,6 +14429,7 @@ MonoBehaviour:
   axeSpawnBehindDistance: 1.5
   pauseAudio: {fileID: 1536373799}
   pauseBeforeAxe: 2
+  hallucinationToDisable: {fileID: 770294292}
 --- !u!1001 &122277235
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -94750,6 +94751,11 @@ PrefabInstance:
 --- !u!82 &770294291 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 3177614232092418861, guid: c4306b6d582e4e045aa66a4f65ecce7c, type: 3}
+  m_PrefabInstance: {fileID: 770294290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &770294292 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2494449264941470790, guid: c4306b6d582e4e045aa66a4f65ecce7c, type: 3}
   m_PrefabInstance: {fileID: 770294290}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &770461337
