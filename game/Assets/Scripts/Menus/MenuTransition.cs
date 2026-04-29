@@ -3,24 +3,29 @@ using UnityEngine;
 
 public class MenuTransition : MonoBehaviour
 {
-
     public static MenuTransition Instance { get; private set; }
-
     public CanvasGroup fadeScreen;
     public Transform player;
     public float fadeDuration = 3f;
     public MovementController movementScript;
+
+    private bool hasStarted = false;
 
     private void Awake()
     {
         Instance = this;
         Time.timeScale = 0f;
     }
-    
+
     public IEnumerator StartGame()
     {
+        if (hasStarted)
+            yield break;
+
+        hasStarted = true;
+
         Time.timeScale = 1f;
-        float elapsed  = 0;
+        float elapsed = 0;
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
@@ -28,11 +33,9 @@ public class MenuTransition : MonoBehaviour
             yield return null;
         }
         fadeScreen.alpha = 1;
-
         player.transform.position = new Vector3(-10.75f, 5, -13);
         MySceneManager.Instance.LoadNewScene("Tutorial");
         yield return new WaitForSeconds(2f);
-
         elapsed = 0;
         while (elapsed < fadeDuration)
         {
@@ -41,10 +44,7 @@ public class MenuTransition : MonoBehaviour
             yield return null;
         }
         fadeScreen.alpha = 0;
-        
+
         movementScript.EnableMovement();
-
     }
-
-
 }
