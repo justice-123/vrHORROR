@@ -121,9 +121,12 @@ public class GirlBear : MonoBehaviour
 
         axeSpawned = true;
         SpawnAxeFromBehindPlayer();
-        Destroy(gameObject);
+        yield return new WaitForSeconds(1.0f);
 
         MySceneManager.Instance.LoadNewScene("Final-monster-game-scene");
+
+        Destroy(gameObject);
+
     }
 
     void SpawnAxeFromBehindPlayer()
