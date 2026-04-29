@@ -45,12 +45,16 @@ public class WheelchairFinale : MonoBehaviour
     [Header("=== TIMING ===")]
     [SerializeField] private float falseSafetyDuration = 4f;
     [SerializeField] private float crashHoldDuration = 0.5f;
-    [SerializeField] private float dreadBuildDuration = 2.5f;
+    [Tooltip("SET THIS TO 4 to match your new 4-second custom heartbeat!")]
+    [SerializeField] private float dreadBuildDuration = 4.0f;
     [SerializeField] private float fadeOutDuration = 0.4f;
     [SerializeField] private float blackHoldDuration = 0.4f;
     [SerializeField] private float fadeInDuration = 0.3f;
     [Tooltip("Magic beat of silence right before attack. 0.15-0.25 sweet spot.")]
     [SerializeField] private float silenceBeforeAttack = 0.2f;
+
+    [Header("=== HAPTICS ===")]
+    [SerializeField] private string customHeartbeatEvent = "custom_heartbeat2";
 
     [Header("=== CHASE ===")]
     [SerializeField] private float attackTriggerDistance = 2.5f;
@@ -118,8 +122,18 @@ public class WheelchairFinale : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // THE TRIPWIRE
+        Debug.Log("<color=yellow>SOMETHING HIT THE TRIGGER: </color>" + other.gameObject.name + " (Tag: " + other.tag + ")");
+
         if (hasTriggered) return;
-        if (!other.CompareTag(playerTag)) return;
+
+        if (!other.CompareTag(playerTag))
+        {
+            Debug.Log("<color=red>Trigger ignored it because it wasn't tagged " + playerTag + "!</color>");
+            return;
+        }
+
+        Debug.Log("<color=green>PLAYER DETECTED! STARTING JUMPSCARE!</color>");
         hasTriggered = true;
         StartCoroutine(PlayScare());
     }
@@ -195,6 +209,7 @@ public class WheelchairFinale : MonoBehaviour
         DisableControllers();
 
         if (crashSound != null) crashSound.Play();
+        BhapticsLibrary.Play("jumpscare-back");
         StartCoroutine(FlickerLightsCinematic(flickerDuration));
 
         SpawnMonsterAtChosenPoint();
@@ -206,12 +221,15 @@ public class WheelchairFinale : MonoBehaviour
 
         yield return new WaitForSeconds(crashHoldDuration);
 
-        // === PHASE 4: HEARTBEAT + DREAD ===
+        /// === PHASE 4: HEARTBEAT + DREAD ===
         if (heartbeatAudio != null)
         {
             heartbeatAudio.pitch = 1f;
             heartbeatAudio.Play();
-            StartCoroutine(RampPitch(heartbeatAudio, 1.6f, dreadBuildDuration));
+
+            BhapticsLibrary.Play(customHeartbeatEvent);
+
+            // StartCoroutine(RampPitch(heartbeatAudio, 1.6f, dreadBuildDuration)); // <-- Disabled!
         }
 
         if (subBassRumble != null)
@@ -219,6 +237,7 @@ public class WheelchairFinale : MonoBehaviour
 
         ApplyNightHorrorLighting();
 
+        // This wait duration is what keeps the player staring forward while the 4-second audio/haptic plays
         yield return new WaitForSeconds(dreadBuildDuration);
 
         // === PHASE 5: FADE TO BLACK + ROTATE ===
@@ -235,7 +254,7 @@ public class WheelchairFinale : MonoBehaviour
         StartCoroutine(CameraShakeLoop(chaseShakeIntensity));
 
         agent.enabled = true;
-        yield return null; // THE FIX: Wait 1 frame so the NavMesh actually registers the monster!
+        yield return null;
 
         agent.isStopped = false;
         agent.speed = chaseSpeed;
@@ -249,17 +268,15 @@ public class WheelchairFinale : MonoBehaviour
         float timer = 0f;
         while (timer < maxChaseTime)
         {
-            // Use 2D distance so height differences don't break the trigger
             float distance = Vector2.Distance(
                 new Vector2(monster.transform.position.x, monster.transform.position.z),
                 new Vector2(playerCamera.position.x, playerCamera.position.z));
 
             if (distance <= attackTriggerDistance)
             {
-                break; // Stop slightly before the player
+                break;
             }
 
-            // THE FIX: Path directly to the floor under the player, not an offset inside a wall
             Vector3 targetFloorPos = playerCamera.position;
             if (NavMesh.SamplePosition(playerCamera.position, out NavMeshHit playerHit, 5f, NavMesh.AllAreas))
             {
@@ -274,44 +291,39 @@ public class WheelchairFinale : MonoBehaviour
         }
 
         // === PHASE 8: FAST FADE TO BLACK THEN SETUP ===
-
-        // 1. Fast fade to black to hide the transition glitch
         yield return StartCoroutine(FadeAlpha(0f, 1f, 0.15f));
 
-        // 2. Shut down the agent COMPLETELY so it stops fighting the animator
         agent.isStopped = true;
         agent.speed = 0;
         agent.velocity = Vector3.zero;
         agent.ResetPath();
         agent.enabled = false;
 
-        // 3. Stop chase audio
+        // Ensure the custom heartbeat doesn't bleed into the attack
+        BhapticsLibrary.StopByEventId(customHeartbeatEvent);
+
         if (chaseAudio != null && chaseAudio.isPlaying) chaseAudio.Stop();
         if (heartbeatAudio != null && heartbeatAudio.isPlaying) heartbeatAudio.Stop();
         if (subBassRumble != null && subBassRumble.isPlaying) subBassRumble.Stop();
 
-        // 4. Snap to attack position and trigger animation while hidden in black
         SnapMonsterToAttackPositionInFrontOfPlayer();
         monsterAnimator.Play(attackStateName, 0, 0f);
-        monsterAnimator.Update(0f); // Force animator to update instantly
+        monsterAnimator.Update(0f);
 
-        // Magic beat of silence in darkness
         yield return new WaitForSeconds(silenceBeforeAttack);
 
         // === PHASE 9: REVEAL ATTACK, THEN FADE OUT ===
-
-        // Instantly reveal the attack
         if (fadeScreen != null) fadeScreen.alpha = 0f;
 
         if (attackBoom != null) attackBoom.Play();
         if (attackScreech != null) attackScreech.Play();
         StartCoroutine(ImpactShake(impactShakeIntensity, 0.2f));
-        BhapticsLibrary.Play("hunt_vibration");
 
-        // Show the attack happening for a fraction of a second
+        // Start the 3-second real-time attack haptic loop
+        StartCoroutine(HuntVibrationLoop(3f));
+
         yield return new WaitForSeconds(0.4f);
 
-        // Fade out to black again for the finale
         yield return StartCoroutine(FadeAlpha(0f, 1f, 0.15f));
 
         // === PHASE 10: HOLD ON BLACK ===
@@ -334,6 +346,22 @@ public class WheelchairFinale : MonoBehaviour
         if (fadeScreen != null) fadeScreen.alpha = 1f;
 
         OnFinaleComplete();
+    }
+
+    // ============================================================
+    // HUNT VIBRATION LOOP (Spam-filter safe, real-time)
+    // ============================================================
+    private IEnumerator HuntVibrationLoop(float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            BhapticsLibrary.StopByEventId("hunt_vibration");
+            BhapticsLibrary.Play("hunt_vibration");
+
+            yield return new WaitForSecondsRealtime(0.2f);
+            elapsed += 0.2f;
+        }
     }
 
     // ============================================================
@@ -455,9 +483,6 @@ public class WheelchairFinale : MonoBehaviour
     // ============================================================
     // NIGHT LIGHTING
     // ============================================================
-    // ============================================================
-    // NIGHT LIGHTING
-    // ============================================================
     private void ApplyNightHorrorLighting()
     {
         disabledLights.Clear();
@@ -475,8 +500,6 @@ public class WheelchairFinale : MonoBehaviour
                     if (l == moonLight) continue;
                     if (!l.enabled) continue;
 
-                    // THE FIX: Drop the lights to 15% power instead of turning them off.
-                    // It keeps the 3D depth of the room but makes it terrifyingly dim.
                     l.intensity *= 0.15f;
                 }
             }

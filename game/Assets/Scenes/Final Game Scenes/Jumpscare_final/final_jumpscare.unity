@@ -1490,6 +1490,7 @@ MonoBehaviour:
   blackHoldDuration: 0.3
   fadeInDuration: 0.3
   silenceBeforeAttack: 0.2
+  customHeartbeatEvent: custom_heartbeat2
   attackTriggerDistance: 2.5
   maxChaseTime: 5
   chaseSpeed: 25
@@ -1861,20 +1862,20 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 1b0768bbf3da9a14d9d7a9be12e3fca6, type: 3}
+  m_Resource: {fileID: 8300000, guid: 9e72b11bd763bc84c8f47890071ec5a8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.682
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 108
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1882,17 +1883,8 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
       time: 1
-      value: 0
+      value: 0.96177673
       inSlope: 0
       outSlope: 0
       tangentMode: 0
