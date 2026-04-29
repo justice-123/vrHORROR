@@ -67,7 +67,8 @@ public class MonsterAI : MonoBehaviour
     private UnityEngine.XR.InputDevice leftHandHap;
     private UnityEngine.XR.InputDevice rightHandHap;
 
-    private OxygenTank playerOxygen;
+
+    private GameObject playerWheelchair;
 
 
 
@@ -82,6 +83,9 @@ public class MonsterAI : MonoBehaviour
         GameObject playerObj = GameObject.FindGameObjectWithTag("MainCamera");
         GameObject lHandObj = GameObject.FindGameObjectWithTag("Left Controller");
         GameObject rHandObj = GameObject.FindGameObjectWithTag("Right Controller");
+        playerWheelchair = GameObject.FindGameObjectWithTag("Player");
+
+
 
         if (playerObj != null && lHandObj != null && rHandObj != null)
         {
@@ -102,12 +106,7 @@ public class MonsterAI : MonoBehaviour
         rightHandHap = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
 
 
-        playerOxygen = player.root.GetComponentInChildren<OxygenTank>();
-
-        if (playerOxygen == null)
-        {
-            Debug.LogError("ox_tank not found");
-        }
+       
 
         //attackVolume = GameObject.Find("Damage Volume");
         
@@ -336,10 +335,10 @@ public class MonsterAI : MonoBehaviour
         //}
         //attackVolume.weight = 0f;
 
-        if (playerOxygen != null)
+        if (OxygenTank.Instance != null)
         {
-            playerOxygen.UseOxygen(30f);
-            Debug.Log($"Oxygen remaining: {playerOxygen.oxygenLevel}%");
+            OxygenTank.Instance.UseOxygen(30f);
+            Debug.Log($"Oxygen remaining: {OxygenTank.Instance.oxygenLevel}%");
         }
 
         yield return new WaitForSeconds(2.0f);
@@ -573,7 +572,7 @@ public class MonsterAI : MonoBehaviour
                     //Debug.Log("Monster ray hit: " + hit.transform.name + " with tag: " + hit.transform.tag);
 
 
-                return (hit.transform.root == player.root || hit.transform.CompareTag("Player") || hit.transform.CompareTag("MainCamera") || hit.transform == player);
+                return (hit.transform.root == player.root || hit.transform.CompareTag("Player") || hit.transform.CompareTag("MainCamera") || hit.transform == player || hit.transform == playerWheelchair);
             }
         }
         return false;
