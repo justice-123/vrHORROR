@@ -178882,6 +178882,7 @@ Transform:
   - {fileID: 363213351}
   - {fileID: 1594844435}
   - {fileID: 147767146}
+  - {fileID: 1859024193}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1606186775
@@ -206248,6 +206249,74 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3118196507054971232, guid: 20c305495167c4e468c2c28720402c19, type: 3}
   m_PrefabInstance: {fileID: 1858856280}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1859024192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1859024193}
+  - component: {fileID: 1859024195}
+  - component: {fileID: 1859024194}
+  m_Layer: 0
+  m_Name: SlamTutorial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1859024193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859024192}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.318, y: 0, z: -0.965}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1606027063}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1859024194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859024192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b2f29dd5eae11841b47e33e4e3b1f79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slammedTutorial: 0
+  tutorialDoor: {fileID: 1922906389}
+--- !u!65 &1859024195
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859024192}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 2.5161374}
+  m_Center: {x: -1.0669202e-15, y: 0, z: -0.42492205}
 --- !u!1001 &1859179413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -213960,6 +214029,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6917133213671452396, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Size.x
+      value: 4.0599203
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917133213671452396, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Size.z
+      value: 1.5881579
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917133213671452396, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Center.x
+      value: -2.843008
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917133213671452396, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+      propertyPath: m_Center.z
+      value: 2.384952
+      objectReference: {fileID: 0}
     - target: {fileID: 8174524819860399446, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
       propertyPath: m_Name
       value: Tutorial Door
@@ -214036,6 +214121,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1545240251}
   m_SourcePrefab: {fileID: 100100000, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+--- !u!4 &1922906389 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6267874579622320389, guid: 5df55da3edd7a4c46a7f4f056450ad01, type: 3}
+  m_PrefabInstance: {fileID: 1922906388}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1923465539
 PrefabInstance:
   m_ObjectHideFlags: 0

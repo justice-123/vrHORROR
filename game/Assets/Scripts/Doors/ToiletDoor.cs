@@ -12,24 +12,31 @@ public class ToiletDoor : MonoBehaviour
     public AudioClip slamClip;
     public AudioSource roomAmbienceAudio;
     public AudioSource bgMusic;
-
+    public bool inNursery;
     private Vector3 defaulRot;
     private Vector3 openRot;
 
     void Start()
     {
         openPadlock = false;
+        inNursery = false;
+        open = false;
+
         defaulRot = transform.eulerAngles;
         openRot = new Vector3(defaulRot.x, defaulRot.y + DoorOpenAngle, defaulRot.z);
     }
 
-    public void PadlockOpen()
+    private void OnTriggerEnter(Collider collider)
     {
-        openPadlock = true;
-        StartCoroutine(openDoor());
-        StartCoroutine(FadeInAmbience(5f));
-        flushAudio.Play();
-        if (bgMusic != null) bgMusic.Stop();
+        if (collider.CompareTag("Player") && inNursery && !open)
+        {
+            openPadlock = true;
+            open = true;
+            StartCoroutine(openDoor());
+            StartCoroutine(FadeInAmbience(5f));
+            flushAudio.Play();
+            if (bgMusic != null) bgMusic.Stop();
+        }
     }
 
     public void SlamDoor(Collider triggerCollider)
