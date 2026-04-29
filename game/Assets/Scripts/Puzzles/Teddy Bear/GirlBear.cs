@@ -101,8 +101,14 @@ public class GirlBear : MonoBehaviour
         }
 
         if (progress >= 1f)
-            //Destroy(gameObject);
+        {
+            foreach (Renderer r in renderers)
+            {
+                r.enabled = false;
+            }
+            this.enabled = false;
             return;
+        }
     }
 
     IEnumerator PauseBeforeAxe()
