@@ -1,5 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class AxeSpin : MonoBehaviour
 {
     public float spinSpeed = 720f;
@@ -8,8 +10,26 @@ public class AxeSpin : MonoBehaviour
     public float flyDuration = 0.8f;
     public float arcHeight = 2.5f;
 
+    [Header("Audio")]
+    public AudioClip axeDropSound;
+    private AudioSource audioSource;
+
+    [Header("Boss BGM")]
+    public AudioClip bossBGM;
+    public float fadeTime = 1.5f;
+
     private float timer = 0f;
     private bool arrived = false;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 1f;
+        audioSource.volume = 1f;
+        audioSource.minDistance = 1f;
+        audioSource.maxDistance = 10f;
+    }
 
     void Update()
     {
@@ -17,7 +37,6 @@ public class AxeSpin : MonoBehaviour
 
         timer += Time.deltaTime;
         float progress = Mathf.Clamp01(timer / flyDuration);
-
         float easedProgress = 1f - Mathf.Pow(1f - progress, 2f);
 
         Vector3 currentPos = Vector3.Lerp(startPos, targetPos, easedProgress);
@@ -30,6 +49,7 @@ public class AxeSpin : MonoBehaviour
         if (progress >= 1f)
         {
             arrived = true;
+            PlayAxeDropSound();
 
             Collider col = GetComponent<Collider>();
             if (col != null)
@@ -41,6 +61,56 @@ public class AxeSpin : MonoBehaviour
                 rb.isKinematic = false;
                 rb.useGravity = true;
             }
+
+            StartCoroutine(SwitchToBossBGM());
         }
+    }
+
+    private void PlayAxeDropSound()
+    {
+        if (axeDropSound != null)
+        {
+            audioSource.PlayOneShot(axeDropSound);
+        }
+    }
+    private IEnumerator SwitchToBossBGM()
+    {
+        string[] triggerNames = { "BackgroundMusicTrigger", "BackgroundMusicTrigger (1)", "BackgroundMusicChange" };
+        foreach (string name in triggerNames)
+        {
+            GameObject obj = GameObject.Find(name);
+            if (obj != null) obj.SetActive(false);
+        }
+
+        if (bossBGM == null) yield break;
+
+        AudioSource bgmSource = null;
+        GameObject bgmObject = GameObject.Find("BGM");
+        if (bgmObject != null)
+            bgmSource = bgmObject.GetComponent<AudioSource>();
+
+        if (bgmSource == null) yield break;
+
+        float originalVolume = bgmSource.volume;
+
+        while (bgmSource.volume > 0.01f)
+        {
+            bgmSource.volume -= originalVolume * Time.deltaTime / fadeTime;
+            yield return null;
+        }
+
+        bgmSource.volume = 0f;
+        bgmSource.Stop();
+        bgmSource.clip = bossBGM;
+        bgmSource.loop = true;
+        bgmSource.Play();
+
+        while (bgmSource.volume < originalVolume)
+        {
+            bgmSource.volume += originalVolume * Time.deltaTime / fadeTime;
+            yield return null;
+        }
+
+        bgmSource.volume = originalVolume;
     }
 }
