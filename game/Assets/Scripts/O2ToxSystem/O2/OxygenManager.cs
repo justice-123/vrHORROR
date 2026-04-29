@@ -18,6 +18,11 @@ public class OxygenManager : MonoBehaviour
     private bool _deathTriggered = false;
     private bool _chokingTriggered = false;
 
+
+    private bool[] o2Announced = new bool[4]; // 75, 50, 20, 10
+
+  
+
     void Update()
     {
         if (disabled) return;
@@ -82,6 +87,23 @@ public class OxygenManager : MonoBehaviour
             if (chokingAudio != null) chokingAudio.Stop();
             VRDebugHUD.Instance?.SetStatus("O2=0 detected, calling Respawn...");
             OnPlayerDied();
+        }
+        CheckO2Announcements();
+    }
+
+    void CheckO2Announcements()
+    {
+        float o2 = OxygenTank.Instance.oxygenLevel;
+        float[] thresholds = { 75f, 50f, 20f, 10f };
+        string[] messages = { "Oxygen at 75 percent", "Oxygen at 50 percent", "Warning Oxygen at 20 percent", "Warning Oxygen at 10 percent" };
+
+        for (int i = 0; i < thresholds.Length; i++)
+        {
+            if (!o2Announced[i] && o2 <= thresholds[i])
+            {
+                o2Announced[i] = true;
+                TTSManager.Instance?.Speak(messages[i]);
+            }
         }
     }
 
