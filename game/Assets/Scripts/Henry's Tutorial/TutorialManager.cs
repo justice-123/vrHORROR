@@ -72,10 +72,7 @@ public class TutorialManager : MonoBehaviour
         yield return StartCoroutine(BreathingInformation());
         yield return StartCoroutine(ItemInteraction());
 
-        // Re-enable oxygen and toxicity when tutorial ends
-        OxygenManager.Instance.disabled = false;
-        ToxicityDevice.Instance.disabled = false;
-
+        
         tutorialCompleted = true;
         HintButton.Instance.changeHintState(HintButton.HintState.ExploreFirstArea);
     }
@@ -170,7 +167,7 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitUntil(() => okButtonPressed);
         okButtonPressed = false;
 
-        tutorialText.text = "If you run out of oxygen, or if your blood toxicity gets too high, you will pass out.";
+        tutorialText.text = "If you run out of oxygen you will pass out.";
         yield return new WaitUntil(() => okButtonPressed);
         okButtonPressed = false;
     }
