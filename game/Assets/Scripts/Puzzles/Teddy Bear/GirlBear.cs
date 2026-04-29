@@ -39,7 +39,6 @@ public class GirlBear : MonoBehaviour
     [Header("Disable hallucinations ")]
     [SerializeField] private GameObject hallucinationToDisable;
 
-
     void Start()
     {
         renderers = GetComponentsInChildren<Renderer>();

@@ -13415,7 +13415,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1987255994}
   - component: {fileID: 1987255995}
-  m_Layer: 2
+  m_Layer: 6
   m_Name: Player Detection Capsule
   m_TagString: Player
   m_Icon: {fileID: 0}
