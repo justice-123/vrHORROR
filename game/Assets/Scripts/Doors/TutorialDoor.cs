@@ -37,6 +37,18 @@ public class TutorialDoor : MonoBehaviour
         
     }
 
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (open && collider.CompareTag("Player"))
+        {
+            open = false;
+            Vector3 temp = defaulRot;
+            defaulRot = openRot;
+            openRot = temp;
+            StartCoroutine(openDoor());
+        }
+    }
+
     public IEnumerator openDoor()
     {
         float elapsed = 0f;
