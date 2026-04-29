@@ -37,7 +37,7 @@ public class TeddyGrabSequence : MonoBehaviour
         SetLights(false);
         StartCoroutine(DelayedFlicker(flickerDelay));
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.8f);
         if (growlAudioSource != null)
             growlAudioSource.Play();
     }

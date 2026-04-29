@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class GirlBear : MonoBehaviour
 {
     public GameObject axePrefab;
     public Animator animator;
     public string animTriggerName = "ReceiveBear";
-    public Transform playerTransform;      
+    public Transform playerTransform;
 
     [Header("Float Settings")]
     public float floatHeight = 1.5f;
@@ -17,10 +18,18 @@ public class GirlBear : MonoBehaviour
     public float fadeStartPercent = 0.7f;
 
     [Header("Axe Throw Settings")]
-    public float axeForwardForce = 5f;     
-    public float axeUpForce = 3f;         
-    public float axeSpinSpeed = 720f;     
-    public float axeSpawnBehindDistance = 1.5f; 
+    public float axeForwardForce = 5f;
+    public float axeUpForce = 3f;
+    public float axeSpinSpeed = 720f;
+    public float axeSpawnBehindDistance = 1.5f;
+
+    [Header("Pause Audio")]
+    public AudioSource pauseAudio;
+    public float pauseBeforeAxe = 2f;
+
+    [Header("Eye Flash")]
+    public Light eyeLight;
+    public float eyeFlashSpeed = 0.15f;
 
     private bool activated = false;
     private bool floating = false;
@@ -28,11 +37,16 @@ public class GirlBear : MonoBehaviour
     private float floatTimer = 0f;
     private Vector3 startPos;
     private bool axeSpawned = false;
+    private bool pauseStarted = false;
     private Renderer[] renderers;
 
     void Start()
     {
         renderers = GetComponentsInChildren<Renderer>();
+
+        if (eyeLight != null)
+            eyeLight.enabled = false;
+
         if (playerTransform == null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -48,6 +62,9 @@ public class GirlBear : MonoBehaviour
         {
             activated = true;
             startPos = transform.position;
+
+            Collider col = GetComponent<Collider>();
+            if (col != null) col.enabled = false;
 
             if (animator != null)
                 animator.SetTrigger(animTriggerName);
@@ -84,15 +101,50 @@ public class GirlBear : MonoBehaviour
             SetAlpha(1f - fadeProgress);
         }
 
-        if (!axeSpawned && progress > 0.4f)
+        if (!axeSpawned && progress > 0.2f && !pauseStarted)
         {
-            axeSpawned = true;
-            SpawnAxeFromBehindPlayer();
-            MySceneManager.Instance.LoadNewScene("Final-monster-game-scene");
+            pauseStarted = true;
+            StartCoroutine(PauseBeforeAxe());
         }
 
         if (progress >= 1f)
             Destroy(gameObject);
+    }
+
+    IEnumerator PauseBeforeAxe()
+    {
+        if (pauseAudio != null)
+            pauseAudio.Play();
+
+        float clipLength = pauseAudio != null && pauseAudio.clip != null ? pauseAudio.clip.length : 0f;
+        StartCoroutine(FlashEyes());
+
+        yield return new WaitForSeconds(clipLength + pauseBeforeAxe);
+
+        axeSpawned = true;
+        SpawnAxeFromBehindPlayer();
+        MySceneManager.Instance.LoadNewScene("Final-monster-game-scene");
+    }
+
+    IEnumerator FlashEyes()
+    {
+        if (eyeLight == null) yield break;
+
+        // phase 1 — flicker for 1 second
+        float elapsed = 0f;
+        while (elapsed < 1f)
+        {
+            eyeLight.enabled = !eyeLight.enabled;
+            yield return new WaitForSeconds(eyeFlashSpeed);
+            elapsed += eyeFlashSpeed;
+        }
+
+        // phase 2 — hard on for 1 second
+        eyeLight.enabled = true;
+        yield return new WaitForSeconds(1f);
+
+        // phase 3 — off
+        eyeLight.enabled = false;
     }
 
     void SpawnAxeFromBehindPlayer()
@@ -118,13 +170,12 @@ public class GirlBear : MonoBehaviour
         if (col != null)
             col.enabled = false;
 
-
         AxeSpin spin = axe.AddComponent<AxeSpin>();
         spin.spinSpeed = axeSpinSpeed;
         spin.startPos = behindPlayer;
         spin.targetPos = target;
-        spin.flyDuration = 0.8f;   
-        spin.arcHeight = 2.5f;     
+        spin.flyDuration = 0.8f;
+        spin.arcHeight = 2.5f;
     }
 
     void SetAlpha(float alpha)
