@@ -16037,6 +16037,11 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!108 &140064615 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2810746467312875328, guid: 91af1f8eb68556e4b95709ab825c22a8, type: 3}
+  m_PrefabInstance: {fileID: 1169689625}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &140141127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26860,6 +26865,11 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!108 &221855566 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 3860050062276788605, guid: 68c6801b404867c4d9910513ff079702, type: 3}
+  m_PrefabInstance: {fileID: 535857335}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &222111775
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74237,6 +74247,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toilet Flickering Lamp
       objectReference: {fileID: 0}
+    - target: {fileID: 8138081056601741781, guid: 55dc7ab3a91756d4a95bd57fc1e82e12, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8915883946984948591, guid: 55dc7ab3a91756d4a95bd57fc1e82e12, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.814
@@ -111681,6 +111695,11 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!108 &912638704 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 1117785330443335777, guid: dac792caf81aa9d43aaca0973fd20b49, type: 3}
+  m_PrefabInstance: {fileID: 1439709480}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &914401805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -174121,6 +174140,11 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!108 &1393467934 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 1117785330443335777, guid: dac792caf81aa9d43aaca0973fd20b49, type: 3}
+  m_PrefabInstance: {fileID: 1588084603}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1394114342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -188531,6 +188555,11 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!108 &1512236942 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 8861992163454338779, guid: ac6810805f8089b48a03a97fcaae1bea, type: 3}
+  m_PrefabInstance: {fileID: 699841529}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1512343677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -195336,6 +195365,11 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!108 &1558824825 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 3860050062276788605, guid: 68c6801b404867c4d9910513ff079702, type: 3}
+  m_PrefabInstance: {fileID: 77155398}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1558950289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201314,6 +201348,11 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!108 &1601531222 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 1117785330443335777, guid: dac792caf81aa9d43aaca0973fd20b49, type: 3}
+  m_PrefabInstance: {fileID: 955782083}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1601540882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -215843,13 +215882,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomLights:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1393467934}
+  - {fileID: 140064615}
+  - {fileID: 1601531222}
+  - {fileID: 912638704}
+  - {fileID: 1512236942}
+  - {fileID: 221855566}
+  - {fileID: 1558824825}
   flickerDelay: 2
   minFlickerIntensity: 0.05
   maxFlickerIntensity: 0.3
