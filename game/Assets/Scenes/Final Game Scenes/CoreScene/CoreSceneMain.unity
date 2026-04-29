@@ -12656,7 +12656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tank: {fileID: 2143975637}
   horrorVolume: {fileID: 1730463863}
-  dangerThreshold: 20
+  dangerThreshold: 25
   vignetteColor: {r: 1, g: 0, b: 0, a: 1}
   minVignetteIntensity: 0.35
   maxVignetteIntensity: 0.9
