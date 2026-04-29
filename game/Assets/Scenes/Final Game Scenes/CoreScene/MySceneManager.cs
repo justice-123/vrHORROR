@@ -14,9 +14,10 @@ public class MySceneManager : MonoBehaviour
     void Start()
     {
         LoadNewScene("MainMenu");
-        LoadNewScene("final_jumpscare");
+        //LoadNewScene("final_jumpscare");
         LoadNewScene("First Area");
         LoadNewScene("Lift");
+        //LoadNewScene("Final-monster-game-scene");
     }
 
     public void LoadNewScene(string sceneName)

@@ -26,7 +26,7 @@ public class MonsterAI : MonoBehaviour
     [Header("BHaptics")]
     private string heartbeatClip = "heartbeat_buzz";
     private string huntClip = "hunt_vibration";
-    private string monster_slash = "monster-slash";
+    //private string monster_slash = "monster-slash";
 
     [Header("Chase Settings")]
     private float chaseDelay = 0.25f;
@@ -62,12 +62,15 @@ public class MonsterAI : MonoBehaviour
     private bool isGameOver = false;
     private bool isAttacking = false;
 
-    private bool initialized = false;
+    //private bool initialized = false;
 
     private UnityEngine.XR.InputDevice leftHandHap;
     private UnityEngine.XR.InputDevice rightHandHap;
 
     private OxygenTank playerOxygen;
+
+    private GameObject playerWheelchair;
+
 
 
 
@@ -82,6 +85,7 @@ public class MonsterAI : MonoBehaviour
         GameObject playerObj = GameObject.FindGameObjectWithTag("MainCamera");
         GameObject lHandObj = GameObject.FindGameObjectWithTag("Left Controller");
         GameObject rHandObj = GameObject.FindGameObjectWithTag("Right Controller");
+        playerWheelchair = GameObject.FindGameObjectWithTag("Player");
 
         if (playerObj != null && lHandObj != null && rHandObj != null)
         {
@@ -115,9 +119,11 @@ public class MonsterAI : MonoBehaviour
         attackVolume = attackVolumeObj.GetComponent<Volume>();
         blackoutVolume = blackoutVolumeObj.GetComponent<Volume>();
 
+        Debug.Log("Whoop whoop");
 
         UpdateLastPositions();
         Wander();
+        
     }
 
     void Update()
@@ -573,7 +579,7 @@ public class MonsterAI : MonoBehaviour
                     //Debug.Log("Monster ray hit: " + hit.transform.name + " with tag: " + hit.transform.tag);
 
 
-                return (hit.transform.root == player.root || hit.transform.CompareTag("Player") || hit.transform.CompareTag("MainCamera") || hit.transform == player);
+                return (hit.transform.root == player.root || hit.transform.CompareTag("Player") || hit.transform.CompareTag("MainCamera") || hit.transform == player || hit.transform == playerWheelchair);
             }
         }
         return false;

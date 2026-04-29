@@ -17430,6 +17430,9 @@ MonoBehaviour:
   head: {fileID: 6280090011958278503}
   currentSpeed: 0
   rotationSpeed: 0
+  movementEnabled: 0
+  rotated: 0
+  listeningForMovement: 0
   initialForward: {x: 0, y: 0, z: 0}
   wheelchairModel: {fileID: 8082104776597185065}
 --- !u!114 &4763236765422436564
@@ -17457,7 +17460,6 @@ MonoBehaviour:
   chairVelocity: 0
   turnStrength: 60
   vignette: {fileID: 2460679463734724365}
-  methodChosen: 1
   blinkerCanvasGroup: {fileID: 0}
   snapAngle: 45
   snapFadeSpeed: 0.5
