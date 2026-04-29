@@ -14,7 +14,6 @@ public class MySceneManager : MonoBehaviour
     void Start()
     {
         LoadNewScene("MainMenu");
-        //LoadNewScene("final_jumpscare");
         LoadNewScene("First Area");
         LoadNewScene("Lift");
     }
@@ -23,12 +22,21 @@ public class MySceneManager : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
     }
-    
+
     public void UnloadOldScene(string sceneName)
     {
         Debug.Log("Scene Unloading");
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("CoreSceneMain"));
         SceneManager.UnloadSceneAsync(sceneName);
     }
+
+    
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        DynamicGI.UpdateEnvironment();
+        SceneManager.LoadScene(0);
+    }
+
 
 }
