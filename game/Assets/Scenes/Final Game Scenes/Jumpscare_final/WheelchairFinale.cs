@@ -341,9 +341,6 @@ public class WheelchairFinale : MonoBehaviour
         // === PHASE 10: HOLD ON BLACK ===
         isShakingCamera = false;
 
-        if (attackBoom != null) attackBoom.Stop();
-        if (attackScreech != null) attackScreech.Stop();
-
         if (monster != null) monster.SetActive(false);
 
         if (tinnitusAudio != null)
