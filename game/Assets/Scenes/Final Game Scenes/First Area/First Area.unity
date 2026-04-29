@@ -45883,6 +45883,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hallucinations1stFloor
       objectReference: {fileID: 0}
+    - target: {fileID: 5486289570648659225, guid: cae52fa9bc4d67440984089fd17b4f0f, type: 3}
+      propertyPath: hideAngle
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 8738022666623763005, guid: cae52fa9bc4d67440984089fd17b4f0f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.07
