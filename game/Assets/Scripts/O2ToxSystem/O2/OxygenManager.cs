@@ -21,17 +21,22 @@ public class OxygenManager : MonoBehaviour
 
     private bool[] o2Announced = new bool[4]; // 75, 50, 20, 10
 
-  
+
 
     void Update()
     {
-        if (disabled) return;
+        if (OxygenTank.Instance == null) return;
 
-        if (OxygenTank.Instance == null)
+        // Always allow refilling even during tutorial
+        if (OxygenTank.Instance.isRefilling)
         {
-            VRDebugHUD.Instance?.SetStatus("OxygenTank NULL - returning");
+            OxygenTank.Instance.oxygenLevel = Mathf.Clamp(
+                OxygenTank.Instance.oxygenLevel + refillRate * Time.deltaTime, 0f, 100f);
+            canPlayBreathAudio = true;
             return;
         }
+
+        if (disabled) return; // moved below refill check
 
         if (OxygenTank.Instance.oxygenLevel > 0f)
             _deathTriggered = false;
@@ -41,14 +46,6 @@ public class OxygenManager : MonoBehaviour
             _chokingTriggered = false;
             if (chokingAudio != null && chokingAudio.isPlaying)
                 chokingAudio.Stop();
-        }
-
-        if (OxygenTank.Instance.isRefilling)
-        {
-            OxygenTank.Instance.oxygenLevel = Mathf.Clamp(
-                OxygenTank.Instance.oxygenLevel + refillRate * Time.deltaTime, 0f, 100f);
-            canPlayBreathAudio = true;
-            return;
         }
 
         if (breathInput != null && breathInput.isBreathing)
@@ -85,9 +82,9 @@ public class OxygenManager : MonoBehaviour
         {
             _deathTriggered = true;
             if (chokingAudio != null) chokingAudio.Stop();
-            VRDebugHUD.Instance?.SetStatus("O2=0 detected, calling Respawn...");
             OnPlayerDied();
         }
+
         CheckO2Announcements();
     }
 
