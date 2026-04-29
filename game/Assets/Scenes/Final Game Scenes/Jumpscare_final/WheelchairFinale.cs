@@ -223,16 +223,26 @@ public class WheelchairFinale : MonoBehaviour
 
         yield return new WaitForSeconds(crashHoldDuration);
 
-        /// === PHASE 4: HEARTBEAT + DREAD ===
+        // === PHASE 4: HEARTBEAT + DREAD ===
+
         if (heartbeatAudio != null)
         {
             heartbeatAudio.pitch = 1f;
+
+            // 1. FIRE THE HAPTIC (No delays, no StopAll, no tricks)
+            BhapticsLibrary.Play("custom_heartbeat2");
+
+            // 2. FIRE THE AUDIO (Instantly, on the exact same frame)
             heartbeatAudio.Play();
-
-            BhapticsLibrary.Play(customHeartbeatEvent);
-
-            // StartCoroutine(RampPitch(heartbeatAudio, 1.6f, dreadBuildDuration)); // <-- Disabled!
         }
+
+        if (subBassRumble != null)
+            StartCoroutine(RampVolume(subBassRumble, 0.9f, dreadBuildDuration));
+
+        ApplyNightHorrorLighting();
+
+        // Wait for the audio/haptic to finish
+        yield return new WaitForSeconds(dreadBuildDuration);
 
         if (subBassRumble != null)
             StartCoroutine(RampVolume(subBassRumble, 0.9f, dreadBuildDuration));
@@ -330,10 +340,6 @@ public class WheelchairFinale : MonoBehaviour
 
         // === PHASE 10: HOLD ON BLACK ===
         isShakingCamera = false;
-
-        
-        // if (attackBoom != null) attackBoom.Stop();
-        // if (attackScreech != null) attackScreech.Stop();
 
         if (monster != null) monster.SetActive(false);
 
