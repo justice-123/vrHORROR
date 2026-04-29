@@ -215178,6 +215178,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hallucination2ndFloor
       objectReference: {fileID: 0}
+    - target: {fileID: 8807982628224078595, guid: c4306b6d582e4e045aa66a4f65ecce7c, type: 3}
+      propertyPath: clips.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8807982628224078595, guid: c4306b6d582e4e045aa66a4f65ecce7c, type: 3}
+      propertyPath: 'clips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 8e0f9530f2335234f91610f5a890c126, type: 3}
+    - target: {fileID: 8807982628224078595, guid: c4306b6d582e4e045aa66a4f65ecce7c, type: 3}
+      propertyPath: 'clips.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f211f200ed69f6843a46d6d272e88ae4, type: 3}
+    - target: {fileID: 8807982628224078595, guid: c4306b6d582e4e045aa66a4f65ecce7c, type: 3}
+      propertyPath: 'clips.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3c63a7657ce0ac34097bba2a9c2a6752, type: 3}
+    - target: {fileID: 8807982628224078595, guid: c4306b6d582e4e045aa66a4f65ecce7c, type: 3}
+      propertyPath: 'clips.Array.data[6]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 75e379aa4e660f84a9bd91664dffb1dd, type: 3}
+    - target: {fileID: 8807982628224078595, guid: c4306b6d582e4e045aa66a4f65ecce7c, type: 3}
+      propertyPath: 'clips.Array.data[7]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 8e0f9530f2335234f91610f5a890c126, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
