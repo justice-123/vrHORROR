@@ -1483,6 +1483,8 @@ MonoBehaviour:
   attackScreech: {fileID: 1992135249}
   ambientWind: {fileID: 711061565}
   tinnitusAudio: {fileID: 1509028641}
+  beepClip: {fileID: 8300000, guid: 8136c04bf2b21a649ba23a8ac44ec084, type: 3}
+  beepVolume: 1
   falseSafetyDuration: 3
   crashHoldDuration: 0.5
   dreadBuildDuration: 3

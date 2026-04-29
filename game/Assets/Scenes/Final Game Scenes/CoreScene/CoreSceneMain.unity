@@ -192,6 +192,10 @@ PrefabInstance:
       value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 3858713634997537359, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858713634997537359, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_RequirePokeFilter
       value: 0
       objectReference: {fileID: 0}
@@ -202,6 +206,10 @@ PrefabInstance:
     - target: {fileID: 4369480952707354298, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_MoveSpeed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4520558394424975604, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4520558394424975604, guid: cc1ad07c0423c4d4aa66bdfe6704f084, type: 3}
       propertyPath: m_RequirePokeFilter
@@ -1216,7 +1224,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.7
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
