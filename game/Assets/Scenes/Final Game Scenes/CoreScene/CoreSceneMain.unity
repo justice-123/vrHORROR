@@ -12702,6 +12702,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toxic_Device
       objectReference: {fileID: 0}
+    - target: {fileID: 6692850832498194522, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7902821567335160169, guid: 820ca251184abb64ea0e56be07ba8908, type: 3}
       propertyPath: barFill
       value: 
@@ -12841,7 +12845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7921472147264483783, guid: 2f3b2e90d64d8b04e8ea4ccc0544a07e, type: 3}
       propertyPath: m_TagString
-      value: oxygentank
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8942254830204261444, guid: 2f3b2e90d64d8b04e8ea4ccc0544a07e, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -12880,4 +12884,3 @@ SceneRoots:
   - {fileID: 4815150429841432670}
   - {fileID: 1615729980}
   - {fileID: 1592465870}
-  - {fileID: 1568522298}
