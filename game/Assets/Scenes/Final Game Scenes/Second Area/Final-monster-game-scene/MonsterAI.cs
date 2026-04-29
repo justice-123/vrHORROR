@@ -69,6 +69,8 @@ public class MonsterAI : MonoBehaviour
 
     private OxygenTank playerOxygen;
 
+    private GameObject playerWheelchair;
+
 
 
 
@@ -82,6 +84,9 @@ public class MonsterAI : MonoBehaviour
         GameObject playerObj = GameObject.FindGameObjectWithTag("MainCamera");
         GameObject lHandObj = GameObject.FindGameObjectWithTag("Left Controller");
         GameObject rHandObj = GameObject.FindGameObjectWithTag("Right Controller");
+        playerWheelchair = GameObject.FindGameObjectWithTag("Player");
+
+
 
         if (playerObj != null && lHandObj != null && rHandObj != null)
         {
@@ -573,7 +578,7 @@ public class MonsterAI : MonoBehaviour
                     //Debug.Log("Monster ray hit: " + hit.transform.name + " with tag: " + hit.transform.tag);
 
 
-                return (hit.transform.root == player.root || hit.transform.CompareTag("Player") || hit.transform.CompareTag("MainCamera") || hit.transform == player);
+                return (hit.transform.root == player.root || hit.transform.CompareTag("Player") || hit.transform.CompareTag("MainCamera") || hit.transform == player || hit.transform == playerWheelchair);
             }
         }
         return false;
