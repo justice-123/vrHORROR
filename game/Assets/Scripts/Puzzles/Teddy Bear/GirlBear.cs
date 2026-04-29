@@ -101,7 +101,8 @@ public class GirlBear : MonoBehaviour
         }
 
         if (progress >= 1f)
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            return;
     }
 
     IEnumerator PauseBeforeAxe()
@@ -114,6 +115,8 @@ public class GirlBear : MonoBehaviour
 
         axeSpawned = true;
         SpawnAxeFromBehindPlayer();
+        Destroy(gameObject);
+
         MySceneManager.Instance.LoadNewScene("Final-monster-game-scene");
     }
 
