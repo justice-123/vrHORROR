@@ -1,24 +1,53 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Button : MonoBehaviour
 {
-    
     public DoorMovement doorMovement;
+
+    private AudioSource audioSource;
     private bool doorTriggered = false;
 
     private float startY = 0.915f;
     private float pressedY = 0.945f;
     private float moveDuration = 0.2f;
 
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 1f; // 3D sound
+        audioSource.volume = 1.5f;
+    }
+
     public void buttonInteraction()
     {
         if (!doorTriggered)
         {
             doorTriggered = true;
+
+            PlayButtonSound();
+
             StartCoroutine(buttonPress());
-            doorMovement.closeDoors();
+
+            if (doorMovement != null)
+            {
+                doorMovement.closeDoors();
+            }
+        }
+    }
+
+    private void PlayButtonSound()
+    {
+        if (audioSource.clip != null)
+        {
+            audioSource.PlayOneShot(audioSource.clip);
+        }
+        else
+        {
+            Debug.LogWarning("Button audio clip is missing.", this);
         }
     }
 
@@ -46,5 +75,4 @@ public class Button : MonoBehaviour
 
         transform.localPosition = end;
     }
-
 }
