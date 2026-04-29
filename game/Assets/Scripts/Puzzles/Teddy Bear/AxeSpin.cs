@@ -20,6 +20,7 @@ public class AxeSpin : MonoBehaviour
 
     private float timer = 0f;
     private bool arrived = false;
+    private bool bgmSwitched = false;
 
     void Awake()
     {
@@ -35,14 +36,19 @@ public class AxeSpin : MonoBehaviour
     {
         if (arrived) return;
 
+        // Switch BGM as soon as the axe starts flying
+        if (!bgmSwitched)
+        {
+            bgmSwitched = true;
+            StartCoroutine(SwitchToBossBGM());
+        }
+
         timer += Time.deltaTime;
         float progress = Mathf.Clamp01(timer / flyDuration);
         float easedProgress = 1f - Mathf.Pow(1f - progress, 2f);
-
         Vector3 currentPos = Vector3.Lerp(startPos, targetPos, easedProgress);
         float arc = arcHeight * 4f * progress * (1f - progress);
         currentPos.y += arc;
-
         transform.position = currentPos;
         transform.Rotate(spinSpeed * Time.deltaTime, 0f, 0f);
 
@@ -61,8 +67,6 @@ public class AxeSpin : MonoBehaviour
                 rb.isKinematic = false;
                 rb.useGravity = true;
             }
-
-            StartCoroutine(SwitchToBossBGM());
         }
     }
 
@@ -73,6 +77,7 @@ public class AxeSpin : MonoBehaviour
             audioSource.PlayOneShot(axeDropSound);
         }
     }
+
     private IEnumerator SwitchToBossBGM()
     {
         string[] triggerNames = { "BackgroundMusicTrigger", "BackgroundMusicTrigger (1)", "BackgroundMusicChange" };
@@ -93,6 +98,7 @@ public class AxeSpin : MonoBehaviour
 
         float originalVolume = bgmSource.volume;
 
+        // Fade out current BGM
         while (bgmSource.volume > 0.01f)
         {
             bgmSource.volume -= originalVolume * Time.deltaTime / fadeTime;
@@ -105,6 +111,7 @@ public class AxeSpin : MonoBehaviour
         bgmSource.loop = true;
         bgmSource.Play();
 
+        // Fade in boss BGM
         while (bgmSource.volume < originalVolume)
         {
             bgmSource.volume += originalVolume * Time.deltaTime / fadeTime;
