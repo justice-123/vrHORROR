@@ -81,7 +81,7 @@ public class HintButton : MonoBehaviour
             }
             else if (hintNumber == 3)
             {
-                hintText.text = "I don't thing there's anything useful left in the office...";
+                hintText.text = "Wasn't there a keypad near the room I woke up in?";
             }
             break;
 
@@ -98,7 +98,7 @@ public class HintButton : MonoBehaviour
             }
             else if (hintNumber == 3)
             {
-                hintText.text = "Wasn't there a lift near the room I woke up in?";
+                
             }
             break;
 
@@ -122,12 +122,12 @@ public class HintButton : MonoBehaviour
             } 
             else if (hintNumber == 2) 
             {
-                hintText.text = "There's a room with a padlock next door, I should look there.";
+                hintText.text = "There's a room with a next door to the nursery, I should look there.";
                 hintNumber++;
             } 
             else if (hintNumber == 3)
             {
-                hintText.text = "What was that date I saw earlier? Could that be the combination?";
+                
             }
             break;
 

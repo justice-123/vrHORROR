@@ -5,6 +5,7 @@ public class ToiletDoorTrigger : MonoBehaviour
     
     public bool triggered;
     public ToiletLight toiletLight;
+    public ToiletDoor toiletDoor;
 
     void Start()
     {
@@ -16,6 +17,7 @@ public class ToiletDoorTrigger : MonoBehaviour
         if (!triggered)
         {
             triggered = true;
+            toiletDoor.inNursery = true;
             toiletLight.enableLight();
         }
     }
