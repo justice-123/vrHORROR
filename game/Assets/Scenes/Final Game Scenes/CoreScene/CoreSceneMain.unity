@@ -7011,7 +7011,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 800
+    maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -11172,8 +11172,8 @@ Transform:
   m_GameObject: {fileID: 1626217432}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.98, y: 3.14, z: 0}
-  m_LocalScale: {x: 0.84269, y: 1, z: 1}
+  m_LocalPosition: {x: -0.51, y: 3.14, z: -0.76}
+  m_LocalScale: {x: 0.7259184, y: 1, z: 0.8586791}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -12750,4 +12750,3 @@ SceneRoots:
   - {fileID: 4815150429841432670}
   - {fileID: 1615729980}
   - {fileID: 1592465870}
-  - {fileID: 1568522298}
