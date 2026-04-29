@@ -1596,7 +1596,7 @@ Transform:
   m_GameObject: {fileID: 817084915}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.94, y: 0.95, z: 0.558}
+  m_LocalPosition: {x: 13.925, y: 0.95, z: 0.558}
   m_LocalScale: {x: 1.201035, y: 1.4320834, z: 10.728069}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1870,7 +1870,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 108
+  Priority: 0
   DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
@@ -4111,7 +4111,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.33333334
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 0b3ef8c7a22eb974ea49c961e38ab3b4, type: 2}
   m_BuildHeightMesh: 0

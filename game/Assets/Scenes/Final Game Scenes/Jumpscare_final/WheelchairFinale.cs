@@ -145,10 +145,12 @@ public class WheelchairFinale : MonoBehaviour
         GameObject p = GameObject.FindGameObjectWithTag(playerTag);
         if (p != null)
         {
-            playerRig = p.transform;
-            moveProvider = p.GetComponentInChildren<ContinuousMoveProvider>();
-            turnProvider = p.GetComponentInChildren<ContinuousTurnProvider>();
-            snapTurnProvider = p.GetComponentInChildren<SnapTurnProvider>();
+            // THE FIX: Target the absolute root of the XR Rig so it doesn't just spin a child collider!
+            playerRig = p.transform.root;
+
+            moveProvider = playerRig.GetComponentInChildren<ContinuousMoveProvider>();
+            turnProvider = playerRig.GetComponentInChildren<ContinuousTurnProvider>();
+            snapTurnProvider = playerRig.GetComponentInChildren<SnapTurnProvider>();
         }
 
         if (AreaTransition.Instance != null)
@@ -399,7 +401,7 @@ public class WheelchairFinale : MonoBehaviour
     }
 
     // ============================================================
-    // ROTATE PLAYER
+    // ROTATE PLAYER (BULLETPROOF VR FIX)
     // ============================================================
     private void RotatePlayerToFaceSpawnPoint()
     {
@@ -407,6 +409,7 @@ public class WheelchairFinale : MonoBehaviour
 
         Vector3 targetDir = spawnPoint.position - playerCamera.position;
         targetDir.y = 0;
+
         if (targetDir.sqrMagnitude < 0.001f) return;
         targetDir.Normalize();
 
@@ -415,7 +418,10 @@ public class WheelchairFinale : MonoBehaviour
         currentCamDir.Normalize();
 
         float angleDifference = Vector3.SignedAngle(currentCamDir, targetDir, Vector3.up);
-        playerRig.Rotate(Vector3.up, angleDifference, Space.World);
+
+        // THE FIX: Rotate the root rig directly AROUND the physical position of the camera/head.
+        // This forces the headset vision to completely snap around, ignoring nested colliders.
+        playerRig.RotateAround(playerCamera.position, Vector3.up, angleDifference);
     }
 
     // ============================================================
