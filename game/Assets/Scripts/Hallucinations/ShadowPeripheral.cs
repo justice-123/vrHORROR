@@ -33,12 +33,21 @@ public class ShadowPeripheral : MonoBehaviour
         if (toxicity == null)
             toxicity = FindAnyObjectByType<ToxicityDevice>();
 
-        player = Camera.main.transform;
+        player = Camera.main != null ? Camera.main.transform : null;
+
+        Debug.LogWarning("ShadowPeripheral Start - toxicity: " + (toxicity != null) + " player: " + (player != null));
+
+        if (player == null)
+        {
+            Debug.LogWarning("ShadowPeripheral: Camera.main not found, will retry in Update");
+        }
+
         startPos = transform.position;
         baseIntensity = spotLight.intensity;
         currentIntensity = 0f;
         spotLight.intensity = 0f;
-        lastPlayerPos = player != null ? player.position : Vector3.zero;
+
+        Debug.LogWarning("ShadowPeripheral: baseIntensity = " + baseIntensity);
 
         if (monsterAnimator != null)
             monsterAnimator.enabled = false;
@@ -46,6 +55,19 @@ public class ShadowPeripheral : MonoBehaviour
 
     void Update()
     {
+
+        if (player == null)
+        {
+            player = Camera.main != null ? Camera.main.transform : null;
+            if (player == null) return;
+        }
+
+        if (toxicity == null)
+        {
+            toxicity = FindAnyObjectByType<ToxicityDevice>();
+            if (toxicity != null)
+                Debug.LogWarning("ShadowPeripheral: Found toxicity in Update");
+        }
         if (toxicity == null || toxicity.toxicityLevel < activateAbove)
         {
             currentIntensity = Mathf.MoveTowards(currentIntensity, 0f, fadeSpeed * Time.deltaTime);
@@ -92,6 +114,7 @@ public class ShadowPeripheral : MonoBehaviour
         Vector3 shadowPoint;
         RaycastHit hit;
         if (Physics.Raycast(spotLight.transform.position, spotLight.transform.forward, out hit, Mathf.Infinity, layerMask))
+
             shadowPoint = hit.point;
         else
             shadowPoint = spotLight.transform.position + spotLight.transform.forward * 5f;
@@ -101,6 +124,8 @@ public class ShadowPeripheral : MonoBehaviour
         Vector3 playerForward = player.forward;
         playerForward.y = 0f;
         float angle = Vector3.Angle(playerForward, toShadow);
+
+        Debug.LogWarning("Raycast hit: " + (hit.collider != null ? hit.collider.gameObject.name : "nothing") + " angle: " + angle);
 
         bool looking = angle < hideAngle;
 
