@@ -11454,7 +11454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toxicityLevel: 30
-  fillRate: 1.5
+  fillRate: 3
   drainRate: 12
   disabled: 0
   breathInput: {fileID: 1292080283}
