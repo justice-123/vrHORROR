@@ -23,6 +23,7 @@ public class HallucinationPostFX : MonoBehaviour
 
     void Update()
     {
+
         if (toxicity.toxicityLevel < activateAbove)
         {
             SetEffects(0f);

@@ -26,15 +26,18 @@ public class TutorialDoor : MonoBehaviour
     {
         open = true;
 
-        // Re-enable oxygen and toxicity when tutorial ends
-        OxygenManager.Instance.disabled = false;
-        ToxicityDevice.Instance.disabled = false;
+        if (OxygenManager.Instance != null)
+            OxygenManager.Instance.disabled = false;
+        else
+            Debug.LogWarning("OxygenManager.Instance is null when unlocking door");
 
+        if (ToxicityDevice.Instance != null)
+            ToxicityDevice.Instance.disabled = false;
+        else
+            Debug.LogWarning("ToxicityDevice.Instance is null when unlocking door");
 
-        audioSource.Play();
+        if (audioSource != null) audioSource.Play();
         StartCoroutine(openDoor());
-
-        
     }
 
     private void OnTriggerEnter(Collider collider)

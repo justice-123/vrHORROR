@@ -48,6 +48,7 @@ public class TutorialManager : MonoBehaviour
     {
         // Disable oxygen and toxicity during tutorial
         OxygenManager.Instance.disabled = true;
+        ToxicityDevice.Instance.toxicityLevel = 30f;
         ToxicityDevice.Instance.disabled = true;
 
         okButtonObject.SetActive(false);
