@@ -7672,9 +7672,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1615729981}
-  warning75: {fileID: 8300000, guid: 567313f176c843b4a8858401febe5ab9, type: 3}
-  warning50: {fileID: 8300000, guid: e52b209d0c243d447b3bc32ddcf41c85, type: 3}
-  warning25: {fileID: 8300000, guid: e101bf7003f13824d91043fdb90761fb, type: 3}
+  warning75: {fileID: 8300000, guid: 8d5e41aeadef73044b7492add0214a26, type: 3}
+  warning50: {fileID: 8300000, guid: 341e75bcd8cf30040af5f91791e569fb, type: 3}
+  warning25: {fileID: 8300000, guid: cd0cc5e4bd6e00845913421417d7ffd5, type: 3}
 --- !u!1 &1623176429
 GameObject:
   m_ObjectHideFlags: 0
