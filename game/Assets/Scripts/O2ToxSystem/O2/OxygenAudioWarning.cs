@@ -6,8 +6,6 @@ public class OxygenAudioWarning : MonoBehaviour
     [SerializeField] private AudioClip warning75;
     [SerializeField] private AudioClip warning50;
     [SerializeField] private AudioClip warning25;
-    [SerializeField] private AudioClip warning0;
-
     void OnEnable() { OxygenTank.OnOxygenThresholdCrossed += HandleThreshold; }
     void OnDisable() { OxygenTank.OnOxygenThresholdCrossed -= HandleThreshold; }
 
@@ -18,7 +16,6 @@ public class OxygenAudioWarning : MonoBehaviour
             75 => warning75,
             50 => warning50,
             25 => warning25,
-            0 => warning0,
             _ => null
         };
 
