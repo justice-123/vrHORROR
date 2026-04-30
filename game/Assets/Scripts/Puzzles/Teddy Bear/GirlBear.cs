@@ -36,6 +36,10 @@ public class GirlBear : MonoBehaviour
     private bool pauseStarted = false;
     private Renderer[] renderers;
 
+
+    [Header("Disable hallucinations ")]
+    [SerializeField] private GameObject hallucinationToDisable;
+
     void Start()
     {
         renderers = GetComponentsInChildren<Renderer>();
@@ -126,6 +130,9 @@ public class GirlBear : MonoBehaviour
         axeSpawned = true;
         SpawnAxeFromBehindPlayer();
         yield return new WaitForSeconds(1.0f);
+
+        hallucinationToDisable.SetActive(false);
+
 
         MySceneManager.Instance.LoadNewScene("Final-monster-game-scene");
 
