@@ -99,7 +99,7 @@ public class ShadowPeripheral : MonoBehaviour
         }
 
         // raycast from light to wall
-        int layerMask = ~LayerMask.GetMask("ShadowOnly", "Ignore Raycast");
+        int layerMask = ~LayerMask.GetMask("ShadowOnly", "Ignore Raycast", "Player");
         Vector3 shadowPoint;
         RaycastHit hit;
         if (Physics.Raycast(spotLight.transform.position, spotLight.transform.forward, out hit, Mathf.Infinity, layerMask))
