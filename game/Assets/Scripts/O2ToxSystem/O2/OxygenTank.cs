@@ -15,11 +15,6 @@ public class OxygenTank : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
         Instance = this;
     }
 
@@ -37,7 +32,7 @@ public class OxygenTank : MonoBehaviour
 
     private void CheckThreshold()
     {
-        while (nextThreshold >= 0 && oxygenLevel <= nextThreshold)
+        while (nextThreshold >= 25 && oxygenLevel <= nextThreshold)
         {
             OnOxygenThresholdCrossed?.Invoke(nextThreshold);
             nextThreshold -= 25;
@@ -47,7 +42,7 @@ public class OxygenTank : MonoBehaviour
     private void ResetThresholds()
     {
         nextThreshold = 75;
-        while (nextThreshold >= 0 && oxygenLevel <= nextThreshold)
+        while (nextThreshold >= 25 && oxygenLevel <= nextThreshold)
             nextThreshold -= 25;
     }
 }

@@ -18,11 +18,6 @@ public class OxygenManager : MonoBehaviour
     private bool _deathTriggered = false;
     private bool _chokingTriggered = false;
 
-
-    private bool[] o2Announced = new bool[4]; // 75, 50, 20, 10
-
-
-
     void Update()
     {
         if (OxygenTank.Instance == null) return;
@@ -30,13 +25,12 @@ public class OxygenManager : MonoBehaviour
         // Always allow refilling even during tutorial
         if (OxygenTank.Instance.isRefilling)
         {
-            OxygenTank.Instance.oxygenLevel = Mathf.Clamp(
-                OxygenTank.Instance.oxygenLevel + refillRate * Time.deltaTime, 0f, 100f);
+            OxygenTank.Instance.RefillOxygen(refillRate * Time.deltaTime);
             canPlayBreathAudio = true;
             return;
         }
 
-        if (disabled) return; // moved below refill check
+        if (disabled) return;
 
         if (OxygenTank.Instance.oxygenLevel > 0f)
             _deathTriggered = false;
@@ -50,8 +44,8 @@ public class OxygenManager : MonoBehaviour
 
         if (breathInput != null && breathInput.isBreathing)
         {
-            OxygenTank.Instance.oxygenLevel = Mathf.Clamp(
-                OxygenTank.Instance.oxygenLevel - drainRate * Time.deltaTime, 0f, 100f);
+            OxygenTank.Instance.UseOxygen(drainRate * Time.deltaTime);
+
             if (canPlayBreathAudio)
             {
                 if (audioSource != null)
@@ -83,23 +77,6 @@ public class OxygenManager : MonoBehaviour
             _deathTriggered = true;
             if (chokingAudio != null) chokingAudio.Stop();
             OnPlayerDied();
-        }
-
-        CheckO2Announcements();
-    }
-
-    void CheckO2Announcements()
-    {
-        float o2 = OxygenTank.Instance.oxygenLevel;
-        float[] thresholds = { 75f, 50f, 20f, 10f };
-        string[] messages = { "Oxygen at 75 percent", "Oxygen at 50 percent", "Warning Oxygen at 20 percent", "Warning Oxygen at 10 percent" };
-
-        for (int i = 0; i < thresholds.Length; i++)
-        {
-            if (!o2Announced[i] && o2 <= thresholds[i])
-            {
-                o2Announced[i] = true;
-            }
         }
     }
 
