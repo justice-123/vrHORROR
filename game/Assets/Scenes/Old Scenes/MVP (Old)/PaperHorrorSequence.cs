@@ -81,7 +81,7 @@ public class PaperHorrorSequence : MonoBehaviour
     {
         Debug.Log("heartbeat activated");
 
-        // Optional initial scary noise
+        
         if (scaryNoise != null)
             audioSource.PlayOneShot(scaryNoise);
 
@@ -96,7 +96,7 @@ public class PaperHorrorSequence : MonoBehaviour
 
         Debug.Log("Heartbeat complete.");
 
-        // Optional eerie audio
+        
         if (eerieNoise != null)
             audioSource.PlayOneShot(eerieNoise);
 
@@ -108,7 +108,6 @@ public class PaperHorrorSequence : MonoBehaviour
         // Strong back tap
         BhapticsLibrary.Play(backScareEvent, 1, 600);
 
-        // Let the brain register the tap
         yield return new WaitForSeconds(0.8f);
 
         // Wait for player to turn

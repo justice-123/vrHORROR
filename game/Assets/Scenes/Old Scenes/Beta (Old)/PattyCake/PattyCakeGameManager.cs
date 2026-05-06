@@ -61,7 +61,6 @@ public class PattyCakeGameManager : MonoBehaviour
         {
             if (Time.time > gameStartTime + gameAllowedTime)
             {
-                // Timer ran out! Trigger the lose sequence.
                 StartCoroutine(TriggerLoseSequence());
             }
         }
@@ -243,11 +242,11 @@ public class PattyCakeGameManager : MonoBehaviour
             audioSource.PlayOneShot(clapSound);
             Debug.Log("Clap");
 
-            PickNextTarget(); // Pick a new box 
+            PickNextTarget(); 
             return true;
         }
 
-        return false; // Wrong box hit
+        return false; 
     }
 
 

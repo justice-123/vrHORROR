@@ -77,7 +77,6 @@ public class MonsterAI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        //meshRenderer = GetComponent<MeshRenderer>();
 
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("MainCamera");
@@ -100,16 +99,11 @@ public class MonsterAI : MonoBehaviour
             Debug.LogError("Monster can't find the Player");
         }
 
-        //lastPlayerPos = player.position;
 
         leftHandHap = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
         rightHandHap = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
 
 
-       
-
-        //attackVolume = GameObject.Find("Damage Volume");
-        
         
         attackVolume = attackVolumeObj.GetComponent<Volume>();
         blackoutVolume = blackoutVolumeObj.GetComponent<Volume>();
@@ -130,7 +124,6 @@ public class MonsterAI : MonoBehaviour
 
 
         float distance = Vector3.Distance(transform.position, player.position); //checks current monster distance to player
-        //float playerSpeed = (player.position - lastPlayerPos).magnitude / Time.deltaTime;
         bool monsterSeesPlayer = CanSeePlayer();
         float totalMotion = CalculateCombinedMotion();
 

@@ -9,7 +9,6 @@ public class GameManagerScript : MonoBehaviour
     public enum GameState { Green, Orange, Red }
 
     [Header("Game State")]
-    //public bool isGreenLight = true;
     public GameState currentState = GameState.Green;
     public float timer = 0f;
     public bool isInsideGameBox = false;
@@ -19,7 +18,6 @@ public class GameManagerScript : MonoBehaviour
 
     [Header("Detection Thresholds")]
     private float velocityThreshold = 1.0f; // head/hands
-    //public float velocityThreshold = 0.15f; // head/hands
     private float angularVelocityThreshold = 1.0f; // head turning
 
     [Header("References")]
@@ -28,7 +26,6 @@ public class GameManagerScript : MonoBehaviour
 
 
     [Header("Jumpscare References")]
-    //public GameObject jumpscareUI;    // Canvas/Image here
     public AudioSource scareAudio;    // AudioSource here
     public float scareDuration = 1.0f;
 
