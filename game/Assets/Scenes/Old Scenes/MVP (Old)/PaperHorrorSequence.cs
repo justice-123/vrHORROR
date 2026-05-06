@@ -9,7 +9,7 @@ public class PaperHorrorSequence : MonoBehaviour
     [SerializeField] private AudioClip eerieNoise;
     [SerializeField] private AudioClip jumpscareSound;
 
-    [Header("Haptics - Exact Event Names")]
+    [Header("Haptics")]
     [SerializeField] private string heartbeatEvent = "hearthump";
     [SerializeField] private string backScareEvent = "jumpscare-back";
     [SerializeField] private int heartbeatIntensity = 1;
@@ -30,13 +30,13 @@ public class PaperHorrorSequence : MonoBehaviour
 
     void Start()
     {
-        // Setup AudioSource
+        // setting up audiosource
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.spatialBlend = 1f;
         audioSource.minDistance = 1f;
         audioSource.maxDistance = 15f;
 
-        // Find VR Camera (CenterEyeAnchor)
+        // Finding the VR camera
         Camera cam = FindFirstObjectByType<Camera>();
         if (cam != null)
         {
@@ -79,7 +79,7 @@ public class PaperHorrorSequence : MonoBehaviour
 
     IEnumerator HorrorSequence()
     {
-        Debug.Log("=== PHASE 1: Heartbeat ===");
+        Debug.Log("heartbeat activated");
 
         // Optional initial scary noise
         if (scaryNoise != null)
@@ -100,10 +100,10 @@ public class PaperHorrorSequence : MonoBehaviour
         if (eerieNoise != null)
             audioSource.PlayOneShot(eerieNoise);
 
-        Debug.Log("=== PHASE 2: Silence ===");
+       
         yield return new WaitForSeconds(silenceDuration);
 
-        Debug.Log("=== PHASE 3: Back Tap ===");
+        Debug.Log("back tap");
 
         // Strong back tap
         BhapticsLibrary.Play(backScareEvent, 1, 600);
@@ -117,7 +117,7 @@ public class PaperHorrorSequence : MonoBehaviour
 
     IEnumerator WaitForPlayerTurn()
     {
-        Debug.Log("Waiting for player to turn around...");
+       // Debug.Log("Waiting for player to turn around...");
 
         if (playerTransform == null)
             yield break;
@@ -135,8 +135,7 @@ public class PaperHorrorSequence : MonoBehaviour
 
             float angle = Vector3.Angle(initialForward, currentForward);
 
-            // Debug to see rotation in console
-            // Debug.Log("Turn angle: " + angle);
+            
 
             if (angle > 120f) // Adjust if needed
             {
@@ -182,7 +181,6 @@ public class PaperHorrorSequence : MonoBehaviour
     }
 
 
-    // Manual test trigger (Press T in Editor)
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T) && !hasTriggered)

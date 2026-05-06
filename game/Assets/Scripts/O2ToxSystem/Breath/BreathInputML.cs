@@ -40,7 +40,7 @@ public class BreathInputML : MonoBehaviour
     [Header("Smoothing")]
     public float smoothSpeed = 8f;
 
-    [Header("Outputs - Read Only")]
+    [Header("Outputs")]
     public string detectedClass = "none";
     public string detectionPath = "none";
     public float inhaleConfidence;
@@ -122,9 +122,8 @@ public class BreathInputML : MonoBehaviour
         float rms = Mathf.Sqrt((float)(rmsSum / audioBuffer.Length));
         debugRms = rms;
 
-        // =============================================
-        // PATH A: ML model (quiet-to-moderate sounds)
-        // =============================================
+        // path A--> ML model for quiet to moderate sounds
+       
         float[,] mfcc = MFCCExtractor.ComputeMFCC(
             audioBuffer, sampleRate, nMfcc, nFft, hopLength);
 
@@ -170,9 +169,7 @@ public class BreathInputML : MonoBehaviour
             && inhaleConfidence >= confidenceThreshold
             && rms <= maxInhaleRms;
 
-        // =============================================
-        // PATH B: Pitch detection (loud sounds only)
-        // =============================================
+        // path b--> loud sounds only pitch detection
         bool pitchSaysBreath = false;
         debugPitchConfidence = 0f;
 
@@ -185,10 +182,7 @@ public class BreathInputML : MonoBehaviour
             debugPitchConfidence = pitchConf;
             pitchSaysBreath = pitchConf < pitchConfidenceThreshold;
         }
-
-        // =============================================
-        // Combine paths
-        // =============================================
+        //combining paths a and b
         if (mlSaysInhale)
         {
             detectedClass = "inhale";

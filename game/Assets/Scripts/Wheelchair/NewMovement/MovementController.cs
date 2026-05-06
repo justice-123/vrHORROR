@@ -19,7 +19,7 @@ public class MovementController : MonoBehaviour
 
     public static MovementController Instance { get; private set; }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+ 
     void Start()
     {
         Instance = this;
@@ -29,7 +29,6 @@ public class MovementController : MonoBehaviour
         rotated = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!movementEnabled) return;

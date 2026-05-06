@@ -56,12 +56,6 @@ public class GameManagerScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //ResetPlayer();
-
-        //lastPosition = playerTransform.position;
-        //lastRotation = playerTransform.rotation;
-
-        //UpdateCubeColor();
 
         GameObject xrOrigin = GameObject.FindGameObjectWithTag("Player");
         GameObject mainCam = GameObject.FindGameObjectWithTag("MainCamera");
@@ -93,9 +87,6 @@ public class GameManagerScript : MonoBehaviour
 
             if (timer <= 0)
             {
-                //isGreenLight = !isGreenLight;
-                //timer = Random.Range(2f, 5f);
-                //UpdateCubeColor();
                 CycleLight();
             }
 
@@ -137,10 +128,6 @@ public class GameManagerScript : MonoBehaviour
 
     void DetectMovement()
     {
-        // Controllers
-        // 1. Hand Velocities (Calculated by position differences)
-        //float leftHandSpeed = 0f;
-        //float rightHandSpeed = 0f;
 
         float leftHandSpeed = ((leftHandTransform.position - lastLeftHandPos) / Time.deltaTime).magnitude;
 
@@ -166,29 +153,6 @@ public class GameManagerScript : MonoBehaviour
             //if (Jumpscaring == false) StartCoroutine(JumpscareThenReset());
         }
     }
-
-    //IEnumerator JumpscareThenReset()
-    //{
-
-        //Jumpscaring = true;
-
-        //jumpscareUI.SetActive(true);
-        //scareAudio.Play();
-
-        
-        //yield return new WaitForSeconds(scareDuration);
-
-        
-        //jumpscareUI.SetActive(false);
-
-
-
-
-        //ResetPlayer();
-        //Jumpscaring = false;
-
-    //}
-
     public void SetPlayerInZone(bool inside)
     {
         isInsideGameBox = inside;
@@ -248,7 +212,6 @@ public class GameManagerScript : MonoBehaviour
 
         UpdateTrackingData();
 
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
 
     }

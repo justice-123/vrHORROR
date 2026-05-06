@@ -6,7 +6,7 @@ public class DoorVR : MonoBehaviour
     public float smooth = 2.0f;
     public float doorOpenAngle = 90.0f;
 
-    [Header("State (read-only)")]
+    [Header("State")]
     [SerializeField] private bool isUnlocked;
     [SerializeField] private bool isOpen;
 

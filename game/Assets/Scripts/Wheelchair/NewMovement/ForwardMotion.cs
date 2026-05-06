@@ -46,7 +46,7 @@ public class forwardMotion : MonoBehaviour
     public float snapDeadzone = 0.2f;
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+   
     void Start()
     {
         
@@ -56,7 +56,7 @@ public class forwardMotion : MonoBehaviour
         chairVelocity = 0f;
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
         

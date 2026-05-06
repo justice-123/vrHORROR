@@ -142,7 +142,7 @@ public class MonsterAI : MonoBehaviour
             if (totalMotion > moveThreshold)
             {
                 Debug.Log("Hunting");
-                //UpdateWalkingSound(chaseSpeed);
+                
                 UpdateWalkingSound();
 
                 isPausing = false;
@@ -156,7 +156,7 @@ public class MonsterAI : MonoBehaviour
                     agent.SetDestination(player.position);
                     agent.speed = chaseSpeed;
 
-                    //ChangeColor(huntingColor);
+                    
                 }
 
             }
@@ -168,17 +168,7 @@ public class MonsterAI : MonoBehaviour
 
                 agent.speed = 1.0f;  // keep moving closer to player, 
 
-                //if (distance < personalSpace)
-                //{
-                //    if (!isPausing && Vector3.Distance(agent.destination, player.position) < personalSpace)
-                //    {
-                //        WanderAwayFromPlayer();
-                //    }
-                //    else if (!agent.pathPending && agent.remainingDistance < 0.75f)
-                //    {
-                //        WanderAwayFromPlayer();
-                //    }
-                //}
+               
 
                 if (distance < personalSpace)
                 {
@@ -233,20 +223,11 @@ public class MonsterAI : MonoBehaviour
                 }
 
 
-                //if (!agent.pathPending && agent.remainingDistance < 0.75f) Wander();
-
-                //if (distance < 1) { 
-                //    Wander(); 
-                //}
-
-
             }
         }
         else
         {
 
-            // Randomly wander 
-            //UpdateWalkingSound(1.0f);
             UpdateWalkingSound();
             agent.speed = 1f;
             movementTimer = 0f;
@@ -323,17 +304,7 @@ public class MonsterAI : MonoBehaviour
         StartCoroutine(PlayHapticForDuration(huntClip, 2.0f, 0.1f));
         leftHandHap.SendHapticImpulse(0, 1.0f, 2f);
         rightHandHap.SendHapticImpulse(0, 1.0f, 2f);
-        //BhapticsLibrary.Play(monster_slash);
-
-        // slowly fade away red
-        //float fadeTime = 3.0f;
-        //float startWeight = 1f;
-        //for (float t = 0; t < fadeTime; t += Time.deltaTime)
-        //{
-        //    attackVolume.weight = Mathf.Lerp(startWeight, 0f, t / fadeTime);
-        //    yield return null;
-        //}
-        //attackVolume.weight = 0f;
+        
 
         if (OxygenTank.Instance != null)
         {
@@ -385,22 +356,7 @@ public class MonsterAI : MonoBehaviour
 
     void UpdateWalkingSound()
     {
-        //if (agent.velocity.magnitude > 0.2f && !agent.isStopped)
-        //{
-        //    if (!movementSource.isPlaying)
-        //    {
-        //        movementSource.clip = walkClip;
-        //        movementSource.Play();
-        //    }
-
-        //    movementSource.pitch = pitch;
-        //}
-        //else
-        //{
-        //    StopWalkingSound();
-        //}
-
-
+       
         float currentVelocity = agent.velocity.magnitude;
 
         if (currentVelocity > 0.1f && !agent.isStopped)
@@ -418,7 +374,7 @@ public class MonsterAI : MonoBehaviour
             float speedPercentage = currentVelocity / chaseSpeed;
 
             movementSource.pitch = Mathf.Lerp(minPitch, maxPitch, speedPercentage);
-            //movementSource.volume = Mathf.Lerp(0.7f, 1.0f, speedPercentage);
+            
 
         }
         else
@@ -449,11 +405,7 @@ public class MonsterAI : MonoBehaviour
         BhapticsLibrary.StopByEventId(clipName);
     }
 
-    private void LateUpdate()
-    {
-        UpdateLastPositions();
-
-    }
+ 
 
     void WanderAwayFromPlayer()
     {
@@ -527,12 +479,9 @@ public class MonsterAI : MonoBehaviour
             if (!BhapticsLibrary.IsPlayingByEventId(huntClip))
             {
                 BhapticsLibrary.Play(huntClip);
-                //BhapticsLibrary.Play(huntClip);
-                //Debug.Log("Playing Hunting clip");
+                
             }
-            //if (!BhapticsLibrary.IsPlaying()) BhapticsLibrary.Play(huntClip);
-
-            // Controller 
+            
 
             leftHandHap.SendHapticImpulse(0, 0.8f, 0.1f);
             rightHandHap.SendHapticImpulse(0, 0.8f, 0.1f);
@@ -596,22 +545,5 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-
-
-    // REMOVE THIS I BEG
-    void OnDrawGizmos()
-    {
-        
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, viewRange);
-
-        Gizmos.color = Color.red;
-
-        Vector3 leftBoundary = Quaternion.AngleAxis(-viewAngle, Vector3.up) * transform.forward;
-        Vector3 rightBoundary = Quaternion.AngleAxis(viewAngle, Vector3.up) * transform.forward;
-
-        Gizmos.DrawLine(transform.position, transform.position + leftBoundary * viewRange);
-        Gizmos.DrawLine(transform.position, transform.position + rightBoundary * viewRange);
-    }
 
 }

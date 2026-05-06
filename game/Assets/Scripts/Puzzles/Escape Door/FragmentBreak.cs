@@ -6,7 +6,6 @@ public class FragmentBreak : MonoBehaviour
     public bool fragmentBroken;
     public FragmentBreak[] neighbours;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         fragmentBroken = false;
