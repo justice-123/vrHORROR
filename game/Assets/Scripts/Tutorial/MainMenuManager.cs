@@ -4,9 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class MainMenuManager : MonoBehaviour
 {
-    /// <summary>
-    /// Load the tutorial scene when Start button is clicked
-    /// </summary>
+
     public void LoadTutorialScene()
     {
         // Trigger controller haptic feedback
@@ -23,9 +21,7 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene("Tutorial-2");
     }
 
-    /// <summary>
-    /// Quit the game
-    /// </summary>
+ 
     public void QuitGame()
     {
 #if UNITY_EDITOR

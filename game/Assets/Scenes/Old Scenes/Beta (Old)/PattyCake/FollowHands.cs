@@ -7,14 +7,7 @@ public class FollowHands : MonoBehaviour
 
     private Transform targetHandBox;
 
-    //void Start()
-    //{
-    //    GameObject targetHand = GameObject.FindGameObjectWithTag(targetTag);
-
-    //    targetHandBox = targetHand.transform;
-
-
-    //}
+  
 
     void Update()
     {

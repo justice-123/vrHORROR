@@ -61,7 +61,6 @@ public class PattyCakeGameManager : MonoBehaviour
         {
             if (Time.time > gameStartTime + gameAllowedTime)
             {
-                // Timer ran out! Trigger the lose sequence.
                 StartCoroutine(TriggerLoseSequence());
             }
         }
@@ -87,8 +86,7 @@ public class PattyCakeGameManager : MonoBehaviour
                 box.material = inactiveMaterial;
             }
 
-            // Pick random box for now, and set i active
-            //currentActiveIndex = Random.Range(0, targetBoxes.Length);
+          
 
             if (gameState == 2)
             {
@@ -133,7 +131,7 @@ public class PattyCakeGameManager : MonoBehaviour
 
 
         if (gameCounter == 11) // after 21 hits, switch to baby part
-        //if (gameCounter == 21) // after 21 hits, switch to baby part
+      
         {
             // disable old boxes
             startBoxes.SetActive(false);
@@ -152,8 +150,6 @@ public class PattyCakeGameManager : MonoBehaviour
         }
 
 
-
-        //if (gameCounter > 21) // after 21 hits, switch to baby part
         if (B4Baby) // after 21 hits, switch to baby part
             {
                 
@@ -177,10 +173,6 @@ public class PattyCakeGameManager : MonoBehaviour
 
             }
 
-
-        //if (Time.time > gameStartTime + gameAllowedTime)   // if time runs out, you failed
-       
-        
 
 
         isWaiting = false;
@@ -206,10 +198,7 @@ public class PattyCakeGameManager : MonoBehaviour
 
             // play scream
             audioSource.PlayOneShot(scream);
-            //yield return new WaitForSeconds(scream.length);
-
-
-            // flashing lights for 2 secs,
+         
 
             int totalFlashes = 6;
             float waitTime = 0.14f;
@@ -232,7 +221,6 @@ public class PattyCakeGameManager : MonoBehaviour
         }
     }
 
-
     // called by pattycake hands when collide with a box, returns true if it was the correct box
     public bool TryHit(GameObject hitBox)
     {
@@ -254,11 +242,11 @@ public class PattyCakeGameManager : MonoBehaviour
             audioSource.PlayOneShot(clapSound);
             Debug.Log("Clap");
 
-            PickNextTarget(); // Pick a new box 
+            PickNextTarget(); 
             return true;
         }
 
-        return false; // Wrong box hit
+        return false; 
     }
 
 

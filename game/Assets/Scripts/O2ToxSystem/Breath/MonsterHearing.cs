@@ -9,7 +9,7 @@ public class MonsterHearing : MonoBehaviour
     [Header("Hearing")]
     public float hearingRadius = 6f;
 
-    [Tooltip("Suspicion gain is scaled by distance - full effect at 0, zero at hearingRadius")]
+    [Tooltip("Suspicion gain is scaled by distance-full effect at 0, zero at hearingRadius")]
     public bool useDistanceFalloff = true;
 
     [Header("Suspicion")]

@@ -21,7 +21,7 @@ public class Wheelchair_Vignette : MonoBehaviour
 
     public float currentIntensity;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         if (volume.profile.TryGet(out vignette))
@@ -30,7 +30,7 @@ public class Wheelchair_Vignette : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
         float move = Mathf.Abs(currentSpeed);

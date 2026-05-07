@@ -9,7 +9,6 @@ public class GameManagerScript : MonoBehaviour
     public enum GameState { Green, Orange, Red }
 
     [Header("Game State")]
-    //public bool isGreenLight = true;
     public GameState currentState = GameState.Green;
     public float timer = 0f;
     public bool isInsideGameBox = false;
@@ -19,7 +18,6 @@ public class GameManagerScript : MonoBehaviour
 
     [Header("Detection Thresholds")]
     private float velocityThreshold = 1.0f; // head/hands
-    //public float velocityThreshold = 0.15f; // head/hands
     private float angularVelocityThreshold = 1.0f; // head turning
 
     [Header("References")]
@@ -28,7 +26,6 @@ public class GameManagerScript : MonoBehaviour
 
 
     [Header("Jumpscare References")]
-    //public GameObject jumpscareUI;    // Canvas/Image here
     public AudioSource scareAudio;    // AudioSource here
     public float scareDuration = 1.0f;
 
@@ -56,12 +53,6 @@ public class GameManagerScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //ResetPlayer();
-
-        //lastPosition = playerTransform.position;
-        //lastRotation = playerTransform.rotation;
-
-        //UpdateCubeColor();
 
         GameObject xrOrigin = GameObject.FindGameObjectWithTag("Player");
         GameObject mainCam = GameObject.FindGameObjectWithTag("MainCamera");
@@ -93,9 +84,6 @@ public class GameManagerScript : MonoBehaviour
 
             if (timer <= 0)
             {
-                //isGreenLight = !isGreenLight;
-                //timer = Random.Range(2f, 5f);
-                //UpdateCubeColor();
                 CycleLight();
             }
 
@@ -137,10 +125,6 @@ public class GameManagerScript : MonoBehaviour
 
     void DetectMovement()
     {
-        // Controllers
-        // 1. Hand Velocities (Calculated by position differences)
-        //float leftHandSpeed = 0f;
-        //float rightHandSpeed = 0f;
 
         float leftHandSpeed = ((leftHandTransform.position - lastLeftHandPos) / Time.deltaTime).magnitude;
 
@@ -166,29 +150,6 @@ public class GameManagerScript : MonoBehaviour
             //if (Jumpscaring == false) StartCoroutine(JumpscareThenReset());
         }
     }
-
-    //IEnumerator JumpscareThenReset()
-    //{
-
-        //Jumpscaring = true;
-
-        //jumpscareUI.SetActive(true);
-        //scareAudio.Play();
-
-        
-        //yield return new WaitForSeconds(scareDuration);
-
-        
-        //jumpscareUI.SetActive(false);
-
-
-
-
-        //ResetPlayer();
-        //Jumpscaring = false;
-
-    //}
-
     public void SetPlayerInZone(bool inside)
     {
         isInsideGameBox = inside;
@@ -248,7 +209,6 @@ public class GameManagerScript : MonoBehaviour
 
         UpdateTrackingData();
 
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
 
     }

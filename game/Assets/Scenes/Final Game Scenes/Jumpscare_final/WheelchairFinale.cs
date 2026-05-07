@@ -11,68 +11,66 @@ using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 
 public class WheelchairFinale : MonoBehaviour
 {
-    [Header("=== MONSTER ===")]
+    [Header("monster ")]
     [SerializeField] private GameObject monster;
     [SerializeField] private Animator monsterAnimator;
     [SerializeField] private NavMeshAgent agent;
 
-    [Header("=== ANIMATOR STATES ===")]
+    [Header("animator states")]
     [SerializeField] private string chaseStateName = "Chase";
     [SerializeField] private string attackStateName = "Attack";
     [SerializeField] private string idleStateName = "Idle";
 
-    [Header("=== CROSS-SCENE REFERENCES ===")]
+    [Header("cross scene references")]
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private string spawnPointName = "DoorMarker";
     [SerializeField] private string horrorPostFXName = "HorrorPostFX";
 
-    [Header("=== FLICKER LIGHTS ===")]
+    [Header("flickering lights")]
     [SerializeField] private Light[] flickerLights;
     [SerializeField] private float flickerDuration = 0.6f;
 
-    [Header("=== AUDIO ===")]
+    [Header("audio effects")]
     [SerializeField] private AudioSource crashSound;
     [SerializeField] private AudioSource heartbeatAudio;
     [SerializeField] private AudioSource subBassRumble;
     [SerializeField] private AudioSource chaseAudio;
     [SerializeField] private AudioSource attackBoom;
     [SerializeField] private AudioSource attackScreech;
-    [Tooltip("Optional: distant ambient wind/city sounds for false safety phase.")]
+    [Tooltip(" distant ambient wind/city sounds for false safety phase.")]
     [SerializeField] private AudioSource ambientWind;
-    [Tooltip("Optional: tinnitus ringing after the attack.")]
+    [Tooltip(" tinnitus ringing after the attack.")]
     [SerializeField] private AudioSource tinnitusAudio;
     [SerializeField] private AudioSource beepAudio;
 
 
-    [Header("=== TIMING ===")]
+    [Header("timing of everything")]
     [SerializeField] private float falseSafetyDuration = 4f;
     [SerializeField] private float crashHoldDuration = 0.5f;
-    [Tooltip("SET THIS TO 4 to match your new 4-second custom heartbeat!")]
     [SerializeField] private float dreadBuildDuration = 4.0f;
     [SerializeField] private float fadeOutDuration = 0.4f;
     [SerializeField] private float blackHoldDuration = 0.4f;
     [SerializeField] private float fadeInDuration = 0.3f;
-    [Tooltip("Magic beat of silence right before attack. 0.15-0.25 sweet spot.")]
     [SerializeField] private float silenceBeforeAttack = 0.2f;
 
-    [Header("=== HAPTICS ===")]
+    [Header("haptic events")]
     [SerializeField] private string customHeartbeatEvent = "custom_heartbeat2";
 
-    [Header("=== CHASE ===")]
+    [Header("monster chase towards")]
     [SerializeField] private float attackTriggerDistance = 2.5f;
     [SerializeField] private float maxChaseTime = 5f;
     [SerializeField] private float chaseSpeed = 12f;
     [SerializeField] private float chaseAcceleration = 20f;
 
-    [Header("=== ATTACK POSITION ===")]
+    [Header("death attack position")]
     [SerializeField] private float attackDistanceFromPlayer = 1.8f;
     [Tooltip("Vertical offset from camera Y. Press C to test. Try -0.3 to -0.7.")]
     [SerializeField] private float attackHeightOffset = -0.4f;
 
-    [Header("=== POST-PROCESSING ===")]
+    [Header("post processing stuff")]
     [SerializeField] private float postFXRampDuration = 1f;
 
-    [Header("=== NIGHT LIGHTING ===")]
+    [Header("night lighting ")]
     [SerializeField] private Color nightAmbientColor = new Color(0.06f, 0.08f, 0.12f);
     [SerializeField] private float nightAmbientIntensity = 0.25f;
     [SerializeField] private Light moonLight;
@@ -80,19 +78,19 @@ public class WheelchairFinale : MonoBehaviour
     [SerializeField] private float moonLightIntensity = 0.4f;
     [SerializeField] private string[] scenesToDarken = { "final_jumpscare", "Second Area" };
 
-    [Header("=== NIGHT FOG ===")]
+    [Header("fog")]
     [SerializeField] private bool useNightFog = true;
     [SerializeField] private Color nightFogColor = new Color(0.04f, 0.05f, 0.08f);
     [SerializeField] private float nightFogDensity = 0.05f;
 
-    [Header("=== IMPACT ===")]
+  
     [SerializeField] private float holdOnBlackDuration = 5f;
 
-    [Header("=== CAMERA SHAKE ===")]
+    [Header("mild camera shake. keep values low")]
     [SerializeField] private float chaseShakeIntensity = 0.012f;
     [SerializeField] private float impactShakeIntensity = 0.08f;
 
-    [Header("=== CALIBRATION ===")]
+    [Header("calibration")]
     [SerializeField] private bool enableCalibrationMode = true;
 
     // Runtime
@@ -124,8 +122,7 @@ public class WheelchairFinale : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // THE TRIPWIRE
-        Debug.Log("<color=yellow>SOMETHING HIT THE TRIGGER: </color>" + other.gameObject.name + " (Tag: " + other.tag + ")");
+        Debug.Log("<color=yellow>we hit the collider!: </color>" + other.gameObject.name + " (Tag: " + other.tag + ")");
 
         if (hasTriggered) return;
 
@@ -135,7 +132,7 @@ public class WheelchairFinale : MonoBehaviour
             return;
         }
 
-        Debug.Log("<color=green>PLAYER DETECTED! STARTING JUMPSCARE!</color>");
+        Debug.Log("<color=green> player has been detected, start the jumscare sequence now</color>");
         hasTriggered = true;
         StartCoroutine(PlayScare());
     }
@@ -147,7 +144,7 @@ public class WheelchairFinale : MonoBehaviour
         GameObject p = GameObject.FindGameObjectWithTag(playerTag);
         if (p != null)
         {
-            // THE FIX: Target the absolute root of the XR Rig so it doesn't just spin a child collider!
+            
             playerRig = p.transform.root;
 
             moveProvider = playerRig.GetComponentInChildren<ContinuousMoveProvider>();
@@ -172,9 +169,7 @@ public class WheelchairFinale : MonoBehaviour
         if (postFX != null) horrorPostFX = postFX.GetComponent<Volume>();
     }
 
-    // ============================================================
-    // MAIN SEQUENCE
-    // ============================================================
+    // main sequence now:
     private IEnumerator PlayScare()
     {
         FindRuntimeReferences();
@@ -184,11 +179,11 @@ public class WheelchairFinale : MonoBehaviour
         if (monster == null || monsterAnimator == null || playerCamera == null ||
             playerRig == null || agent == null || spawnPoint == null)
         {
-            Debug.LogError("[WheelchairFinale] Missing critical refs - aborting");
+            Debug.LogError("[WheelchairFinale] Missing critical references, just break");
             yield break;
         }
 
-        // === PHASE 1: FALSE SAFETY ===
+        // player "thinks" they escaped 
         if (ambientWind != null)
         {
             ambientWind.volume = 0.4f;
@@ -197,7 +192,7 @@ public class WheelchairFinale : MonoBehaviour
 
         yield return new WaitForSeconds(falseSafetyDuration);
 
-        // === PHASE 2: WRONGNESS ===
+        // player realises smthg is wrong
         if (ambientWind != null) StartCoroutine(RampVolume(ambientWind, 0f, 0.8f));
 
         if (subBassRumble != null)
@@ -209,7 +204,7 @@ public class WheelchairFinale : MonoBehaviour
 
         yield return new WaitForSeconds(0.8f);
 
-        // === PHASE 3: TRAP ===
+        // slowly disable motion and trap the player wherever they are
         DisableControllers();
 
         if (crashSound != null) crashSound.Play();
@@ -225,16 +220,13 @@ public class WheelchairFinale : MonoBehaviour
 
         yield return new WaitForSeconds(crashHoldDuration);
 
-        // === PHASE 4: HEARTBEAT + DREAD ===
+        // building tension with the bhaptics custom heartbeat and composer audio
 
         if (heartbeatAudio != null)
         {
             heartbeatAudio.pitch = 1f;
 
-            // 1. FIRE THE HAPTIC (No delays, no StopAll, no tricks)
             BhapticsLibrary.Play("custom_heartbeat2");
-
-            // 2. FIRE THE AUDIO (Instantly, on the exact same frame)
             heartbeatAudio.Play();
         }
 
@@ -243,7 +235,6 @@ public class WheelchairFinale : MonoBehaviour
 
         ApplyNightHorrorLighting();
 
-        // Wait for the audio/haptic to finish
         yield return new WaitForSeconds(dreadBuildDuration);
 
         if (subBassRumble != null)
@@ -251,15 +242,14 @@ public class WheelchairFinale : MonoBehaviour
 
         ApplyNightHorrorLighting();
 
-        // This wait duration is what keeps the player staring forward while the 4-second audio/haptic plays
         yield return new WaitForSeconds(dreadBuildDuration);
 
-        // === PHASE 5: FADE TO BLACK + ROTATE ===
+        // fade to black then rotate the player to come face to face with the monster the make it chase at you
         yield return StartCoroutine(FadeAlpha(0f, 1f, fadeOutDuration));
         RotatePlayerToFaceSpawnPoint();
         yield return new WaitForSeconds(blackHoldDuration);
 
-        // === PHASE 6: CHASE BEGINS ===
+        
         monsterAnimator.Play(chaseStateName, 0, 0f);
         if (chaseAudio != null) chaseAudio.Play();
 
@@ -278,7 +268,7 @@ public class WheelchairFinale : MonoBehaviour
 
         StartCoroutine(FadeAlpha(1f, 0f, fadeInDuration));
 
-        // === PHASE 7: NAVMESH CHASE ===
+        // navmesh chase
         float timer = 0f;
         while (timer < maxChaseTime)
         {
@@ -304,7 +294,7 @@ public class WheelchairFinale : MonoBehaviour
             yield return null;
         }
 
-        // === PHASE 8: FAST FADE TO BLACK THEN SETUP ===
+        // do a quick fade to black and then "kill" the player
         yield return StartCoroutine(FadeAlpha(0f, 1f, 0.15f));
 
         agent.isStopped = true;
@@ -313,7 +303,7 @@ public class WheelchairFinale : MonoBehaviour
         agent.ResetPath();
         agent.enabled = false;
 
-        // Ensure the custom heartbeat doesn't bleed into the attack
+        // Ensure the custom heartbeat doesn't roll over into the attack
         BhapticsLibrary.StopByEventId(customHeartbeatEvent);
 
         if (chaseAudio != null && chaseAudio.isPlaying) chaseAudio.Stop();
@@ -326,21 +316,21 @@ public class WheelchairFinale : MonoBehaviour
 
         yield return new WaitForSeconds(silenceBeforeAttack);
 
-        // === PHASE 9: REVEAL ATTACK, THEN FADE OUT ===
+      
         if (fadeScreen != null) fadeScreen.alpha = 0f;
 
         if (attackBoom != null) attackBoom.Play();
         if (attackScreech != null) attackScreech.Play();
         StartCoroutine(ImpactShake(impactShakeIntensity, 0.2f));
 
-        // Start the 3-second real-time attack haptic loop
+        // Start the 3-second haptic event upon "killing"
         StartCoroutine(HuntVibrationLoop(3f));
 
         yield return new WaitForSeconds(0.4f);
 
         yield return StartCoroutine(FadeAlpha(0f, 1f, 0.15f));
 
-        // === PHASE 10: HOLD ON BLACK ===
+        // hold the black- player dies womp womp
         isShakingCamera = false;
 
         if (monster != null) monster.SetActive(false);
@@ -372,9 +362,7 @@ public class WheelchairFinale : MonoBehaviour
         OnFinaleComplete();
     }
 
-    // ============================================================
-    // HUNT VIBRATION LOOP (Spam-filter safe, real-time)
-    // ============================================================
+    
     private IEnumerator HuntVibrationLoop(float duration)
     {
         float elapsed = 0f;
@@ -388,9 +376,7 @@ public class WheelchairFinale : MonoBehaviour
         }
     }
 
-    // ============================================================
-    // SNAP TO ATTACK POSITION
-    // ============================================================
+    //snap to attack position helper fn
     private void SnapMonsterToAttackPositionInFrontOfPlayer()
     {
         if (monster == null || playerCamera == null) return;
@@ -406,9 +392,7 @@ public class WheelchairFinale : MonoBehaviour
         FaceMonsterAtPlayer();
     }
 
-    // ============================================================
-    // SPAWN AT CHOSEN POINT
-    // ============================================================
+    // make the monster spawn at a specific point helper fn
     private void SpawnMonsterAtChosenPoint()
     {
         if (spawnPoint == null) return;
@@ -422,9 +406,7 @@ public class WheelchairFinale : MonoBehaviour
         FaceMonsterAtPlayer();
     }
 
-    // ============================================================
-    // ROTATE PLAYER (BULLETPROOF VR FIX)
-    // ============================================================
+    // rotating the player to face exactly eye to eye with the monster helper fn
     private void RotatePlayerToFaceSpawnPoint()
     {
         if (playerRig == null || spawnPoint == null || playerCamera == null) return;
@@ -441,14 +423,9 @@ public class WheelchairFinale : MonoBehaviour
 
         float angleDifference = Vector3.SignedAngle(currentCamDir, targetDir, Vector3.up);
 
-        // THE FIX: Rotate the root rig directly AROUND the physical position of the camera/head.
-        // This forces the headset vision to completely snap around, ignoring nested colliders.
         playerRig.RotateAround(playerCamera.position, Vector3.up, angleDifference);
     }
-
-    // ============================================================
-    // FACE MONSTER AT PLAYER
-    // ============================================================
+    //face monster at player helper fn
     private void FaceMonsterAtPlayer()
     {
         if (monster == null || playerCamera == null) return;
@@ -457,9 +434,7 @@ public class WheelchairFinale : MonoBehaviour
         monster.transform.LookAt(lookPos);
     }
 
-    // ============================================================
-    // CALIBRATION
-    // ============================================================
+   
     private void TestAttackPosition()
     {
         FindRuntimeReferences();
@@ -474,9 +449,7 @@ public class WheelchairFinale : MonoBehaviour
         Debug.Log("[CALIBRATE] Adjust attackHeightOffset and press C again.");
     }
 
-    // ============================================================
-    // FADE (using CanvasGroup alpha)
-    // ============================================================
+    //fading helper fn
     private IEnumerator FadeAlpha(float startAlpha, float endAlpha, float duration)
     {
         if (fadeScreen == null) yield break;
@@ -491,9 +464,7 @@ public class WheelchairFinale : MonoBehaviour
         fadeScreen.alpha = endAlpha;
     }
 
-    // ============================================================
-    // POST-PROCESSING
-    // ============================================================
+    //post processing helper fn
     private IEnumerator RampPostFX(float targetWeight, float duration)
     {
         if (horrorPostFX == null) yield break;
@@ -508,9 +479,7 @@ public class WheelchairFinale : MonoBehaviour
         horrorPostFX.weight = targetWeight;
     }
 
-    // ============================================================
-    // NIGHT LIGHTING
-    // ============================================================
+    // night lighting effects
     private void ApplyNightHorrorLighting()
     {
         disabledLights.Clear();
@@ -556,9 +525,7 @@ public class WheelchairFinale : MonoBehaviour
         }
     }
 
-    // ============================================================
-    // CINEMATIC FLICKER
-    // ============================================================
+    // flickering lights helper fn
     private IEnumerator FlickerLightsCinematic(float duration)
     {
         if (flickerLights == null || flickerLights.Length == 0) yield break;
@@ -618,9 +585,7 @@ public class WheelchairFinale : MonoBehaviour
         }
     }
 
-    // ============================================================
-    // CAMERA SHAKE
-    // ============================================================
+   
     private IEnumerator CameraShakeLoop(float intensity)
     {
         while (isShakingCamera)
@@ -648,9 +613,7 @@ public class WheelchairFinale : MonoBehaviour
         playerRig.localPosition = rigShakeBasePos;
     }
 
-    // ============================================================
-    // AUDIO HELPERS
-    // ============================================================
+    //audio helper fn
     private IEnumerator RampVolume(AudioSource src, float targetVolume, float duration)
     {
         if (src == null) yield break;
@@ -664,22 +627,9 @@ public class WheelchairFinale : MonoBehaviour
         }
     }
 
-    private IEnumerator RampPitch(AudioSource src, float targetPitch, float duration)
-    {
-        if (src == null) yield break;
-        float startPitch = src.pitch;
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            src.pitch = Mathf.Lerp(startPitch, targetPitch, elapsed / duration);
-            yield return null;
-        }
-    }
+    
 
-    // ============================================================
-    // CONTROLS
-    // ============================================================
+    // helper fn to disable the controllers 
     private void DisableControllers()
     {
         if (moveProvider != null) moveProvider.enabled = false;
