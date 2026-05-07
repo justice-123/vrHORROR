@@ -17,7 +17,7 @@ public class BreathInputML : MonoBehaviour
     public float clipDuration = 0.5f;
     public float classifyInterval = 0.25f;
 
-    [Header("MFCC Parameters (must match training)")]
+    [Header("MFCC Parameters, must match training")]
     public int nMfcc = 13;
     public int nFft = 2048;
     public int hopLength = 512;
@@ -268,3 +268,4 @@ public class BreathInputML : MonoBehaviour
         pitchHz = (bestCorr > 0.2f) ? (float)sr / bestLag : 0f;
     }
 }
+
