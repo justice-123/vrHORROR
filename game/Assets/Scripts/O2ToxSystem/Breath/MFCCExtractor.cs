@@ -1,16 +1,7 @@
 using System;
 using UnityEngine;
 
-/// <summary>
-/// Computes MFCC features from raw audio samples in C#.
-/// Matches librosa's MFCC output so the features are compatible
-/// with the Python-trained ONNX model.
-///
-/// Usage:
-///     float[] audio = ...; // 0.5 seconds of audio at 48kHz
-///     float[,] mfcc = MFCCExtractor.ComputeMFCC(audio, 48000);
-///     // mfcc shape: (13, timeFrames) - ready for model input
-/// </summary>
+//Computes MFCC features from raw audio samples in C#. Matches librosa's MFCC output so the features are compatible with the Python-trained ONNX model.
 public static class MFCCExtractor
 {
     // Default parameters matching the Python training pipeline
@@ -21,10 +12,8 @@ public static class MFCCExtractor
     public const float DefaultFMin = 0f;
     public const float DefaultFMax = 8000f;
 
-    /// <summary>
-    /// Compute MFCC features from audio samples.
-    /// Returns a (nMfcc, timeFrames) array.
-    /// </summary>
+    // Compute MFCC features from audio samples.
+    // Returns a (nMfcc, timeFrames) array.
     public static float[,] ComputeMFCC(
         float[] audio, int sampleRate,
         int nMfcc = DefaultNMfcc,
@@ -32,7 +21,7 @@ public static class MFCCExtractor
         int hopLength = DefaultHopLength,
         int nMels = DefaultNMels)
     {
-        // first computing power spectrogram via STFT
+        // First computing power spectrogram via STFT
         float[,] powerSpec = ComputePowerSpectrogram(audio, nFft, hopLength);
 
         //  Applying the mel filterbank
@@ -48,10 +37,8 @@ public static class MFCCExtractor
         return mfcc;
     }
 
-    /// <summary>
-    /// Flatten a 2D MFCC array to 1D for model input.
-    /// Output order: all time frames for coeff 0, then all for coeff 1, etc.
-    /// </summary>
+    // Flatten a 2D MFCC array to 1D for model input.
+    // Output order: all time frames for coeff 0, then all for coeff 1,.
     public static float[] Flatten(float[,] mfcc)
     {
         int rows = mfcc.GetLength(0);
@@ -63,7 +50,7 @@ public static class MFCCExtractor
         return flat;
     }
 
-    // internal methiods
+    // Internal methiods
 
     static float[,] ComputePowerSpectrogram(float[] audio, int nFft, int hopLength)
     {
@@ -93,10 +80,10 @@ public static class MFCCExtractor
             Array.Copy(frame, fftReal, nFft);
             Array.Clear(fftImag, 0, nFft);
 
-            // In-place FFT
+            // In place FFT
             FFT(fftReal, fftImag);
 
-            // Power spectrum (magnitude squared)
+            // Power spectrum 
             for (int f = 0; f < freqBins; f++)
             {
                 float re = fftReal[f];
@@ -148,7 +135,7 @@ public static class MFCCExtractor
             }
         }
 
-        // Normalise (Slaney normalisation like librosa)
+        // Normalise similar to librosa
         for (int m = 0; m < nMels; m++)
         {
             float enorm = 2.0f / (MelToHz(melPoints[m + 2]) - MelToHz(melPoints[m]));
@@ -216,7 +203,7 @@ public static class MFCCExtractor
         return mfcc;
     }
 
-    // utility funtions here:
+    // Utility funtions 
 
     static float HzToMel(float hz)
     {
@@ -236,14 +223,11 @@ public static class MFCCExtractor
         return w;
     }
 
-    /// <summary>
-    /// In-place radix-2 Cooley-Tukey FFT. Length must be power of 2.
-    /// </summary>
+    // Cooley Tukey FFT. length must be power of 2.
     static void FFT(float[] real, float[] imag)
     {
         int n = real.Length;
 
-        // Bit-reversal permutation
         for (int i = 1, j = 0; i < n; i++)
         {
             int bit = n >> 1;
@@ -256,7 +240,6 @@ public static class MFCCExtractor
             }
         }
 
-        // Butterfly stages
         for (int len = 2; len <= n; len *= 2)
         {
             float angle = -2f * Mathf.PI / len;
