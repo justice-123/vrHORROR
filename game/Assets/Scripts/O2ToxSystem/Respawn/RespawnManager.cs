@@ -6,7 +6,7 @@ public class RespawnManager : MonoBehaviour
 {
     public static RespawnManager Instance { get; private set; }
 
-    [Header("Scene Names — must match Build Settings exactly")]
+    
     [SerializeField] private string firstAreaSceneName = "First Area";
 
     [SerializeField] private float fadeDuration = 0.5f;
@@ -53,7 +53,7 @@ public class RespawnManager : MonoBehaviour
     {
         if (AreaTransition.Instance == null)
         {
-            VRDebugHUD.Instance?.SetStatus("AreaTransition NULL!");
+            VRDebugHUD.Instance?.SetStatus("AreaTransition null!");
             _isRespawning = false;
             yield break;
         }
@@ -63,7 +63,7 @@ public class RespawnManager : MonoBehaviour
 
         if (player == null)
         {
-            VRDebugHUD.Instance?.SetStatus("AreaTransition.player NULL!");
+            VRDebugHUD.Instance?.SetStatus("AreaTransition.player null!");
             _isRespawning = false;
             yield break;
         }
@@ -78,7 +78,7 @@ public class RespawnManager : MonoBehaviour
         }
         fade.alpha = 1f;
 
-        // Fade tinnitus in
+        // play the beep tinnitus audio
         if (tinnitusAudio != null)
         {
             tinnitusAudio.volume = 0f;

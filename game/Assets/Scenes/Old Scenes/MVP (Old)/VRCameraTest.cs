@@ -16,7 +16,7 @@ public class VRCameraTest : MonoBehaviour
         if (cam != null)
         {
             cameraTransform = cam.transform;
-            Debug.Log("VR Camera Test Controls Enabled - Use WASD to move, Right-Click+Mouse to look");
+            
         }
     }
 

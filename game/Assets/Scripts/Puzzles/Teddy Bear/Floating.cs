@@ -11,7 +11,7 @@ public class Floating : MonoBehaviour
     public float bobSpeed = 1.5f;
 
     [Header("Ritual Light")]
-    public Light ritualLight; // drag the child Point Light in here
+    public Light ritualLight; 
 
     [Header("Rotation")]
     public float spinSpeed = 45f;
@@ -21,9 +21,9 @@ public class Floating : MonoBehaviour
     public float tiltSpeed = 0.8f;
 
     [Header("Grab Sequence")]
-    public TeddyGrabSequence grabSequence; // drag TeddyGrabSequence object in inspector
+    public TeddyGrabSequence grabSequence; 
 
-    public ToiletDoor toiletDoor; // drag the door in the inspector
+    public ToiletDoor toiletDoor; 
 
     private Vector3 startPos;
     private Rigidbody rb;

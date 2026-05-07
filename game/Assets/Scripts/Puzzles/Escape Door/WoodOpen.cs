@@ -7,7 +7,7 @@ public class WoodOpen : MonoBehaviour
     public FrontDoor frontDoor;
 
 
-    // Update is called once per frame
+   
     void Update()
     {
         if (wood1.woodBroken && wood2.woodBroken)

@@ -23,7 +23,7 @@ public class AreaTransition : MonoBehaviour
         fadeScreen.alpha = 0;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     public IEnumerator StartAreaTransition()
     {
         float elapsed  = 0;
