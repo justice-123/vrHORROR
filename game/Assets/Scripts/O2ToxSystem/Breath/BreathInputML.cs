@@ -81,7 +81,7 @@ public class BreathInputML : MonoBehaviour
 
         if (modelAsset == null)
         {
-            Debug.LogError("BreathInputML: No model assigned!");
+            Debug.LogError("BreathInputML: No model assigned");
             yield break;
         }
 
