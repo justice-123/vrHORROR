@@ -16,7 +16,7 @@ public class AlignPlayer : MonoBehaviour
     public Transform cameraOffset;
     private bool _wasUserPresent = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+  
     void Start()
     {
         StartCoroutine(InitialAlign());

@@ -10,7 +10,7 @@ public class JumpscareLoader : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         hasLoaded = true;
-        Debug.Log("Player crossed loader - loading final_jumpscare");
+        Debug.Log("loading the final scene- collider has been hit");
         MySceneManager.Instance.LoadNewScene("final_jumpscare");
     }
 }

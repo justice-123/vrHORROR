@@ -13,7 +13,7 @@ public class RefillPoint : MonoBehaviour
             other.transform.position = transform.position;
             other.transform.rotation = transform.rotation;
 
-            // Optional: parent it so it moves with the point
+            // Parent it so it moves with the point
             other.transform.SetParent(transform);
 
             // Disable its Rigidbody so it doesn't slide

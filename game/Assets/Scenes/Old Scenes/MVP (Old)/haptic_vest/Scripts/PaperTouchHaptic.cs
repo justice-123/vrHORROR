@@ -20,7 +20,7 @@ public class PaperTouchHaptic : MonoBehaviour
     [SerializeField] private float faceDistance = 0.8f;
     [SerializeField] private float groundRayHeight = 2.5f;
     [SerializeField] private LayerMask groundMask = ~0; // set to your Ground layer if you have one
-    [SerializeField] private float groundLift = 0.02f;  // tiny lift to avoid z-fighting
+    [SerializeField] private float groundLift = 0.02f;  
 
 
 
@@ -29,8 +29,8 @@ public class PaperTouchHaptic : MonoBehaviour
     [SerializeField] private Transform playerHead;
 
     private bool triggered = false;
-    private Transform playerRoot;            // whatever entered trigger (optional)
-    private Vector3 initialForwardFlat;      // forward on the ground plane
+    private Transform playerRoot;            
+    private Vector3 initialForwardFlat;      
 
     void OnTriggerEnter(Collider other)
     {
@@ -56,7 +56,7 @@ public class PaperTouchHaptic : MonoBehaviour
 
     IEnumerator HorrorSequence()
     {
-        // HEARTBEAT LOOP
+        // heartbeat
         float timer = 0f;
         while (timer < heartbeatDuration)
         {
@@ -103,11 +103,10 @@ public class PaperTouchHaptic : MonoBehaviour
         if (!monster || !playerHead) return;
 
         // Spawn behind the direction you were facing at jumpscare time
-        Vector3 spawnDir = -initialForwardFlat; // already flat + normalized
+        Vector3 spawnDir = -initialForwardFlat; 
         if (spawnDir.sqrMagnitude < 0.0001f) spawnDir = -Flatten(playerHead.forward);
         spawnDir.Normalize();
 
-        // Horizontal spawn position (ignore Y for now)
         Vector3 spawnPos = playerHead.position + spawnDir * faceDistance;
 
         // Raycast down to find ground height at spawn spot
@@ -119,11 +118,10 @@ public class PaperTouchHaptic : MonoBehaviour
             groundY = hit.point.y;
         }
 
-        // Place monster roughly at ground first (we'll correct using bounds)
         monster.transform.position = new Vector3(spawnPos.x, groundY, spawnPos.z);
         monster.SetActive(true);
 
-        // Snap so the *bottom of the rendered model* sits on the ground
+        
         Renderer rend = monster.GetComponentInChildren<Renderer>();
         if (rend != null)
         {
@@ -139,9 +137,6 @@ public class PaperTouchHaptic : MonoBehaviour
             monster.transform.rotation = Quaternion.LookRotation(lookDir);
         pianoScare.Play();
     }
-
-
-
 
 
 

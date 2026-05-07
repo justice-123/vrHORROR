@@ -32,17 +32,17 @@ public static class MFCCExtractor
         int hopLength = DefaultHopLength,
         int nMels = DefaultNMels)
     {
-        // Step 1: Compute power spectrogram via STFT
+        // first computing power spectrogram via STFT
         float[,] powerSpec = ComputePowerSpectrogram(audio, nFft, hopLength);
 
-        // Step 2: Apply mel filterbank
+        //  Applying the mel filterbank
         float[,] melFilters = CreateMelFilterbank(sampleRate, nFft, nMels, DefaultFMin, DefaultFMax);
         float[,] melSpec = ApplyMelFilterbank(powerSpec, melFilters);
 
-        // Step 3: Convert to log scale
+        // Converting to log scale
         LogScale(melSpec);
 
-        // Step 4: Apply DCT to get MFCCs
+        //  Applying DCT to get MFCCs
         float[,] mfcc = ApplyDCT(melSpec, nMfcc);
 
         return mfcc;
@@ -63,7 +63,7 @@ public static class MFCCExtractor
         return flat;
     }
 
-    // --- Internal methods ---
+    // internal methiods
 
     static float[,] ComputePowerSpectrogram(float[] audio, int nFft, int hopLength)
     {
@@ -148,7 +148,7 @@ public static class MFCCExtractor
             }
         }
 
-        // Normalize (Slaney normalization like librosa)
+        // Normalise (Slaney normalisation like librosa)
         for (int m = 0; m < nMels; m++)
         {
             float enorm = 2.0f / (MelToHz(melPoints[m + 2]) - MelToHz(melPoints[m]));
@@ -198,7 +198,7 @@ public static class MFCCExtractor
         int numFrames = melSpec.GetLength(1);
         float[,] mfcc = new float[nMfcc, numFrames];
 
-        // Type-II DCT (matching scipy/librosa)
+        
         for (int k = 0; k < nMfcc; k++)
         {
             for (int t = 0; t < numFrames; t++)
@@ -216,7 +216,7 @@ public static class MFCCExtractor
         return mfcc;
     }
 
-    // --- Utility functions ---
+    // utility funtions here:
 
     static float HzToMel(float hz)
     {

@@ -20,7 +20,7 @@ public class SimpleBGMTrigger : MonoBehaviour
 
         if (bgmSource == null)
         {
-            Debug.LogWarning("Cannot find BGM AudioSource. Please make sure there is a GameObject named 'BGM' with an AudioSource.");
+            Debug.LogWarning("Cannot find BGM AudioSource.");
         }
     }
 

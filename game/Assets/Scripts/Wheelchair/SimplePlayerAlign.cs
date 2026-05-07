@@ -10,7 +10,7 @@ public class SimplePlayerAlign : MonoBehaviour
     public Transform cameraOffset;
     public CanvasGroup fadeCanvasGroup;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         StartCoroutine(InitialAlign());
@@ -41,7 +41,7 @@ public class SimplePlayerAlign : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
         
